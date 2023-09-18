@@ -1,5 +1,7 @@
-orion/orion.vcxproj
-orion/orion.vcxproj.filters
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.users
+
 *.sln
 
 .vs/*
