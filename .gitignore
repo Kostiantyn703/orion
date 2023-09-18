@@ -1,0 +1,6 @@
+orion/*.vcxproj
+orion/*.vcxproj.filters
+
+.vs/*
+orion/x64/*
+x64/*
