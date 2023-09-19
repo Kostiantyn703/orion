@@ -1,7 +1,8 @@
 #include <iostream>
+#include <SDL_log.h>
+
 
 int main() {
-	std::cout << "Let's start making a great game." << std::endl;
-	
+	SDL_Log("Let's start making a great game.");
 	return 0;
 }

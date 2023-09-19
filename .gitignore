@@ -7,3 +7,6 @@
 .vs/*
 orion/x64/*
 x64/*
+
+external/*
+SDL2.dll
