@@ -21,6 +21,21 @@ void print_video_info() {
 	SDL_Log("Displays quantity [%d]", num_displays);
 	for (int i = 0; i < num_displays; ++i) {
 		SDL_Log("Display %d [%s]", i, SDL_GetDisplayName(i));
+		
+		SDL_Rect bounds;
+		SDL_GetDisplayBounds(i, &bounds);
+		SDL_Log("Bounds\n\tx [%d]\ty [%d]\th [%d]\tw [%d]", bounds.x, bounds.y, bounds.h, bounds.w);
+		
+		SDL_Rect ubounds;
+		SDL_GetDisplayUsableBounds(i, &ubounds);
+		SDL_Log("Usable Bounds\n\tx [%d]\ty [%d]\th [%d]\tw [%d]", ubounds.x, ubounds.y, ubounds.h, ubounds.w);
+
+		// enum
+		SDL_DisplayOrientation display_orient =  SDL_GetDisplayOrientation(i);
+
+		SDL_DisplayMode mode;
+		SDL_GetCurrentDisplayMode(i, &mode);
+		SDL_Log("Current Mode Info: format[%d] w [%d] h [%d] refresh_rate [%d]", mode.format, mode.w, mode.h, mode.refresh_rate);
 	}
 }
 
@@ -32,6 +47,7 @@ int main() {
 											,	WINDOW_HEIGHT
 											, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 	);
+	SDL_GL_CreateContext(window);
 
 	print_video_info();
 
