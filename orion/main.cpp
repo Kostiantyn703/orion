@@ -6,9 +6,10 @@
 #include "SDL_video.h"
 #include "SDL_events.h"
 #include "SDL.h"
+#include <memory>
+#include "window.h"
 
-constexpr int WINDOW_HEIGHT = 600;
-constexpr int WINDOW_WIDTH = 800;
+bool is_active = true;
 
 void print_video_info() {
 	int drivers_num = SDL_GetNumVideoDrivers();
@@ -41,8 +42,6 @@ void print_video_info() {
 	}
 }
 
-bool is_active = true;
-
 void handle_input() {
 	SDL_Event curr_event;
 	SDL_PollEvent(&curr_event);
@@ -52,21 +51,13 @@ void handle_input() {
 }
 
 void update() {}
-
 void render() {}
 
 int main(int argc, char* args[]) {
 	print_video_info();
+	std::unique_ptr<window> main_window = std::make_unique<window>();
 	
-	SDL_Window *window = SDL_CreateWindow	(		"PROJECT ORION"
-											,	SDL_WINDOWPOS_CENTERED
-											,	SDL_WINDOWPOS_CENTERED
-											,	WINDOW_WIDTH
-											,	WINDOW_HEIGHT
-											, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
-	);
 	SDL_Init(SDL_INIT_VIDEO);
-
 	while (is_active) {
 		handle_input();
 		update();
