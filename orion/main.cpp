@@ -4,6 +4,8 @@
 
 #include "SDL_log.h"
 #include "SDL_video.h"
+#include "SDL_events.h"
+#include "SDL.h"
 
 constexpr int WINDOW_HEIGHT = 600;
 constexpr int WINDOW_WIDTH = 800;
@@ -39,7 +41,9 @@ void print_video_info() {
 	}
 }
 
-int main() {
+int main(int argc, char* args[]) {
+	print_video_info();
+	
 	SDL_Window *window = SDL_CreateWindow	(		"PROJECT ORION"
 											,	SDL_WINDOWPOS_CENTERED
 											,	SDL_WINDOWPOS_CENTERED
@@ -47,9 +51,17 @@ int main() {
 											,	WINDOW_HEIGHT
 											, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 	);
-	SDL_GL_CreateContext(window);
+	//SDL_Surface *surface = SDL_GetWindowSurface(window);
+	SDL_Init(SDL_INIT_VIDEO);
 
-	print_video_info();
+	SDL_Event curr_event;
+	bool is_active = true;
+	while (is_active) {
+		SDL_PollEvent(&curr_event);
+		if (curr_event.type == SDL_KEYDOWN) {
+			is_active = false;
+		}
+	}
 
 	return 0;
 }
