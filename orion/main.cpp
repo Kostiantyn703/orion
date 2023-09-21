@@ -41,6 +41,20 @@ void print_video_info() {
 	}
 }
 
+bool is_active = true;
+
+void handle_input() {
+	SDL_Event curr_event;
+	SDL_PollEvent(&curr_event);
+	if (curr_event.type == SDL_KEYDOWN) {
+		is_active = false;
+	}
+}
+
+void update() {}
+
+void render() {}
+
 int main(int argc, char* args[]) {
 	print_video_info();
 	
@@ -51,16 +65,12 @@ int main(int argc, char* args[]) {
 											,	WINDOW_HEIGHT
 											, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE
 	);
-	//SDL_Surface *surface = SDL_GetWindowSurface(window);
 	SDL_Init(SDL_INIT_VIDEO);
 
-	SDL_Event curr_event;
-	bool is_active = true;
 	while (is_active) {
-		SDL_PollEvent(&curr_event);
-		if (curr_event.type == SDL_KEYDOWN) {
-			is_active = false;
-		}
+		handle_input();
+		update();
+		render();
 	}
 
 	return 0;
