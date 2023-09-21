@@ -37,7 +37,10 @@ void print_video_info() {
 		SDL_DisplayOrientation display_orient =  SDL_GetDisplayOrientation(i);
 
 		SDL_DisplayMode mode;
-		SDL_GetCurrentDisplayMode(i, &mode);
+		//SDL_GetCurrentDisplayMode(i, &mode);
+		//SDL_Log("Current Mode Info: format[%d] w [%d] h [%d] refresh_rate [%d]", mode.format, mode.w, mode.h, mode.refresh_rate);
+		
+		SDL_GetDesktopDisplayMode(i, &mode);
 		SDL_Log("Current Mode Info: format[%d] w [%d] h [%d] refresh_rate [%d]", mode.format, mode.w, mode.h, mode.refresh_rate);
 	}
 }
@@ -54,10 +57,9 @@ void update() {}
 void render() {}
 
 int main(int argc, char* args[]) {
-	print_video_info();
+	//print_video_info();
 	std::unique_ptr<window> main_window = std::make_unique<window>();
 	
-	SDL_Init(SDL_INIT_VIDEO);
 	while (is_active) {
 		handle_input();
 		update();
