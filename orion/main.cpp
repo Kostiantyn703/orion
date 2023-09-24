@@ -45,11 +45,19 @@ void print_video_info() {
 	}
 }
 
-void handle_input() {
+void handle_input(window &in_window) {
 	SDL_Event curr_event;
 	SDL_PollEvent(&curr_event);
-	if (curr_event.type == SDL_KEYDOWN) {
+
+	if (curr_event.key.type != SDL_KEYUP) {
+		return;
+	}
+
+	if (curr_event.key.keysym.sym == SDLK_ESCAPE) {
 		is_active = false;
+	}
+	if (curr_event.key.keysym.sym == SDLK_1) {
+		in_window.toggle_fullscreen();
 	}
 }
 
@@ -61,7 +69,7 @@ int main(int argc, char* args[]) {
 	std::unique_ptr<window> main_window = std::make_unique<window>();
 	
 	while (is_active) {
-		handle_input();
+		handle_input(*main_window);
 		update();
 		render();
 	}

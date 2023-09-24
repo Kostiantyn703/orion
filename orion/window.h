@@ -10,6 +10,8 @@ public:
 
 	void log_info();
 
+	void toggle_fullscreen();
+
 private:
 	unsigned int m_flags;
 

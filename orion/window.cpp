@@ -10,7 +10,7 @@ const char		*WINDOW_NAME		= "PROJECT ORION";
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
 window::window() {
-	m_flags = SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
+	m_flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
 	m_window = SDL_CreateWindow	(	WINDOW_NAME
 								,	SDL_WINDOWPOS_CENTERED
 								,	SDL_WINDOWPOS_CENTERED
@@ -32,6 +32,28 @@ window::~window() {
 }
 
 void window::log_info() {
-	
+	if (!m_window) {
+		SDL_LogError(0, "Window has not been initialized");
+		return;
+	}
+}
 
+void window::toggle_fullscreen() {
+	int display_idx = SDL_GetWindowDisplayIndex(m_window);
+	SDL_Rect display_bounds;
+	SDL_GetDisplayBounds(display_idx, &display_bounds);
+	
+	int window_width		= 0;
+	int window_height		= 0;
+	SDL_GetWindowSize(m_window, &window_width, &window_height);
+
+	SDL_Log("Display bounds %d %d", display_bounds.h, display_bounds.w);
+	SDL_Log("Window size %d %d", window_width, window_height);
+
+	if (display_bounds.h != window_height && display_bounds.w != window_width) {
+		SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+	}
+	if (display_bounds.h == window_height && display_bounds.w == window_width) {
+		SDL_SetWindowFullscreen(m_window, 0);
+	}
 }
