@@ -1,7 +1,3 @@
-#include <iostream>
-#include <string>
-#include <vector>
-
 #include "SDL_log.h"
 #include "SDL_video.h"
 #include "SDL_events.h"
@@ -62,7 +58,6 @@ void handle_input(window &in_window) {
 }
 
 void update() {}
-void render() {}
 
 int main(int argc, char* args[]) {
 	//print_video_info();
@@ -71,7 +66,7 @@ int main(int argc, char* args[]) {
 	while (is_active) {
 		handle_input(*main_window);
 		update();
-		render();
+		main_window->render();
 	}
 
 	return 0;
