@@ -3,6 +3,8 @@
 
 #include "SDL_video.h"
 
+class shader;
+
 class window {
 public:
 	window();
@@ -10,7 +12,7 @@ public:
 
 	void init_gl();
 
-	void render();
+	void render(const shader &in_shader);
 
 	void log_info();
 

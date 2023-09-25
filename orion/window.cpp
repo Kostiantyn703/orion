@@ -2,8 +2,9 @@
 
 #include "SDL_video.h"
 #include "SDL_log.h"
-#include "SDL_OpenGL.h"
 #include "SDL.h"
+
+#include "shader.h"
 
 constexpr int	WINDOW_HEIGHT		= 600;
 constexpr int	WINDOW_WIDTH		= 800;
@@ -23,6 +24,7 @@ window::window() {
 								);
 
 	m_context = SDL_GL_CreateContext(m_window);
+	gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
 	
 	log_error;
 }
@@ -39,11 +41,16 @@ void window::init_gl() {
 	log_error;
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	log_error;
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 }
 
-void window::render() {
-	glClearColor(0.5f, 0.1f, 0.2f, 1.f);
+void window::render(const shader &in_shader) {
+	glClearColor(0.1f, 0.1f, 0.3f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	in_shader.draw();
+
 	SDL_GL_SwapWindow(m_window);
 }
 

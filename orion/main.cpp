@@ -1,9 +1,14 @@
+#include "glad/glad.h"
+
 #include "SDL_log.h"
 #include "SDL_video.h"
 #include "SDL_events.h"
 #include "SDL.h"
 #include <memory>
 #include "window.h"
+
+#include "shader.h"
+
 
 bool is_active = true;
 
@@ -55,6 +60,9 @@ void handle_input(window &in_window) {
 	if (curr_event.key.keysym.sym == SDLK_1) {
 		in_window.toggle_fullscreen();
 	}
+	if (curr_event.key.keysym.sym == SDLK_2) {
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
 }
 
 void update() {}
@@ -62,11 +70,12 @@ void update() {}
 int main(int argc, char* args[]) {
 	//print_video_info();
 	std::unique_ptr<window> main_window = std::make_unique<window>();
-	
+	std::unique_ptr<shader> curr_shader = std::make_unique<shader>();
+	curr_shader->compile();
 	while (is_active) {
 		handle_input(*main_window);
 		update();
-		main_window->render();
+		main_window->render(*curr_shader);
 	}
 
 	return 0;
