@@ -1,6 +1,7 @@
 #include "shader.h"
 
 #include "SDL_log.h"
+#include <vector>
 
 bool shader::compile() {
 	const char *vertexShaderSource = "#version 330 core\n"
@@ -19,13 +20,15 @@ bool shader::compile() {
 	m_vertex = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(m_vertex, 1, &vertexShaderSource, nullptr);
 	glCompileShader(m_vertex);
-	int success;
-	char info_log[512];
-
+	GLint success = 0;
 	glGetShaderiv(m_vertex, GL_COMPILE_STATUS, &success);
+
 	if (!success) {
-		glGetShaderInfoLog(m_vertex, 512, nullptr, info_log);
-		SDL_Log(info_log);
+		GLint log_size = 0;
+		glGetShaderiv(m_vertex, GL_INFO_LOG_LENGTH, &log_size);
+		std::vector<GLchar> info_log(log_size);
+		glGetShaderInfoLog(m_vertex, log_size, &log_size, &info_log[0]);
+		SDL_Log(&info_log[0]);
 		return false; 
 	}
 	
@@ -34,8 +37,8 @@ bool shader::compile() {
 	glCompileShader(m_fragment);
 	glGetShaderiv(m_fragment, GL_COMPILE_STATUS, &success);
 	if (!success) {
-		glGetShaderInfoLog(m_fragment, 512, nullptr, info_log);
-		SDL_Log(info_log);
+		//glGetShaderInfoLog(m_fragment, 512, nullptr, *info_log);
+		//SDL_Log(*info_log);
 		return false;
 	}
 
@@ -46,8 +49,8 @@ bool shader::compile() {
 
 	glGetProgramiv(m_program, GL_LINK_STATUS, &success);
 	if (!success) {
-		glGetProgramInfoLog(m_program, 512, nullptr, info_log);
-		SDL_Log(info_log);
+		//glGetProgramInfoLog(m_program, 512, nullptr, *info_log);
+		//SDL_Log(*info_log);
 	}
 	glDeleteShader(m_vertex);
 	glDeleteShader(m_fragment);

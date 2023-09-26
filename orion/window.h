@@ -3,16 +3,12 @@
 
 #include "SDL_video.h"
 
-class shader;
-
 class window {
 public:
 	window();
 	~window();
 
-	void init_gl();
-
-	void render(const shader &in_shader);
+	void swap();
 
 	void log_info();
 

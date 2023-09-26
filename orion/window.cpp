@@ -13,7 +13,6 @@ const char		*WINDOW_NAME		= "PROJECT ORION";
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
 window::window() {
-	init_gl();
 	Uint32 flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
 	m_window = SDL_CreateWindow	(	WINDOW_NAME
 								,	SDL_WINDOWPOS_CENTERED
@@ -35,22 +34,7 @@ window::~window() {
 	log_error;
 }
 
-void window::init_gl() {
-	SDL_InitSubSystem(SDL_INIT_VIDEO);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	log_error;
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	log_error;
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-}
-
-void window::render(const shader &in_shader) {
-	glClearColor(0.1f, 0.1f, 0.3f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-	in_shader.draw();
-
+void window::swap() {
 	SDL_GL_SwapWindow(m_window);
 }
 
