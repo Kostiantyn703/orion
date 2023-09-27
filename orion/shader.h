@@ -6,20 +6,20 @@
 
 class shader {
 public:
-	shader()	{}
-	~shader()	{}
+	shader(const char *shader_source, GLenum shader_type);
+	~shader();
+
+	GLuint get_id() const { return m_id; }
 
 	bool compile();
-	void draw() const;
-
+	void destroy();
 
 private:
-	unsigned int VBO, VAO;
+	GLuint m_id;
 
-	unsigned int	m_vertex;
-	unsigned int	m_fragment;
-	unsigned int	m_program;
+	void create(const char *shader_source, GLenum shader_type);
+	bool log_errors();
 
+	shader() = delete;
 };
-
-#endif SHADER_H
+#endif // SHADER_H

@@ -11,6 +11,7 @@ public:
 	void use();
 	void attach_shader(GLuint shader_id);
 	void link();
+
 private:
 	GLuint m_id;
 
