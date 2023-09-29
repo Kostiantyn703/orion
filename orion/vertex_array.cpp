@@ -7,7 +7,7 @@ vertex_array::vertex_array() {
 vertex_array::~vertex_array() {}
 
 void vertex_array::init_data() {
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)0);
 	glEnableVertexAttribArray(0);
 }
 
