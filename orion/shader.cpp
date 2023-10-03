@@ -3,20 +3,16 @@
 #include "SDL_log.h"
 #include <vector>
 
-shader::shader(const char *shader_source, GLenum shader_type) {
-	create(shader_source, shader_type);
-}
-
-shader::~shader() {}
-
-void shader::create(const char *shader_source, GLenum shader_type) {
+shader::shader(const GLchar *shader_source, const GLenum shader_type) {
 	m_id = glCreateShader(shader_type);
 	glShaderSource(m_id, 1, &shader_source, nullptr);
 }
 
+shader::~shader() {}
+
 bool shader::compile() {
 	glCompileShader(m_id);
-	if (!log_errors()) {
+	if (!log_errors(GL_COMPILE_STATUS)) {
 		return false;
 	}
 	return true;
@@ -26,9 +22,9 @@ void shader::destroy() {
 	glDeleteShader(m_id);
 }
 
-bool shader::log_errors() {
+bool shader::log_errors(const GLenum check_type) {
 	GLint success = 0;
-	glGetShaderiv(m_id, GL_COMPILE_STATUS, &success);
+	glGetShaderiv(m_id, check_type, &success);
 	if (!success) {
 		GLint log_size = 0;
 		glGetShaderiv(m_id, GL_INFO_LOG_LENGTH, &log_size);

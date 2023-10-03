@@ -9,7 +9,7 @@ public:
 	~shader_program();
 
 	void use();
-	void attach_shader(GLuint shader_id);
+	void attach_shader(const GLuint shader_id);
 	void link();
 
 private:
