@@ -8,9 +8,6 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
-const char *vertexShaderSource;
-const char *fragmentShaderSource;
-
 std::vector<GLfloat> vertices = {
 	0.5f,	0.5f,
 	0.5f,	-0.5f,
@@ -37,10 +34,15 @@ void render_module::init() {
 	log_error;
 
 	m_window = std::make_unique<window>();
-	
-	std::unique_ptr<shader> vert = std::make_unique<shader>(vertexShaderSource, GL_VERTEX_SHADER);
+	m_resources = std::make_unique<resource_module>();
+	std::string shader_source_buffer;
+	m_resources->get_shader_source("vert", shader_source_buffer);
+	std::unique_ptr<shader> vert = std::make_unique<shader>(shader_source_buffer.data(), GL_VERTEX_SHADER);
 	vert->compile();
-	std::unique_ptr<shader> frag = std::make_unique<shader>(fragmentShaderSource, GL_FRAGMENT_SHADER);
+	
+	shader_source_buffer.clear();
+	m_resources->get_shader_source("frag", shader_source_buffer);
+	std::unique_ptr<shader> frag = std::make_unique<shader>(shader_source_buffer.data(), GL_FRAGMENT_SHADER);
 	frag->compile();
 
 	m_shader_program = std::make_unique<shader_program>();

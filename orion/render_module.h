@@ -7,6 +7,7 @@
 #include "shader_program.h"
 #include "vertex_array.h"
 #include "buffer_object.h"
+#include "resource_module.h"
 
 class render_module {
 public:
@@ -22,5 +23,7 @@ private:
 	std::unique_ptr<vertex_array> m_vertex_array;
 	std::unique_ptr<buffer_object> m_vertex_buffer;
 	std::unique_ptr<buffer_object> m_element_buffer;
+	// TODO: put it in higher abstraction along with render module
+	std::unique_ptr<resource_module> m_resources;
 };
 #endif // RENDER_MODULE_H

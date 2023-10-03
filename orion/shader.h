@@ -19,7 +19,7 @@ public:
 private:
 	GLuint m_id;
 
-	bool log_errors();
+	bool log_errors(const GLenum check_type);
 	// TODO: move this method into factory class
 	//void create(const std::string &shader_source, const GLenum shader_type);
 	shader() = delete;
