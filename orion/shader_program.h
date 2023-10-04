@@ -8,6 +8,8 @@ public:
 	shader_program();
 	~shader_program();
 
+	GLuint id()	{	return m_id;	}
+
 	void use();
 	void attach_shader(const GLuint shader_id);
 	void link();
