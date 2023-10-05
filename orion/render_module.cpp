@@ -10,10 +10,10 @@
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
 std::vector<GLfloat> vertices = {
-	0.5f,	0.5f,
-	0.5f,	-0.5f,
-	-0.5f,	-0.5f,
-	-0.5f,	0.5f
+	0.3f,	0.3f,
+	0.3f,	-0.3f,
+	-0.3f,	-0.3f,
+	-0.3f,	0.3f
 };
 
 std::vector<unsigned int> indices = { 
@@ -73,17 +73,6 @@ void render_module::init() {
 void render_module::run() {
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
-	
-	float curr_time = SDL_GetTicks() * 0.005f;
-	float color_val = (std::sin(curr_time) / 2.f) + 0.5f;
-	GLuint color_loc = glGetUniformLocation(m_shader_program->id(), "shader_color");
-	glUniform4f(color_loc, 1.f - color_val, 0.f, color_val, 1.f);
-
-	float offset_x = 0.3f * (std::sin(curr_time * 0.5f));
-	float offset_y = std::sin(curr_time) / 2.f;
-	GLuint offset_loc = glGetUniformLocation(m_shader_program->id(), "offset");
-	glUniform2f(offset_loc, offset_x, offset_y);
-
 	m_shader_program->use();
 	m_vertex_array->bind();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

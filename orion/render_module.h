@@ -15,7 +15,7 @@ public:
 	~render_module();
 
 	void init();
-	void run();	// update() draw() ???
+	void run();
 
 private:
 	std::unique_ptr<window> m_window;
