@@ -1,27 +1,15 @@
 #include "render_module.h"
 
+#include <vector>
+#include <complex>
+
 #include "SDL.h"
 #include "glad/glad.h"
 
 #include "shader.h"
-#include <vector>
-#include <complex>
+#include "globals.h"
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
-
-//std::vector<float> vertices = {
-float vertices [] = {
-	0.2f,	0.2f,	0.f,	1.f,	1.f,
-	0.2f,	-0.2f,	0.f,	1.f,	0.f,
-	-0.2f,	-0.2f,	0.f,	0.f,	0.f,
-	-0.2f,	0.2f,	0.f,	0.f,	1.f
-};
-
-//std::vector<unsigned int> indices = {
-unsigned int indices[] = {
-	0, 1, 2,
-	0, 2, 3
-};
 
 render_module::render_module() {
 	SDL_InitSubSystem(SDL_INIT_VIDEO);
