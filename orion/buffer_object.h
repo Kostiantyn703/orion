@@ -11,6 +11,8 @@ public:
 
 	template<typename T>
 	void init_data(const std::vector<T> &in_data);
+	template<typename T>
+	void init_data(T &in_data);
 
 	void bind();
 	void unbind();
@@ -27,4 +29,11 @@ void buffer_object::init_data(const std::vector<T> &in_data) {
 	bind();
 	glBufferData(m_target, sizeof(in_data), in_data.data(), GL_STATIC_DRAW);
 }
+
+template<typename T>
+void buffer_object::init_data(T &in_data) {
+	bind();
+	glBufferData(m_target, sizeof(in_data), &in_data, GL_STATIC_DRAW);
+}
+
 #endif // BUFFER_OBJECT_H

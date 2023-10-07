@@ -13,7 +13,7 @@ const char		*WINDOW_NAME		= "PROJECT ORION";
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
 window::window() {
-	Uint32 flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
+	unsigned int flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
 	m_window = SDL_CreateWindow	(	WINDOW_NAME
 								,	SDL_WINDOWPOS_CENTERED
 								,	SDL_WINDOWPOS_CENTERED

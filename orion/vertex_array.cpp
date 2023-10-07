@@ -7,8 +7,11 @@ vertex_array::vertex_array() {
 vertex_array::~vertex_array() {}
 
 void vertex_array::init_data() {
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(GLfloat), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
 	GLuint offset_loc =  glGetUniformLocation(m_id, "offset");
 	glUniform2f(offset_loc, 0.f, 0.f);
 }

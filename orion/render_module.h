@@ -8,6 +8,7 @@
 #include "vertex_array.h"
 #include "buffer_object.h"
 #include "resource_module.h"
+#include "texture.h"
 
 class render_module {
 public:
@@ -18,11 +19,13 @@ public:
 	void run();
 
 private:
-	std::unique_ptr<window> m_window;
-	std::unique_ptr<shader_program> m_shader_program;
-	std::unique_ptr<vertex_array> m_vertex_array;
-	std::unique_ptr<buffer_object> m_vertex_buffer;
-	std::unique_ptr<buffer_object> m_element_buffer;
+	std::unique_ptr<window>			m_window;
+
+	std::unique_ptr<shader_program>	m_shader_program;
+	std::unique_ptr<vertex_array>	m_vertex_array;
+	std::unique_ptr<buffer_object>	m_vertex_buffer;
+	std::unique_ptr<buffer_object>	m_element_buffer;
+	std::unique_ptr<texture>		m_texture;
 	// TODO: put it in higher abstraction along with render module
 	std::unique_ptr<resource_module> m_resources;
 };

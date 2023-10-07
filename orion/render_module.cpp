@@ -9,31 +9,37 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
-std::vector<GLfloat> vertices = {
-	0.3f,	0.3f,
-	0.3f,	-0.3f,
-	-0.3f,	-0.3f,
-	-0.3f,	0.3f
+//std::vector<float> vertices = {
+float vertices [] = {
+	0.2f,	0.2f,	0.f,	1.f,	1.f,
+	0.2f,	-0.2f,	0.f,	1.f,	0.f,
+	-0.2f,	-0.2f,	0.f,	0.f,	0.f,
+	-0.2f,	0.2f,	0.f,	0.f,	1.f
 };
 
-std::vector<unsigned int> indices = { 
+//std::vector<unsigned int> indices = {
+unsigned int indices[] = {
 	0, 1, 2,
 	0, 2, 3
 };
 
 render_module::render_module() {
+	SDL_InitSubSystem(SDL_INIT_VIDEO);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	log_error;
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	log_error;
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	log_error;
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	log_error;
+
 	init();
 }
 
 render_module::~render_module() {}
 
 void render_module::init() {
-	SDL_InitSubSystem(SDL_INIT_VIDEO);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-	log_error;
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	log_error;
-
 	m_window = std::make_unique<window>();
 	m_resources = std::make_unique<resource_module>();
 	std::string shader_source_buffer;
@@ -64,6 +70,13 @@ void render_module::init() {
 	m_element_buffer->init_data(indices);
 	m_vertex_array->init_data();
 	
+	m_texture = std::make_unique<texture>();
+	
+	GLint width, height, nr_channels;
+	unsigned char *texture_data = m_resources->load_texture(width, height, nr_channels);
+	m_texture->init_data(texture_data, width, height, nr_channels);
+	m_resources->free_texture_data(texture_data);
+
 	m_vertex_buffer->unbind();
 	m_vertex_array->unbind();
 
@@ -73,6 +86,8 @@ void render_module::init() {
 void render_module::run() {
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	m_texture->bind();
 	m_shader_program->use();
 	m_vertex_array->bind();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
