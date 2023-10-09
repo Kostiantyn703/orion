@@ -9,6 +9,6 @@ uniform vec4 shader_color;
 
 void main()
 {
-	//frag_color = shader_color;
 	frag_color = shader_color * texture(m_texture, out_texture);
+	//frag_color = texture(m_texture, out_texture);
 }

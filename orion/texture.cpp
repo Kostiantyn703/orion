@@ -20,11 +20,11 @@ void texture::unbind() {
 void texture::init_data(unsigned char *data, const GLint &width, const GLint &height, const GLint &channels) {
 	bind();
 
-	glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-	glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+	glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glTexImage2D(m_target, 0, m_format, width, height, 0, m_format, GL_UNSIGNED_BYTE, data);
 

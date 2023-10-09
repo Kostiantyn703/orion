@@ -24,6 +24,9 @@ window::window() {
 
 	m_context = SDL_GL_CreateContext(m_window);
 	gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	
 	log_error;
 }
