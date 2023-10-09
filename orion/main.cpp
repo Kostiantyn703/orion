@@ -8,7 +8,7 @@
 #include <memory>
 
 #include "render_module.h"
-
+#include "controller.h"
 
 bool is_active = true;
 
@@ -71,8 +71,9 @@ void update() {}
 int main(int argc, char* args[]) {
 	//print_video_info();
 	std::unique_ptr<render_module> renderer = std::make_unique<render_module>();
+	std::unique_ptr<controller> input_handler = std::make_unique<controller>();
 	while (is_active) {
-		handle_input();
+		input_handler->handle_input(is_active);
 		update();
 		renderer->run();
 	}
