@@ -18,7 +18,13 @@ public:
 	void init();
 	void run();
 
+	void toggle_wireframe() { is_wireframe = !is_wireframe; }
+
+	window *get_window() const { return m_window.get();	}
+
 private:
+	bool is_wireframe;
+
 	std::unique_ptr<window>			m_window;
 
 	std::unique_ptr<shader_program>	m_shader_program;

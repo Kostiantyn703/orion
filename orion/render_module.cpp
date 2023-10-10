@@ -11,7 +11,8 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
-render_module::render_module() {
+render_module::render_module() : is_wireframe(false)
+{
 	SDL_InitSubSystem(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	log_error;
@@ -67,11 +68,11 @@ void render_module::init() {
 
 	m_vertex_buffer->unbind();
 	m_vertex_array->unbind();
-
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 void render_module::run() {
+	glPolygonMode(GL_FRONT_AND_BACK, is_wireframe ? GL_LINE : GL_FILL);
+
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
