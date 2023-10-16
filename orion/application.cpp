@@ -10,6 +10,9 @@ void application::start_up() {
 	m_renderer = std::make_unique<render_module>();
 	m_input_handler = std::make_unique<controller>();
 	
+	m_timer = std::make_unique<timer>();
+	m_timer->start();
+
 	is_active = true;
 }
 
@@ -22,7 +25,7 @@ void application::run() {
 }
 
 void application::shut_down() {
-
+	m_timer->stop();
 }
 
 void application::print_video_info() {
@@ -67,4 +70,8 @@ void application::toggle_window_size() {
 
 void application::toggle_wireframe() {
 	m_renderer->toggle_wireframe();
+}
+
+void application::show_current_time() {
+	m_timer->current_time();
 }

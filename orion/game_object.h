@@ -15,7 +15,7 @@ public:
 	void update		(float delta_time);
 
 	void set_position	(float in_x, float in_y);
-	point get_position	() const { return m_position;}
+	point get_position	() const {	return m_position;	}
 
 
 private:

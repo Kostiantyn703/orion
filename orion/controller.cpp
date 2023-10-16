@@ -41,5 +41,8 @@ void controller::handle_input(application &in_app) {
 	if (curr_event.key.keysym.sym == SDLK_3) {
 		in_app.print_video_info();
 	}
+	if (curr_event.key.keysym.sym == SDLK_4) {
+		in_app.show_current_time();
+	}
 }
 
