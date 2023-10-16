@@ -16,16 +16,17 @@ void controller::handle_input(application &in_app) {
 	if (curr_event.key.type != SDL_KEYUP) {
 		return;
 	}
-	if (curr_event.key.keysym.sym == SDLK_UP) {
+	SDL_Keycode curr_key = curr_event.key.keysym.sym;
+	if ((curr_key == SDLK_UP) || (curr_key == SDLK_w)) {
 		SDL_Log("Key UP pressed");
 	}
-	if (curr_event.key.keysym.sym == SDLK_DOWN) {
+	if ((curr_key == SDLK_DOWN) || (curr_key == SDLK_s)) {
 		SDL_Log("Key DOWN pressed");
 	}
-	if (curr_event.key.keysym.sym == SDLK_LEFT) {
+	if ((curr_key == SDLK_LEFT) || (curr_key == SDLK_a)) {
 		SDL_Log("Key LEFT pressed");
 	}
-	if (curr_event.key.keysym.sym == SDLK_RIGHT) {
+	if ((curr_key == SDLK_RIGHT) || (curr_key == SDLK_d)) {
 		SDL_Log("Key RIGHT pressed");
 	}
 	if (curr_event.key.keysym.sym == SDLK_ESCAPE) {
@@ -40,6 +41,5 @@ void controller::handle_input(application &in_app) {
 	if (curr_event.key.keysym.sym == SDLK_3) {
 		in_app.print_video_info();
 	}
-
 }
 
