@@ -13,8 +13,8 @@ public:
 	void start();
 	void stop();
 
-	void current_time();
-	void current_duration();
+	void current_clock();
+	float get_current_time();
 
 private:
 	time_point m_start_point;

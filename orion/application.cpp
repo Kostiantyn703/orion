@@ -1,6 +1,7 @@
 #include "application.h"
 
 #include "SDL.h"
+#include "globals.h"
 
 application::application() : is_active(false) {}
 
@@ -10,6 +11,8 @@ void application::start_up() {
 	m_renderer = std::make_unique<render_module>();
 	m_input_handler = std::make_unique<controller>();
 	
+	m_object = std::make_unique<game_object>(500.f, 500.f);
+
 	m_timer = std::make_unique<timer>();
 	m_timer->start();
 
@@ -17,10 +20,18 @@ void application::start_up() {
 }
 
 void application::run() {
+	float last_frame = m_timer->get_current_time();
+	float curr_frame = 0.f;
+	float delta_time = 0.f;
 	while (is_active) {
+		curr_frame = m_timer->get_current_time();
+		delta_time = curr_frame - last_frame;
+
 		m_input_handler->handle_input(*this);
-		//update();
+		m_object->update(delta_time);
 		m_renderer->run();
+
+		last_frame = m_timer->get_current_time();
 	}
 }
 
@@ -73,5 +84,5 @@ void application::toggle_wireframe() {
 }
 
 void application::show_current_time() {
-	m_timer->current_time();
+	m_timer->current_clock();
 }

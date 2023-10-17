@@ -17,8 +17,8 @@ public:
 	void set_position	(float in_x, float in_y);
 	point get_position	() const {	return m_position;	}
 
-
 private:
+	float m_velocity = 150.f;
 	point m_position;
 
 };

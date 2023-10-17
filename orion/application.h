@@ -6,6 +6,7 @@
 #include "controller.h"
 #include "render_module.h"
 #include "timer.h"
+#include "game_object.h"
 
 class application {
 public:
@@ -28,6 +29,8 @@ private:
 	std::unique_ptr<render_module>	m_renderer;
 	std::unique_ptr<controller>		m_input_handler;
 	std::unique_ptr<timer>			m_timer;
+
+	std::unique_ptr<game_object>	m_object;
 
 };
 
