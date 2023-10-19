@@ -18,7 +18,7 @@ public:
 	point get_position	() const {	return m_position;	}
 
 private:
-	float m_velocity = 150.f;
+	float m_velocity = 200.f;
 	point m_position;
 
 };

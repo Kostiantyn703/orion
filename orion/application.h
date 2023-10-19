@@ -7,6 +7,7 @@
 #include "render_module.h"
 #include "timer.h"
 #include "game_object.h"
+#include "resource_module.h"
 
 class application {
 public:
@@ -26,12 +27,12 @@ public:
 private:
 	bool is_active;
 
+	std::unique_ptr<resource_module> m_resources;
 	std::unique_ptr<render_module>	m_renderer;
 	std::unique_ptr<controller>		m_input_handler;
 	std::unique_ptr<timer>			m_timer;
 
 	std::unique_ptr<game_object>	m_object;
-
+	std::unique_ptr<render_object>	m_render_obj;
 };
-
 #endif // APPLICATION_H

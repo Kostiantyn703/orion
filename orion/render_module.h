@@ -4,13 +4,11 @@
 #include <memory>
 
 #include "window.h"
-#include "shader_program.h"
-#include "vertex_array.h"
 #include "buffer_object.h"
-#include "resource_module.h"
-#include "texture.h"
+#include "render_object.h"
 
 class render_module {
+using render_objects = std::vector<render_object*>;
 public:
 	render_module();
 	~render_module();
@@ -18,6 +16,8 @@ public:
 	void init();
 	void run();
 
+	void add_object(render_object *in_obj) { m_a_objects.push_back(in_obj); }
+	 
 	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 
 	window *get_window() const { return m_window.get();	}
@@ -25,14 +25,8 @@ public:
 private:
 	bool is_wireframe;
 
-	std::unique_ptr<window>			m_window;
+	std::unique_ptr<window>	m_window;
+	render_objects m_a_objects;
 
-	std::unique_ptr<shader_program>	m_shader_program;
-	std::unique_ptr<vertex_array>	m_vertex_array;
-	std::unique_ptr<buffer_object>	m_vertex_buffer;
-	std::unique_ptr<buffer_object>	m_element_buffer;
-	std::unique_ptr<texture>		m_texture;
-	// TODO: put it in higher abstraction along with render module
-	std::unique_ptr<resource_module> m_resources;
 };
 #endif // RENDER_MODULE_H

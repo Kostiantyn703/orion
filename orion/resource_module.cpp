@@ -71,4 +71,3 @@ unsigned char * resource_module::load_texture(int &out_width, int &out_height, i
 void resource_module::free_texture_data(unsigned char *in_data) {
 	stbi_image_free(in_data);
 }
-

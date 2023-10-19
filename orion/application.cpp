@@ -10,8 +10,27 @@ application::~application() {}
 void application::start_up() {
 	m_renderer = std::make_unique<render_module>();
 	m_input_handler = std::make_unique<controller>();
+	m_resources = std::make_unique<resource_module>();
 	
 	m_object = std::make_unique<game_object>(500.f, 500.f);
+	
+	std::string vert_source;
+	m_resources->get_shader_source("vert", vert_source);
+	std::string frag_source;
+	m_resources->get_shader_source("frag", frag_source);
+
+	int width, height, nr_channels;
+	unsigned char *texture_data = m_resources->load_texture(width, height, nr_channels);
+	texture curr_texture;
+	curr_texture.init_data(texture_data, width, height, nr_channels);
+
+	m_render_obj = std::make_unique<render_object>();
+	m_render_obj->init(vert_source, frag_source);
+	m_render_obj->set_texture(curr_texture);
+	
+	m_renderer->add_object(m_render_obj.get());
+
+	m_resources->free_texture_data(texture_data);
 
 	m_timer = std::make_unique<timer>();
 	m_timer->start();

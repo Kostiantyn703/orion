@@ -2,7 +2,7 @@
 
 
 texture::texture()
-	: m_target (GL_TEXTURE_2D), m_format (GL_RGBA), m_width (0), m_height (0), m_channels (0)
+	: m_target (GL_TEXTURE_2D), m_format (GL_RGBA) // , m_width (0), m_height (0), m_channels (0)
 {
 	create();
 }
