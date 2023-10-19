@@ -39,5 +39,8 @@ void render_object::init(const std::string &in_vertex_source, const std::string 
 void render_object::draw() {
 	m_texture->bind();
 	m_shader_program->use();
+
+
+
 	m_vertex_array->bind();
 }

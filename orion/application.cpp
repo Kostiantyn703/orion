@@ -45,6 +45,7 @@ void application::run() {
 	while (is_active) {
 		curr_frame = m_timer->get_current_time();
 		delta_time = curr_frame - last_frame;
+		delta_time *= 100.f;
 
 		m_input_handler->handle_input(*this);
 		m_object->update(delta_time);

@@ -4,11 +4,8 @@
 #include "SDL_log.h"
 #include "SDL.h"
 
-#include "shader.h"
-
-constexpr int	WINDOW_HEIGHT		= 600;
-constexpr int	WINDOW_WIDTH		= 800;
-const char		*WINDOW_NAME		= "PROJECT ORION";
+#include "glad/glad.h"
+#include "globals.h"
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
