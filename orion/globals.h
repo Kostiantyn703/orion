@@ -1,8 +1,8 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-constexpr int		WINDOW_HEIGHT	= 600;
-constexpr int		WINDOW_WIDTH	= 800;
+constexpr float		WINDOW_HEIGHT	= 600.f;
+constexpr float		WINDOW_WIDTH	= 800.f;
 static const char	*WINDOW_NAME	= "PROJECT ORION";
 
 static const char	*vert_shader_address = "../content/shaders/vertex.vert";
@@ -20,6 +20,11 @@ static float vertices[] = {
 static unsigned int indices[] = {
 	0, 1, 2,
 	0, 2, 3
+};
+
+struct point {
+	float x_pos;
+	float y_pos;
 };
 
 #endif // !GLOBALS_H
