@@ -15,10 +15,10 @@ public:
 	render_object();
 	~render_object();
 
-	void set_position	(const point &in_pos)			{	m_position = in_pos;	}
-	void set_texture	(texture &in_texture)	{	m_texture = std::make_unique<texture>(in_texture);}
-
 	void init(const std::string &in_vertex_source, const std::string &in_fragment_source);
+
+	void set_position	(const point &in_pos);
+	void set_texture	(texture &in_texture)	{	m_texture = std::make_unique<texture>(in_texture);}
 
 	void draw();
 

@@ -12,7 +12,7 @@ void application::start_up() {
 	m_input_handler = std::make_unique<controller>();
 	m_resources = std::make_unique<resource_module>();
 	
-	m_object = std::make_unique<game_object>(500.f, 500.f);
+	m_object = std::make_unique<game_object>(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
 	
 	std::string vert_source;
 	m_resources->get_shader_source("vert", vert_source);
@@ -45,13 +45,12 @@ void application::run() {
 	while (is_active) {
 		curr_frame = m_timer->get_current_time();
 		delta_time = curr_frame - last_frame;
-		delta_time *= 100.f;
+		delta_time *= 50.f;
 
 		m_input_handler->handle_input(*this);
 		m_object->update(delta_time);
 		// TODO: temporary
 		m_render_obj->set_position(m_object->get_position());
-
 
 		m_renderer->run();
 

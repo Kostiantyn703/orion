@@ -9,7 +9,7 @@ uniform mat4 model;
 uniform mat4 projection;
 
 void main()
-{//model * projection * 
+{
 	gl_Position = projection * model * vec4(in_pos, 0.f, 1.f);
 	out_texture = vec2(in_tex.x, in_tex.y);
 }

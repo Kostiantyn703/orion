@@ -63,8 +63,8 @@ bool resource_module::get_shader_source(const std::string &in_key, std::string &
 	return true;
 }
 
-unsigned char * resource_module::load_texture(int &out_width, int &out_height, int &out_channels) {
-	stbi_set_flip_vertically_on_load(true);
+unsigned char *resource_module::load_texture(int &out_width, int &out_height, int &out_channels) {
+	//stbi_set_flip_vertically_on_load(true);
 	return stbi_load(ship_texture_address, &out_width, &out_height, &out_channels, 0);
 }
 

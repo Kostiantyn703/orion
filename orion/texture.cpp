@@ -2,7 +2,7 @@
 
 
 texture::texture()
-	: m_target (GL_TEXTURE_2D), m_format (GL_RGBA) // , m_width (0), m_height (0), m_channels (0)
+	: m_target (GL_TEXTURE_2D), m_format (GL_RGBA) , m_width (0), m_height (0), m_channels (0)
 {
 	create();
 }
@@ -27,8 +27,8 @@ void texture::init_data(unsigned char *data, const int &in_width, const int &in_
 	glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(m_target, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-	glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	glTexImage2D(m_target, 0, m_format, m_width, m_height, 0, m_format, GL_UNSIGNED_BYTE, data);
 
