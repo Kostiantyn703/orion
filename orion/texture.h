@@ -13,16 +13,16 @@ public:
 	void bind();
 	void unbind();
 
-	void init_data(unsigned char *in_data, const GLint &in_width, const GLint &in_height, const GLint &in_channels);
+	void init_data(unsigned char *in_data, const int &in_width, const int &in_height, const int &in_channels);
 
 private:
 	GLuint m_id;
 	GLuint m_target;
 	GLuint m_format;
 
-	GLint m_width;
-	GLint m_height;
-	GLint m_channels;
+	int m_width;
+	int m_height;
+	int m_channels;
 
 	void create();
 };

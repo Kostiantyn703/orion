@@ -14,7 +14,7 @@ game_object::~game_object() {}
 
 void game_object::update(float delta_time) {
 	point curr_pos = get_position();
-	SDL_Log("pos x [%f], pos y [%f]", curr_pos.x_pos, curr_pos.y_pos);
+	//SDL_Log("pos x [%f], pos y [%f]", curr_pos.x_pos, curr_pos.y_pos);
 	curr_pos.x_pos += delta_time * m_velocity;
 	set_position(curr_pos.x_pos, curr_pos.y_pos);
 }

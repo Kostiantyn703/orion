@@ -17,7 +17,11 @@ void texture::unbind() {
 	glBindTexture(m_target, 0);
 }
 
-void texture::init_data(unsigned char *data, const GLint &width, const GLint &height, const GLint &channels) {
+void texture::init_data(unsigned char *data, const int &in_width, const int &in_height, const int &in_channels) {
+	m_width		= in_width;
+	m_height	= in_height;
+	m_channels	= in_channels;
+	
 	bind();
 
 	glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -26,7 +30,7 @@ void texture::init_data(unsigned char *data, const GLint &width, const GLint &he
 	glTexParameteri(m_target, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(m_target, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-	glTexImage2D(m_target, 0, m_format, width, height, 0, m_format, GL_UNSIGNED_BYTE, data);
+	glTexImage2D(m_target, 0, m_format, m_width, m_height, 0, m_format, GL_UNSIGNED_BYTE, data);
 
 	unbind();
 }

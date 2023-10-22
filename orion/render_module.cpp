@@ -20,8 +20,8 @@ render_module::render_module() : is_wireframe(false)
 	log_error;
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	log_error;
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	log_error;
+	//SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+	//log_error;
 
 	init();
 }

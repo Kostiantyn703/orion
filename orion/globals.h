@@ -10,11 +10,18 @@ static const char	*frag_shader_address = "../content/shaders/fragment.frag";
 
 static const char	*ship_texture_address = "../content/images/ship.png";
 
+//static float vertices[] = {
+//	0.2f,	0.2f,	1.f,	1.f,
+//	0.2f,	-0.2f,	1.f,	0.f,
+//	-0.2f,	-0.2f,	0.f,	0.f,
+//	-0.2f,	0.2f,	0.f,	1.f
+//};
+
 static float vertices[] = {
-	0.2f,	0.2f,	1.f,	1.f,
-	0.2f,	-0.2f,	1.f,	0.f,
-	-0.2f,	-0.2f,	0.f,	0.f,
-	-0.2f,	0.2f,	0.f,	1.f
+	1.f,	1.f,	1.f,	1.f,
+	1.f,	-1.f,	1.f,	0.f,
+	-1.f,	-1.f,	0.f,	0.f,
+	-1.f,	1.f,	0.f,	1.f
 };
 
 static unsigned int indices[] = {

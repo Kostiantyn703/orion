@@ -49,6 +49,10 @@ void application::run() {
 
 		m_input_handler->handle_input(*this);
 		m_object->update(delta_time);
+		// TODO: temporary
+		m_render_obj->set_position(m_object->get_position());
+
+
 		m_renderer->run();
 
 		last_frame = m_timer->get_current_time();

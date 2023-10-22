@@ -3,6 +3,8 @@
 
 #include <memory>
 
+#include "globals.h"
+
 #include "shader_program.h"
 #include "vertex_array.h"
 #include "texture.h"
@@ -13,7 +15,8 @@ public:
 	render_object();
 	~render_object();
 
-	void set_texture(texture &in_texture) { m_texture = std::make_unique<texture>(in_texture);}
+	void set_position	(const point &in_pos)			{	m_position = in_pos;	}
+	void set_texture	(texture &in_texture)	{	m_texture = std::make_unique<texture>(in_texture);}
 
 	void init(const std::string &in_vertex_source, const std::string &in_fragment_source);
 
@@ -25,5 +28,7 @@ private:
 	std::unique_ptr<texture>		m_texture;
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 	std::unique_ptr<buffer_object>	m_element_buffer;
+
+	point m_position;
 };
 #endif //RENDER_OBJECT_H

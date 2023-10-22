@@ -6,6 +6,7 @@
 
 #include "glad/glad.h"
 #include "globals.h"
+#include <SDL_opengl.h>
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
@@ -18,13 +19,13 @@ window::window() {
 								,	WINDOW_HEIGHT
 								,	flags
 								);
-
 	m_context = SDL_GL_CreateContext(m_window);
 	gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+	//glMatrixMode(GL_PROJECTION);
+
 	log_error;
 }
 

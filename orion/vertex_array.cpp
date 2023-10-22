@@ -11,9 +11,6 @@ void vertex_array::init_data() {
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 	glEnableVertexAttribArray(1);
-
-	GLuint offset_loc =  glGetUniformLocation(m_id, "offset");
-	glUniform2f(offset_loc, 0.f, 0.f);
 }
 
 void vertex_array::bind() {
