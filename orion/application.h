@@ -24,6 +24,8 @@ public:
 	void toggle_wireframe();
 	void show_current_time();
 
+	game_object *get_game_object() const { return m_object.get(); }
+
 private:
 	bool is_active;
 

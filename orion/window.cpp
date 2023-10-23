@@ -15,8 +15,8 @@ window::window() {
 	m_window = SDL_CreateWindow	(	WINDOW_NAME
 								,	SDL_WINDOWPOS_CENTERED
 								,	SDL_WINDOWPOS_CENTERED
-								,	WINDOW_WIDTH
-								,	WINDOW_HEIGHT
+								,	(int)WINDOW_WIDTH
+								,	(int)WINDOW_HEIGHT
 								,	flags
 								);
 	m_context = SDL_GL_CreateContext(m_window);
@@ -24,7 +24,6 @@ window::window() {
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glMatrixMode(GL_PROJECTION);
 
 	log_error;
 }

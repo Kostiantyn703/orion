@@ -13,22 +13,30 @@ void controller::handle_input(application &in_app) {
 	SDL_Event curr_event;
 	SDL_PollEvent(&curr_event);
 
-	if (curr_event.key.type != SDL_KEYUP) {
+	if (curr_event.key.type == SDL_KEYUP) {
+		in_app.get_game_object()->set_direction(direction::D_NONE);
 		return;
 	}
 	SDL_Keycode curr_key = curr_event.key.keysym.sym;
+	// game object controls
 	if ((curr_key == SDLK_UP) || (curr_key == SDLK_w)) {
-		SDL_Log("Key UP pressed");
+		in_app.get_game_object()->set_direction(direction::D_UP);
+		return;
 	}
 	if ((curr_key == SDLK_DOWN) || (curr_key == SDLK_s)) {
-		SDL_Log("Key DOWN pressed");
+		in_app.get_game_object()->set_direction(direction::D_DOWN);
+		return;
 	}
 	if ((curr_key == SDLK_LEFT) || (curr_key == SDLK_a)) {
-		SDL_Log("Key LEFT pressed");
+		in_app.get_game_object()->set_direction(direction::D_LEFT);
+		return;
 	}
 	if ((curr_key == SDLK_RIGHT) || (curr_key == SDLK_d)) {
-		SDL_Log("Key RIGHT pressed");
+		in_app.get_game_object()->set_direction(direction::D_RIGHT);
+		return;
 	}
+
+	// system controls
 	if (curr_event.key.keysym.sym == SDLK_ESCAPE) {
 		in_app.set_active(false);
 	}

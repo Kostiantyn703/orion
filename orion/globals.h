@@ -29,7 +29,13 @@ static unsigned int indices[] = {
 	0, 2, 3
 };
 
-struct point {
+class point {
+public:
+	point() {}
+	point(float in_x, float in_y) : x_pos(in_x), y_pos(in_y) {}
+	
+	~point() {}
+	
 	float x_pos;
 	float y_pos;
 };
