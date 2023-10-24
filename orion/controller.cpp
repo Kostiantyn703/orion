@@ -14,25 +14,25 @@ void controller::handle_input(application &in_app) {
 	SDL_PollEvent(&curr_event);
 
 	if (curr_event.key.type == SDL_KEYUP) {
-		in_app.get_game_object()->set_direction(direction::D_NONE);
+		//in_app.get_game_object()->set_direction(direction::D_NONE);
 		return;
 	}
 	SDL_Keycode curr_key = curr_event.key.keysym.sym;
 	// game object controls
 	if ((curr_key == SDLK_UP) || (curr_key == SDLK_w)) {
-		in_app.get_game_object()->set_direction(direction::D_UP);
+		//in_app.get_game_object()->set_direction(direction::D_UP);
 		return;
 	}
 	if ((curr_key == SDLK_DOWN) || (curr_key == SDLK_s)) {
-		in_app.get_game_object()->set_direction(direction::D_DOWN);
+		//in_app.get_game_object()->set_direction(direction::D_DOWN);
 		return;
 	}
 	if ((curr_key == SDLK_LEFT) || (curr_key == SDLK_a)) {
-		in_app.get_game_object()->set_direction(direction::D_LEFT);
+		//in_app.get_game_object()->set_direction(direction::D_LEFT);
 		return;
 	}
 	if ((curr_key == SDLK_RIGHT) || (curr_key == SDLK_d)) {
-		in_app.get_game_object()->set_direction(direction::D_RIGHT);
+		//in_app.get_game_object()->set_direction(direction::D_RIGHT);
 		return;
 	}
 

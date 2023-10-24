@@ -16,7 +16,7 @@ public:
 	void init();
 	void run();
 
-	void add_object(renderable *in_obj) { m_a_objects.push_back(in_obj); }
+	void add_object(renderable &in_obj) { m_a_objects.push_back(&in_obj); }
 	 
 	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 

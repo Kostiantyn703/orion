@@ -15,7 +15,10 @@ game_object::game_object(float initial_x, float initial_y) {
 	set_position(initial_x, initial_y);
 }
 
-game_object::~game_object() {}
+game_object::game_object(game_object &in_obj) {
+	// TODO: implement proper copy constructor
+	SDL_Log("Copy game object");
+}
 
 void game_object::update(float delta_time) {
 	point curr_pos = get_position();

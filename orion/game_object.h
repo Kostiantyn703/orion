@@ -16,7 +16,10 @@ class game_object : public renderable {
 public:
 	game_object		(point &initial_point);
 	game_object		(float initial_x, float initial_y);
-	~game_object	();
+
+	game_object		(game_object &in_obj);
+
+	virtual ~game_object() {}
 
 	void update		(float delta_time);
 
