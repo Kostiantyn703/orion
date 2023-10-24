@@ -20,8 +20,6 @@ render_module::render_module() : is_wireframe(false)
 	log_error;
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	log_error;
-	//SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
-	//log_error;
 
 	init();
 }
@@ -40,7 +38,7 @@ void render_module::run() {
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	for (render_objects::const_iterator it = m_a_objects.cbegin(); it != m_a_objects.cend(); ++it) {
+	for (renderables::const_iterator it = m_a_objects.cbegin(); it != m_a_objects.cend(); ++it) {
 		(*it)->draw();
 	}
 

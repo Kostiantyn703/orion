@@ -35,6 +35,6 @@ private:
 	std::unique_ptr<timer>			m_timer;
 
 	std::unique_ptr<game_object>	m_object;
-	std::unique_ptr<render_object>	m_render_obj;
+
 };
 #endif // APPLICATION_H

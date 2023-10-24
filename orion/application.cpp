@@ -2,6 +2,7 @@
 
 #include "SDL.h"
 #include "globals.h"
+#include "renderable.h"
 
 application::application() : is_active(false) {}
 
@@ -11,9 +12,7 @@ void application::start_up() {
 	m_renderer = std::make_unique<render_module>();
 	m_input_handler = std::make_unique<controller>();
 	m_resources = std::make_unique<resource_module>();
-	
-	m_object = std::make_unique<game_object>(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
-	
+
 	std::string vert_source;
 	m_resources->get_shader_source("vert", vert_source);
 	std::string frag_source;
@@ -24,11 +23,11 @@ void application::start_up() {
 	texture curr_texture;
 	curr_texture.init_data(texture_data, width, height, nr_channels);
 
-	m_render_obj = std::make_unique<render_object>();
-	m_render_obj->init(vert_source, frag_source);
-	m_render_obj->set_texture(curr_texture);
+	m_object = std::make_unique<game_object>(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
+	m_object->init(vert_source, frag_source);
+	m_object->set_texture(curr_texture);
 	
-	m_renderer->add_object(m_render_obj.get());
+	m_renderer->add_object(m_object.get());
 
 	m_resources->free_texture_data(texture_data);
 
@@ -50,7 +49,7 @@ void application::run() {
 		m_input_handler->handle_input(*this);
 		m_object->update(delta_time);
 		// TODO: temporary
-		m_render_obj->set_position(m_object->get_position());
+		//m_render_obj->set_position(m_object->get_position());
 
 		m_renderer->run();
 

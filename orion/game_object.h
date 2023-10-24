@@ -2,6 +2,7 @@
 #define GAME_OBJECT_H
 
 #include "globals.h"
+#include "renderable.h"
 
 enum class direction {
 	D_UP,
@@ -11,13 +12,15 @@ enum class direction {
 	D_NONE
 };
 
-class game_object {
+class game_object : public renderable {
 public:
 	game_object		(point &initial_point);
 	game_object		(float initial_x, float initial_y);
 	~game_object	();
 
 	void update		(float delta_time);
+
+	virtual void draw() override;
 
 	void set_position	(float in_x, float in_y);
 	const point &get_position	() const {	return m_position;	}
