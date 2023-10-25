@@ -4,7 +4,10 @@
 texture::texture()
 	: m_target (GL_TEXTURE_2D), m_format (GL_RGBA) , m_width (0), m_height (0), m_channels (0)
 {
-	create();
+}
+
+texture::texture(texture &in_texture) {
+
 }
 
 texture::~texture() {}
@@ -21,7 +24,7 @@ void texture::init_data(unsigned char *data, const int &in_width, const int &in_
 	m_width		= in_width;
 	m_height	= in_height;
 	m_channels	= in_channels;
-	
+	create();
 	bind();
 
 	glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

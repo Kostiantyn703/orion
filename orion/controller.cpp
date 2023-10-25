@@ -13,7 +13,7 @@ void controller::handle_input(application &in_app) {
 	SDL_Event curr_event;
 	SDL_PollEvent(&curr_event);
 
-	if (curr_event.key.type == SDL_KEYUP) {
+	if (curr_event.key.type != SDL_KEYUP) {
 		//in_app.get_game_object()->set_direction(direction::D_NONE);
 		return;
 	}

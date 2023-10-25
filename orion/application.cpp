@@ -20,24 +20,13 @@ application::~application() {}
 
 void application::create_object(float in_x, float in_y) {
 
-	std::string vert_source;
-	m_resources->get_shader_source("vert", vert_source);
-	std::string frag_source;
-	m_resources->get_shader_source("frag", frag_source);
-
-	int width, height, nr_channels;
-	unsigned char *texture_data = m_resources->load_texture(width, height, nr_channels);
-	texture curr_texture;
-	curr_texture.init_data(texture_data, width, height, nr_channels);
-
 	game_object *new_object = new game_object(in_x, in_y);
-	new_object->init(vert_source, frag_source);
-	new_object->set_texture(curr_texture);
-
-	m_resources->free_texture_data(texture_data);
+	
+	
 
 	m_storage.add_object(*new_object);
-	m_renderer->add_object(*new_object);
+	m_renderer->add_object(*new_object, *m_resources.get());
+
 }
 
 void application::start_up() {

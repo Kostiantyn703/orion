@@ -6,6 +6,7 @@
 #include "window.h"
 #include "buffer_object.h"
 #include "renderable.h"
+#include "resource_module.h"
 
 class render_module {
 using renderables = std::vector<renderable*>;
@@ -16,7 +17,7 @@ public:
 	void init();
 	void run();
 
-	void add_object(renderable &in_obj) { m_a_objects.push_back(&in_obj); }
+	void add_object(renderable &in_obj, resource_module &in_resources);
 	 
 	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 
@@ -26,7 +27,7 @@ private:
 	bool is_wireframe;
 
 	std::unique_ptr<window>	m_window;
-	renderables m_a_objects;
+	renderables m_objects;
 
 };
 #endif // RENDER_MODULE_H

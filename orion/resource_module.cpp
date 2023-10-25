@@ -30,6 +30,7 @@ bool shader_loader::load_shader(const char *source_address, std::string &out_sha
 resource_module::resource_module() {
 	m_shader_loader = std::make_unique<shader_loader>();
 	init_shaders();
+	load_textures();
 }
 
 resource_module::~resource_module() {}
@@ -50,6 +51,16 @@ void resource_module::init_shaders() {
 	}
 	std::pair<std::string, std::string> frag_shader(f_shader_name, f_shader_source);
 	m_shader_sources.insert(frag_shader);
+}
+
+void resource_module::load_textures() {
+	int width, height, nr_channels;
+	unsigned char *texture_data = load_texture(width, height, nr_channels);
+
+	m_textures.insert(std::make_pair(std::string("ship"), std::make_unique<texture>()));
+	m_textures.at("ship")->init_data(texture_data, width, height, nr_channels);
+	
+	free_texture_data(texture_data);
 }
 
 bool resource_module::get_shader_source(const std::string &in_key, std::string &out_value) {

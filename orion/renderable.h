@@ -11,9 +11,11 @@
 #include "buffer_object.h"
 
 struct render_data {
+	texture			*m_texture = nullptr;
+	
 	std::unique_ptr<shader_program>	m_shader_program;
 	std::unique_ptr<vertex_array>	m_vertex_array;
-	std::unique_ptr<texture>		m_texture;
+	
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 	std::unique_ptr<buffer_object>	m_element_buffer;
 };
@@ -24,7 +26,7 @@ public:
 
 	void init(const std::string &in_vertex_source, const std::string &in_fragment_source);
 
-	void set_texture	(texture &in_texture)	{	m_render_data.m_texture = std::make_unique<texture>(in_texture);}
+	void set_texture	(texture &in_texture)	{	m_render_data.m_texture = &in_texture;}
 
 	virtual void draw() = 0;
 

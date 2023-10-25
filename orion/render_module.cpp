@@ -25,7 +25,7 @@ render_module::render_module() : is_wireframe(false)
 }
 
 render_module::~render_module() {
-	m_a_objects.clear();
+	m_objects.clear();
 }
 
 void render_module::init() {
@@ -38,10 +38,21 @@ void render_module::run() {
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	for (renderables::const_iterator it = m_a_objects.cbegin(); it != m_a_objects.cend(); ++it) {
+	for (renderables::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
 		(*it)->draw();
 	}
 
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	m_window->swap();
+}
+
+void render_module::add_object(renderable &in_obj, resource_module &in_resources) {
+	m_objects.push_back(&in_obj);
+	std::string vert_source;
+	in_resources.get_shader_source("vert", vert_source);
+	std::string frag_source;
+	in_resources.get_shader_source("frag", frag_source);
+
+	m_objects.back()->init(vert_source, frag_source);
+	m_objects.back()->set_texture(*in_resources.get_texture("ship"));
 }
