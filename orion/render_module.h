@@ -17,7 +17,8 @@ public:
 	void init();
 	void run();
 
-	void add_object(renderable &in_obj, resource_module &in_resources);
+	void add_object(renderable *in_obj, resource_module &in_resources);
+	void add_objects(std::vector<renderable*> &in_obj_vec, resource_module &in_resources);
 	 
 	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 
@@ -27,6 +28,8 @@ private:
 	bool is_wireframe;
 
 	std::unique_ptr<window>	m_window;
+
+	std::unique_ptr<vertex_array>	m_vertex_array;
 	renderables m_objects;
 
 };

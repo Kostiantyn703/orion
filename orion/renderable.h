@@ -14,8 +14,6 @@ struct render_data {
 	texture			*m_texture = nullptr;
 	
 	std::unique_ptr<shader_program>	m_shader_program;
-	std::unique_ptr<vertex_array>	m_vertex_array;
-	
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 	std::unique_ptr<buffer_object>	m_element_buffer;
 };

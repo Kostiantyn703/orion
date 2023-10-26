@@ -30,6 +30,7 @@ render_module::~render_module() {
 
 void render_module::init() {
 	m_window = std::make_unique<window>();
+	m_vertex_array = std::make_unique<vertex_array>();
 }
 
 void render_module::run() {
@@ -41,18 +42,36 @@ void render_module::run() {
 	for (renderables::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
 		(*it)->draw();
 	}
-
+	m_vertex_array->bind();
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	m_window->swap();
 }
 
-void render_module::add_object(renderable &in_obj, resource_module &in_resources) {
-	m_objects.push_back(&in_obj);
+void render_module::add_object(renderable *in_obj, resource_module &in_resources) {
+	m_objects.push_back(in_obj);
 	std::string vert_source;
 	in_resources.get_shader_source("vert", vert_source);
 	std::string frag_source;
 	in_resources.get_shader_source("frag", frag_source);
-
+	
+	m_vertex_array->bind();
+	
 	m_objects.back()->init(vert_source, frag_source);
+	m_vertex_array->init_data();
+
 	m_objects.back()->set_texture(*in_resources.get_texture("ship"));
+}
+
+void render_module::add_objects(std::vector<renderable*> &in_obj_vec, resource_module &in_resources) {
+	m_objects.reserve(in_obj_vec.size());
+	m_objects.assign(in_obj_vec.begin(), in_obj_vec.end());
+
+	std::string vert_source;
+	in_resources.get_shader_source("vert", vert_source);
+	std::string frag_source;
+	in_resources.get_shader_source("frag", frag_source);
+	for (renderables::const_iterator it = m_objects.begin(); it != m_objects.end(); ++it) {
+		(*it)->init(vert_source, frag_source);
+		(*it)->set_texture(*in_resources.get_texture("ship"));
+	}
 }

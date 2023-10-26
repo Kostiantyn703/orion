@@ -7,16 +7,17 @@
 #include "glm/gtc/type_ptr.hpp"
 
 
-game_object::game_object(point &initial_point) {
+game_object::game_object(point &initial_point) : m_direction(direction::D_NONE) {
 	set_position(initial_point.x_pos, initial_point.y_pos);
 }
 
-game_object::game_object(float initial_x, float initial_y) {
+game_object::game_object(float initial_x, float initial_y) : m_direction(direction::D_NONE) {
 	set_position(initial_x, initial_y);
 }
 
 game_object::game_object(game_object &in_obj) {
-	// TODO: implement proper copy constructor
+	m_position = in_obj.m_position;
+	m_direction = in_obj.m_direction;
 	SDL_Log("Copy game object");
 }
 
@@ -52,7 +53,6 @@ void game_object::draw() {
 	glUniformMatrix4fv(glGetUniformLocation(m_render_data.m_shader_program->id(), "projection"), 1, false, glm::value_ptr(projection));
 
 	m_render_data.m_texture->bind();
-	m_render_data.m_vertex_array->bind();
 }
 
 void game_object::set_position(float in_x, float in_y) {

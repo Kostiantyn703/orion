@@ -17,16 +17,11 @@ void renderable::init(const std::string &in_vertex_source, const std::string &in
 	vert->destroy();
 	frag->destroy();
 
-	m_render_data.m_vertex_array = std::make_unique<vertex_array>();
 	m_render_data.m_vertex_buffer = std::make_unique<buffer_object>(GL_ARRAY_BUFFER);
 	m_render_data.m_element_buffer = std::make_unique<buffer_object>(GL_ELEMENT_ARRAY_BUFFER);
 
-	m_render_data.m_vertex_array->bind();
-
 	m_render_data.m_vertex_buffer->init_data(vertices);
 	m_render_data.m_element_buffer->init_data(indices);
-	m_render_data.m_vertex_array->init_data();
 
 	m_render_data.m_vertex_buffer->unbind();
-	m_render_data.m_vertex_array->unbind();
 }
