@@ -1,21 +1,19 @@
 #ifndef SHADER_PROGRAM_H
 #define SHADER_PROGRAM_H
 
-#include "glad/glad.h"
-
 class shader_program {
 public:
 	shader_program();
 	~shader_program();
 
-	GLuint id()	{	return m_id;	}
+	unsigned int id()	const	{	return m_id;	}
 
 	void use();
-	void attach_shader(const GLuint shader_id);
+	void attach_shader(unsigned int shader_id);
 	void link();
 
 private:
-	GLuint m_id;
+	unsigned int m_id;
 
 	void create();
 };

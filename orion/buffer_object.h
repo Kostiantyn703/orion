@@ -6,7 +6,7 @@
 
 class buffer_object {
 public:
-	buffer_object(GLuint in_target);
+	buffer_object(unsigned int in_target);
 	~buffer_object();
 
 	template<typename T>
@@ -18,8 +18,8 @@ public:
 	void unbind();
 
 private:
-	GLuint m_id;
-	GLuint m_target;
+	unsigned int m_id;
+	unsigned int m_target;
 
 	void create();
 };

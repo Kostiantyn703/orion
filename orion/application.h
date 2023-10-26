@@ -13,6 +13,9 @@ using objects = std::vector<game_object*>;
 
 class object_storage {
 public:
+	object_storage() {}
+	~object_storage() {}
+
 	void update(float delta_time);
 	void create_object(float in_x, float in_y);
 

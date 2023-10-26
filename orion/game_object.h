@@ -23,7 +23,7 @@ public:
 
 	void update		(float delta_time);
 
-	virtual void draw() override;
+	virtual void draw(const shader_program &in_shader) override;
 
 	void set_position	(float in_x, float in_y);
 	const point &get_position	() const {	return m_position;	}

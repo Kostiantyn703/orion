@@ -1,4 +1,5 @@
 #include "vertex_array.h"
+#include "glad/glad.h"
 
 vertex_array::vertex_array() {
 	create();
@@ -7,10 +8,10 @@ vertex_array::vertex_array() {
 vertex_array::~vertex_array() {}
 
 void vertex_array::init_data() {
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 }
 
 void vertex_array::bind() {

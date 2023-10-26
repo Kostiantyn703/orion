@@ -1,8 +1,6 @@
 #ifndef VERTEX_ARRAY_H
 #define VERTEX_ARRAY_H
 
-#include "glad/glad.h"
-
 class vertex_array {
 public:
 	vertex_array();
@@ -14,7 +12,7 @@ public:
 	void unbind();
 
 private:
-	GLuint m_id;
+	unsigned int m_id;
 
 	void create();
 };
