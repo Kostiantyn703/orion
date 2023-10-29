@@ -3,19 +3,12 @@
 
 #include "globals.h"
 #include "renderable.h"
+#include "movable.h"
 
-enum class direction {
-	D_UP,
-	D_RIGHT,
-	D_DOWN,
-	D_LEFT,
-	D_NONE
-};
-
-class game_object : public renderable {
+class game_object : public renderable, public movable {
 public:
 	game_object		(point &initial_point);
-	game_object		(float initial_x, float initial_y);
+	game_object		(float initial_x, float initial_y, move_direction in_move_dir = move_direction::MD_NONE);
 
 	virtual ~game_object() {}
 
@@ -26,13 +19,11 @@ public:
 	void set_position	(float in_x, float in_y);
 	const point &get_position	() const {	return m_position;	}
 
-	void set_direction(direction in_direction) { m_direction = in_direction; }
-	point get_direction() const;
+	point get_move_dir() const;
 
 private:
-	float m_velocity = 1000.f;
+	float m_velocity = 100.f;
 	point m_position;
-	direction m_direction;
 };
 
 #endif // GAME_OBJECT_H

@@ -10,17 +10,19 @@
 #include "texture.h"
 #include "shader_program.h"
 
-game_object::game_object(point &initial_point) : m_direction(direction::D_NONE) {
+game_object::game_object(point &initial_point) {
 	set_position(initial_point.x_pos, initial_point.y_pos);
+	m_move_dir = move_direction::MD_NONE;
 }
 
-game_object::game_object(float initial_x, float initial_y) : m_direction(direction::D_NONE) {
+game_object::game_object(float initial_x, float initial_y, move_direction in_move_dir) {
 	set_position(initial_x, initial_y);
+	m_move_dir = in_move_dir;
 }
 
 void game_object::update(float delta_time) {
 	point curr_pos = get_position();
-	point curr_dir = get_direction();
+	point curr_dir = get_move_dir();
 
 	curr_pos.x_pos += curr_dir.x_pos * delta_time * m_velocity;
 	curr_pos.y_pos += curr_dir.y_pos * delta_time * m_velocity;
@@ -54,19 +56,19 @@ void game_object::set_position(float in_x, float in_y) {
 	m_position.y_pos = in_y; 
 }
 
-point game_object::get_direction() const {
+point game_object::get_move_dir() const {
 	point result(0.f, 0.f);
-	switch (m_direction) {
-		case direction::D_UP:
+	switch (m_move_dir) {
+		case move_direction::MD_UP:
 			result.y_pos = -1.f;
 		break;
-		case direction::D_RIGHT:
+		case move_direction::MD_RIGHT:
 			result.x_pos = 1.f;
 		break;
-		case direction::D_DOWN:
+		case move_direction::MD_DOWN:
 			result.y_pos = 1.f;
 		break;
-		case direction::D_LEFT:
+		case move_direction::MD_LEFT:
 			result.x_pos = -1.f;
 		break;
 	}

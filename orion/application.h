@@ -17,7 +17,7 @@ public:
 	~object_storage() {}
 
 	void update(float delta_time);
-	void create_object(float in_x, float in_y, texture *in_texture);
+	void create_object(float in_x, float in_y, texture *in_texture, move_direction in_move_dir = move_direction::MD_NONE);
 
 	objects m_objects;
 };
