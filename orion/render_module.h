@@ -19,7 +19,6 @@ public:
 	void run(resource_module &in_resources);
 
 	void add_object(renderable *in_obj);
-	//void add_objects(std::vector<renderable*> &in_obj_vec, resource_module &in_resources);
 	 
 	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 
@@ -32,7 +31,6 @@ private:
 
 	std::unique_ptr<vertex_array>	m_vertex_array;
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
-	std::unique_ptr<buffer_object>	m_element_buffer;
 
 	renderables m_objects;
 

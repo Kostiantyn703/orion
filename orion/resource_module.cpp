@@ -9,6 +9,11 @@
 #include "stb_image.h"
 #include "shader.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
+
 resource_module::resource_module() {
 	init_shaders();
 	load_textures();
@@ -39,6 +44,10 @@ void resource_module::compile_shaders(const std::string &in_vertex_source, const
 	m_shaders.at(SPRITE_SHADER_NAME)->attach_shader(vert->get_id());
 	m_shaders.at(SPRITE_SHADER_NAME)->attach_shader(frag->get_id());
 	m_shaders.at(SPRITE_SHADER_NAME)->link();
+	m_shaders.at(SPRITE_SHADER_NAME)->use();
+	glUniform1i(glGetUniformLocation(m_shaders.at(SPRITE_SHADER_NAME)->id(), "m_texture"), 0);
+	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
+	glUniformMatrix4fv(glGetUniformLocation(m_shaders.at(SPRITE_SHADER_NAME)->id(), "projection"), 1, false, glm::value_ptr(projection));
 
 	vert->destroy();
 	frag->destroy();

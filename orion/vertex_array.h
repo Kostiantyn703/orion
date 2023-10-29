@@ -4,7 +4,7 @@
 class vertex_array {
 public:
 	vertex_array();
-	~vertex_array();
+	~vertex_array() {}
 
 	void init_data();
 

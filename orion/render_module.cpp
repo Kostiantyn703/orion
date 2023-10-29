@@ -29,21 +29,17 @@ render_module::~render_module() {
 }
 
 void render_module::init() {
-	
 	m_vertex_array = std::make_unique<vertex_array>();
-	m_vertex_array->bind();
-
 	m_vertex_buffer = std::make_unique<buffer_object>(GL_ARRAY_BUFFER);
-	m_element_buffer = std::make_unique<buffer_object>(GL_ELEMENT_ARRAY_BUFFER);
 
+	m_vertex_buffer->bind();
 	m_vertex_buffer->init_data(vertices);
-	m_element_buffer->init_data(indices);
 
 	m_vertex_array->bind();
 	m_vertex_array->init_data();
-	
+
 	m_vertex_buffer->unbind();
-	m_element_buffer->unbind();
+	m_vertex_array->unbind();
 }
 
 void render_module::run(resource_module &in_resources) {
@@ -53,9 +49,12 @@ void render_module::run(resource_module &in_resources) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (renderables::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
-		(*it)->draw(*in_resources.get_shader(SPRITE_SHADER_NAME));
+		shader_program *curr_shader = in_resources.get_shader(SPRITE_SHADER_NAME);
+		curr_shader->use();
+		(*it)->draw(*curr_shader);
 		m_vertex_array->bind();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		m_vertex_array->unbind();
 	}
 	m_window->swap();
 }
@@ -63,17 +62,3 @@ void render_module::run(resource_module &in_resources) {
 void render_module::add_object(renderable *in_obj) {
 	m_objects.push_back(in_obj);
 }
-
-//void render_module::add_objects(std::vector<renderable*> &in_obj_vec, resource_module &in_resources) {
-//	m_objects.reserve(in_obj_vec.size());
-//	m_objects.assign(in_obj_vec.begin(), in_obj_vec.end());
-//
-//	std::string vert_source;
-//	in_resources.get_shader_source("vert", vert_source);
-//	std::string frag_source;
-//	in_resources.get_shader_source("frag", frag_source);
-//	for (renderables::const_iterator it = m_objects.begin(); it != m_objects.end(); ++it) {
-//		(*it)->init_shader(vert_source, frag_source);
-//		(*it)->set_texture(*in_resources.get_texture("ship"));
-//	}
-//}
