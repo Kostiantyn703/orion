@@ -10,14 +10,13 @@ void object_storage::update(float delta_time) {
 	}
 }
 
-void object_storage::create_object(float in_x, float in_y) {
+void object_storage::create_object(float in_x, float in_y, texture *in_texture) {
 	game_object *object = new game_object(in_x, in_y);
+	object->set_texture(in_texture);
 	m_objects.push_back(object);
 }
 
 application::application() : is_active(false) {}
-
-application::~application() {}
 
 void application::start_up() {
 	m_renderer = std::make_unique<render_module>();
@@ -25,18 +24,17 @@ void application::start_up() {
 
 	m_input_handler = std::make_unique<controller>();
 
-	m_storage.create_object(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
-	m_storage.create_object(WINDOW_WIDTH, WINDOW_HEIGHT);
-	m_storage.create_object(WINDOW_WIDTH, 0.f);
-	m_storage.create_object(0.f, WINDOW_HEIGHT);
-	m_storage.create_object(0.f, 0.f);
-	m_storage.create_object(170.f, 450.f);
-	m_storage.create_object(680.f, 100.f);
+	m_storage.create_object(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f, m_resources->get_texture(TEX_NAME_SHIP));
+	m_storage.create_object(WINDOW_WIDTH - 200.f, WINDOW_HEIGHT - 200.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
+	m_storage.create_object(WINDOW_WIDTH - 240.f, 300.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
+	m_storage.create_object(50.f, WINDOW_HEIGHT - 100.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
+	m_storage.create_object(20.f, 20.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_MED));
+	m_storage.create_object(170.f, 450.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_MED));
+	m_storage.create_object(680.f, 100.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_MED));
 
 	m_renderer->init();
 
 	for (objects::const_iterator it = m_storage.m_objects.begin(); it != m_storage.m_objects.end(); ++it) {
-		(*it)->set_texture(m_resources->get_texture(SHIP_TEXTURE_NAME));
 		m_renderer->add_object(*it);
 	}
 

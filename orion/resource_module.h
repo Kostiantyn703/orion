@@ -14,7 +14,7 @@ class resource_module {
 	using texture_map = std::unordered_map<std::string, std::unique_ptr<texture>>;
 public:
 	resource_module();
-	~resource_module();
+	~resource_module() {}
 
 	texture			*get_texture(const std::string &in_key)	{	return m_textures.at(in_key).get();	}
 	shader_program	*get_shader	(const std::string &in_key)	{	return m_shaders.at(in_key).get();	}
@@ -23,13 +23,15 @@ public:
 	void compile_shaders(const std::string &in_vertex_source, const std::string &in_fragment_source);
 	
 	void load_textures();
-	void free_texture_data(unsigned char *in_data);
 
 private:
 	shader_map m_shaders;
 	texture_map m_textures;
 
 	bool load_shader(const char *source_address, std::string &out_shader_source);
-	unsigned char *load_texture(int &out_width, int &out_height, int &out_channels);
+	
+	void create_texture(const char *in_tex_address, const char *in_tex_name);
+	unsigned char *load_texture(const char *in_tex_address, int &out_width, int &out_height, int &out_channels);
+	void free_texture_data(unsigned char *in_data);
 };
 #endif // RESOURCE_MODULE_H

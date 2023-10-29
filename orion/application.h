@@ -17,7 +17,7 @@ public:
 	~object_storage() {}
 
 	void update(float delta_time);
-	void create_object(float in_x, float in_y);
+	void create_object(float in_x, float in_y, texture *in_texture);
 
 	objects m_objects;
 };
@@ -25,7 +25,7 @@ public:
 class application {
 public:
 	application();
-	~application();
+	~application() {}
 
 	void set_active(bool in_val) { is_active = in_val; }
 

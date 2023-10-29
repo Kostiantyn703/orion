@@ -13,21 +13,18 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-
 resource_module::resource_module() {
 	init_shaders();
 	load_textures();
 }
 
-resource_module::~resource_module() {}
-
 void resource_module::init_shaders() {
 	std::string v_shader_source;
-	if (!load_shader(VERT_SHADER_ADDRESS, v_shader_source)) {
+	if (!load_shader(SHADER_ADDRESS_VERT, v_shader_source)) {
 		return;
 	}
 	std::string f_shader_source;
-	if (!load_shader(FRAG_SHADER_ADDRESS, f_shader_source)) {
+	if (!load_shader(SHADER_ADDRESS_FRAG, f_shader_source)) {
 		return;
 	}
 	compile_shaders(v_shader_source, f_shader_source);
@@ -46,27 +43,31 @@ void resource_module::compile_shaders(const std::string &in_vertex_source, const
 	curr_shader.link();
 	curr_shader.use();
 
-	m_shaders.insert(std::make_pair(std::string(SPRITE_SHADER_NAME), std::make_unique<shader_program>(curr_shader)));
+	m_shaders.insert(std::make_pair(std::string(SHADER_NAME_SPRITE), std::make_unique<shader_program>(curr_shader)));
 
 	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
-	glUniformMatrix4fv(glGetUniformLocation(m_shaders.at(SPRITE_SHADER_NAME)->id(), "projection"), 1, false, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(m_shaders.at(SHADER_NAME_SPRITE)->id(), "projection"), 1, false, glm::value_ptr(projection));
 
 	vert->destroy();
 	frag->destroy();
 }
 
 void resource_module::load_textures() {
-	int width, height, nr_channels;
-	unsigned char *texture_data = load_texture(width, height, nr_channels);
-
-	m_textures.insert(std::make_pair(std::string(SHIP_TEXTURE_NAME), std::make_unique<texture>()));
-	m_textures.at(SHIP_TEXTURE_NAME)->init_data(texture_data, width, height, nr_channels);
-	
-	free_texture_data(texture_data);
+	create_texture(TEX_ADDRESS_SHIP, TEX_NAME_SHIP);
+	create_texture(TEX_ADDRESS_METEOR_BROWN_BIG, TEX_NAME_METEOR_BROWN_BIG);
+	create_texture(TEX_ADDRESS_METEOR_BROWN_MED, TEX_NAME_METEOR_BROWN_MED);
 }
 
-void resource_module::free_texture_data(unsigned char *in_data) {
-	stbi_image_free(in_data);
+void resource_module::create_texture(const char *in_tex_address, const char *in_tex_name) {
+	int width, height, nr_channels;
+	unsigned char *texture_data = load_texture(in_tex_address, width, height, nr_channels);
+
+	texture new_tex;
+	new_tex.init_data(texture_data, width, height, nr_channels);
+
+	m_textures.insert(std::make_pair(std::string(in_tex_name), std::make_unique<texture>(new_tex)));
+
+	free_texture_data(texture_data);
 }
 
 bool resource_module::load_shader(const char *source_address, std::string &out_shader_source) {
@@ -87,7 +88,10 @@ bool resource_module::load_shader(const char *source_address, std::string &out_s
 	return true;
 }
 
-unsigned char *resource_module::load_texture(int &out_width, int &out_height, int &out_channels) {
-	//stbi_set_flip_vertically_on_load(true);
-	return stbi_load(SHIP_TEXTURE_ADDRESS, &out_width, &out_height, &out_channels, 0);
+unsigned char *resource_module::load_texture(const char *in_tex_address, int &out_width, int &out_height, int &out_channels) {
+	return stbi_load(in_tex_address, &out_width, &out_height, &out_channels, 0);
+}
+
+void resource_module::free_texture_data(unsigned char *in_data) {
+	stbi_image_free(in_data);
 }
