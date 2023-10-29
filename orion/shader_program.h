@@ -4,7 +4,7 @@
 class shader_program {
 public:
 	shader_program();
-	~shader_program();
+	~shader_program() {}
 
 	unsigned int id()	const	{	return m_id;	}
 

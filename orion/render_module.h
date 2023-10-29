@@ -32,7 +32,7 @@ private:
 	std::unique_ptr<vertex_array>	m_vertex_array;
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 
-	renderables m_objects;
+	renderables m_renderables;
 
 };
 #endif // RENDER_MODULE_H

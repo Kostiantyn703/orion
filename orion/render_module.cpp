@@ -1,7 +1,6 @@
 #include "render_module.h"
 
 #include <vector>
-#include <complex>
 
 #include "SDL.h"
 #include "glad/glad.h"
@@ -25,7 +24,7 @@ render_module::render_module() : is_wireframe(false)
 }
 
 render_module::~render_module() {
-	m_objects.clear();
+	m_renderables.clear();
 }
 
 void render_module::init() {
@@ -49,7 +48,7 @@ void render_module::run(resource_module &in_resources) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	shader_program *curr_shader = in_resources.get_shader(SPRITE_SHADER_NAME);
-	for (renderables::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
+	for (renderables::const_iterator it = m_renderables.cbegin(); it != m_renderables.cend(); ++it) {
 		curr_shader->use();
 		(*it)->draw(*curr_shader);
 		m_vertex_array->bind();
@@ -60,5 +59,5 @@ void render_module::run(resource_module &in_resources) {
 }
 
 void render_module::add_object(renderable *in_obj) {
-	m_objects.push_back(in_obj);
+	m_renderables.push_back(in_obj);
 }

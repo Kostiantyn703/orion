@@ -40,11 +40,13 @@ void resource_module::compile_shaders(const std::string &in_vertex_source, const
 	std::unique_ptr<shader> frag = std::make_unique<shader>(in_fragment_source.data(), GL_FRAGMENT_SHADER);
 	frag->compile();
 
-	m_shaders.insert(std::make_pair(std::string(SPRITE_SHADER_NAME), std::make_unique<shader_program>()));
-	m_shaders.at(SPRITE_SHADER_NAME)->attach_shader(vert->get_id());
-	m_shaders.at(SPRITE_SHADER_NAME)->attach_shader(frag->get_id());
-	m_shaders.at(SPRITE_SHADER_NAME)->link();
-	m_shaders.at(SPRITE_SHADER_NAME)->use();
+	shader_program curr_shader;
+	curr_shader.attach_shader(vert->get_id());
+	curr_shader.attach_shader(frag->get_id());
+	curr_shader.link();
+	curr_shader.use();
+
+	m_shaders.insert(std::make_pair(std::string(SPRITE_SHADER_NAME), std::make_unique<shader_program>(curr_shader)));
 
 	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
 	glUniformMatrix4fv(glGetUniformLocation(m_shaders.at(SPRITE_SHADER_NAME)->id(), "projection"), 1, false, glm::value_ptr(projection));

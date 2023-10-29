@@ -1,6 +1,7 @@
 #include "game_object.h"
 
 #include <SDL_log.h>
+#include "glad/glad.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
@@ -30,11 +31,11 @@ void game_object::update(float delta_time) {
 void game_object::draw(const shader_program &in_shader) {
 	glm::mat4 model = glm::mat4(1.f);
 
-	int curr_width = m_texture->get_width();
-	int curr_height = m_texture->get_height();
+	float curr_width = (float)m_texture->get_width();
+	float curr_height = (float)m_texture->get_height();
 
-	int x_offset = curr_width * 0.5f;
-	int y_offset = curr_height * 0.5f;
+	float x_offset = curr_width * 0.5f;
+	float y_offset = curr_height * 0.5f;
 
 	float actual_x = m_position.x_pos - x_offset;
 	float actual_y = m_position.y_pos - y_offset;

@@ -7,6 +7,7 @@
 
 #include "texture.h"
 #include "shader_program.h"
+#include "glad/glad.h"
 
 class resource_module {
 	using shader_map = std::unordered_map<std::string, std::unique_ptr<shader_program>>;

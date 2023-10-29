@@ -1,5 +1,7 @@
 #include "texture.h"
 
+#include "glad/glad.h"
+
 
 texture::texture()
 	: m_target (GL_TEXTURE_2D), m_format (GL_RGBA) , m_width (0), m_height (0), m_channels (0)
@@ -25,10 +27,10 @@ texture &texture::operator=(const texture &in_texture) {
 	return *this;
 }
 
-
 void texture::bind() {
 	glBindTexture(m_target, m_id);
 }
+
 void texture::unbind() {
 	glBindTexture(m_target, 0);
 }
@@ -39,8 +41,6 @@ void texture::init_data(unsigned char *data, const int &in_width, const int &in_
 	m_channels	= in_channels;
 	
 	create();
-
-//	glActiveTexture(GL_TEXTURE0);
 	bind();
 
 	glTexParameteri(m_target, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);

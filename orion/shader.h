@@ -1,27 +1,21 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <vector>
-
-#include "glad/glad.h"
-#include "SDL_opengl.h"
-
 class shader {
 public:
-	shader(const GLchar *shader_source, const GLenum shader_type);
-	~shader();
+	shader(const char *shader_source, const unsigned int shader_type);
+	~shader() {}
 
-	GLuint get_id() const { return m_id; }
+	unsigned int get_id() const { return m_id; }
 
 	bool compile();
 	void destroy();
 
 private:
-	GLuint m_id;
+	unsigned int m_id;
 
-	bool log_errors(const GLenum check_type);
-	// TODO: move this method into factory class
-	//void create(const std::string &shader_source, const GLenum shader_type);
+	bool log_errors(const unsigned int check_type);
+
 	shader() = delete;
 };
 #endif // SHADER_H

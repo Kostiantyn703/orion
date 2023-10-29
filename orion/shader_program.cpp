@@ -7,8 +7,6 @@ shader_program::shader_program() {
 	create();
 }
 
-shader_program::~shader_program() {}
-
 void shader_program::use() {
 	glUseProgram(m_id);
 }
@@ -23,5 +21,4 @@ void shader_program::link() {
 
 void shader_program::create() {
 	m_id = glCreateProgram();
-	// TODO: error log check
 }

@@ -24,11 +24,6 @@ static float vertices[] = {
 	1.f, 0.f,		1.f, 0.f
 };
 
-//static unsigned int indices[] = {
-//	0, 1, 2,
-//	0, 2, 3
-//};
-
 class point {
 public:
 	point() {}
