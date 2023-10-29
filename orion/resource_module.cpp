@@ -45,7 +45,7 @@ void resource_module::compile_shaders(const std::string &in_vertex_source, const
 	m_shaders.at(SPRITE_SHADER_NAME)->attach_shader(frag->get_id());
 	m_shaders.at(SPRITE_SHADER_NAME)->link();
 	m_shaders.at(SPRITE_SHADER_NAME)->use();
-	glUniform1i(glGetUniformLocation(m_shaders.at(SPRITE_SHADER_NAME)->id(), "m_texture"), 0);
+
 	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
 	glUniformMatrix4fv(glGetUniformLocation(m_shaders.at(SPRITE_SHADER_NAME)->id(), "projection"), 1, false, glm::value_ptr(projection));
 

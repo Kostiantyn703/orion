@@ -17,13 +17,6 @@ game_object::game_object(float initial_x, float initial_y) : m_direction(directi
 	set_position(initial_x, initial_y);
 }
 
-game_object::game_object(game_object &in_obj) {
-	m_position = in_obj.m_position;
-	m_direction = in_obj.m_direction;
-	m_texture = in_obj.m_texture;
-	SDL_Log("Copy game object");
-}
-
 void game_object::update(float delta_time) {
 	point curr_pos = get_position();
 	point curr_dir = get_direction();
@@ -40,14 +33,16 @@ void game_object::draw(const shader_program &in_shader) {
 	int curr_width = m_texture->get_width();
 	int curr_height = m_texture->get_height();
 
-	float actual_x = m_position.x_pos;// - curr_width;
-	float actual_y = m_position.y_pos;// - curr_height;
+	int x_offset = curr_width * 0.5f;
+	int y_offset = curr_height * 0.5f;
+
+	float actual_x = m_position.x_pos - x_offset;
+	float actual_y = m_position.y_pos - y_offset;
 
 	model = glm::translate(model, glm::vec3(actual_x, actual_y, 0.f));
 	glm::vec2 size(curr_width, curr_height);
-	model = glm::translate(model, glm::vec3(size.x, size.y, 0.f));
-
 	model = glm::scale(model, glm::vec3(size, 1.0f));
+
 	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();

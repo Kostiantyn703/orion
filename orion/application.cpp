@@ -25,10 +25,13 @@ void application::start_up() {
 
 	m_input_handler = std::make_unique<controller>();
 
-	//m_storage.create_object(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
-	//m_storage.create_object(200.f, 200.f);
+	m_storage.create_object(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f);
+	m_storage.create_object(WINDOW_WIDTH, WINDOW_HEIGHT);
+	m_storage.create_object(WINDOW_WIDTH, 0.f);
+	m_storage.create_object(0.f, WINDOW_HEIGHT);
 	m_storage.create_object(0.f, 0.f);
-	//m_storage.create_object(170.f, 450.f);
+	m_storage.create_object(170.f, 450.f);
+	m_storage.create_object(680.f, 100.f);
 
 	m_renderer->init();
 

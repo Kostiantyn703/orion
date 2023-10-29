@@ -48,8 +48,8 @@ void render_module::run(resource_module &in_resources) {
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
+	shader_program *curr_shader = in_resources.get_shader(SPRITE_SHADER_NAME);
 	for (renderables::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
-		shader_program *curr_shader = in_resources.get_shader(SPRITE_SHADER_NAME);
 		curr_shader->use();
 		(*it)->draw(*curr_shader);
 		m_vertex_array->bind();
