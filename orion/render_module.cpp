@@ -21,27 +21,44 @@ render_module::render_module() : is_wireframe(false)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	log_error;
 
-	init();
-}
-
-render_module::~render_module() {
-	m_a_objects.clear();
-}
-
-void render_module::init() {
 	m_window = std::make_unique<window>();
 }
 
-void render_module::run() {
+render_module::~render_module() {
+	m_objects.clear();
+}
+
+void render_module::init() {
+	m_vertex_array = std::make_unique<vertex_array>();
+	m_vertex_buffer = std::make_unique<buffer_object>(GL_ARRAY_BUFFER);
+
+	m_vertex_buffer->bind();
+	m_vertex_buffer->init_data(vertices);
+
+	m_vertex_array->bind();
+	m_vertex_array->init_data();
+
+	m_vertex_buffer->unbind();
+	m_vertex_array->unbind();
+}
+
+void render_module::run(resource_module &in_resources) {
 	glPolygonMode(GL_FRONT_AND_BACK, is_wireframe ? GL_LINE : GL_FILL);
 
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	for (renderables::const_iterator it = m_a_objects.cbegin(); it != m_a_objects.cend(); ++it) {
-		(*it)->draw();
+	for (renderables::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
+		shader_program *curr_shader = in_resources.get_shader(SPRITE_SHADER_NAME);
+		curr_shader->use();
+		(*it)->draw(*curr_shader);
+		m_vertex_array->bind();
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		m_vertex_array->unbind();
 	}
-
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	m_window->swap();
+}
+
+void render_module::add_object(renderable *in_obj) {
+	m_objects.push_back(in_obj);
 }

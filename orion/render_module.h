@@ -5,6 +5,8 @@
 
 #include "window.h"
 #include "buffer_object.h"
+#include "resource_module.h"
+#include "vertex_array.h"
 #include "renderable.h"
 
 class render_module {
@@ -14,9 +16,9 @@ public:
 	~render_module();
 
 	void init();
-	void run();
+	void run(resource_module &in_resources);
 
-	void add_object(renderable &in_obj) { m_a_objects.push_back(&in_obj); }
+	void add_object(renderable *in_obj);
 	 
 	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 
@@ -26,7 +28,11 @@ private:
 	bool is_wireframe;
 
 	std::unique_ptr<window>	m_window;
-	renderables m_a_objects;
+
+	std::unique_ptr<vertex_array>	m_vertex_array;
+	std::unique_ptr<buffer_object>	m_vertex_buffer;
+
+	renderables m_objects;
 
 };
 #endif // RENDER_MODULE_H

@@ -9,13 +9,16 @@
 #include "game_object.h"
 #include "resource_module.h"
 
-class object_storage {
-	using objects = std::vector<std::unique_ptr<game_object>>;
-public:
-	void update(float delta_time);
-	void add_object(game_object &in_object);
+using objects = std::vector<game_object*>;
 
-private:
+class object_storage {
+public:
+	object_storage() {}
+	~object_storage() {}
+
+	void update(float delta_time);
+	void create_object(float in_x, float in_y);
+
 	objects m_objects;
 };
 
@@ -25,13 +28,10 @@ public:
 	~application();
 
 	void set_active(bool in_val) { is_active = in_val; }
-	void create_object(float in_x, float in_y);
 
 	void start_up();
 	void run();
 	void shut_down();
-
-
 
 	void print_video_info();
 	void toggle_window_size();

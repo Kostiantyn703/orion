@@ -1,6 +1,6 @@
 #include "buffer_object.h"
 
-buffer_object::buffer_object(GLuint in_target)
+buffer_object::buffer_object(unsigned int in_target)
 	: m_target(in_target)
 {
 	create();
