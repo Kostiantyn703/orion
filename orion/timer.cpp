@@ -19,7 +19,7 @@ void timer::start() {
 }
 
 void timer::stop() {
-	std::cout << " Application finished at: ";
+	std::cout << "Application finished at: ";
 	time_stamp curr_time = std::chrono::system_clock::now();
 	show_time(curr_time);
 }

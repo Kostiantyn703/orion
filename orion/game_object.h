@@ -21,9 +21,10 @@ public:
 
 	point get_move_dir() const;
 
+	float m_direction = 0.f;
+
 private:
-	float m_velocity = 100.f;
+	float m_velocity = 300.f;
 	point m_position;
 };
-
 #endif // GAME_OBJECT_H
