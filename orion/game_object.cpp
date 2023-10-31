@@ -46,7 +46,7 @@ void game_object::draw(const shader_program &in_shader) {
 	model = glm::translate(model, glm::vec3(actual_x, actual_y, 0.f));
 	glm::vec2 size(curr_width, curr_height);
 	model = glm::scale(model, glm::vec3(size, 1.0f));
-
+	
 	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();

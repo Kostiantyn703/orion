@@ -10,5 +10,4 @@ uniform mat4 projection;
 void main()
 {
 	gl_Position = projection * model * vec4(in_pos.xy, 0.f, 1.f);
-	//out_texture = vec2(in_pos.z, in_pos.w);
 }

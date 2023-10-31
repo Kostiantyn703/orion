@@ -47,13 +47,14 @@ void render_module::run(resource_module &in_resources) {
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	shader_program *curr_shader = in_resources.get_shader(SPRITE_NAME);
-	for (renderables::const_iterator it = m_renderables.cbegin(); it != m_renderables.cend(); ++it) {
-		curr_shader->use();
-		(*it)->draw(*curr_shader);
-		m_vertex_array->bind();
-		glDrawArrays(GL_LINES, 0, 6);
-		m_vertex_array->unbind();
+	for (int i = 0; i < in_resources.m_shaders.size(); ++i) {
+		for (renderables::const_iterator it = m_renderables.cbegin(); it != m_renderables.cend(); ++it) {
+			in_resources.m_shaders[i]->use();
+			(*it)->draw(*in_resources.m_shaders[i]);
+			m_vertex_array->bind();
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+			m_vertex_array->unbind();
+		}
 	}
 	m_window->swap();
 }
