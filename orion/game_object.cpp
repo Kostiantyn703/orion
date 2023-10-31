@@ -1,6 +1,7 @@
 #include "game_object.h"
 
 #include <SDL_log.h>
+//#include "SDL_opengl.h"
 #include "glad/glad.h"
 
 #include "glm/glm.hpp"

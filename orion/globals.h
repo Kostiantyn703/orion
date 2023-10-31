@@ -6,10 +6,13 @@ constexpr float		WINDOW_WIDTH	= 800.f;
 static const char	*WINDOW_NAME	= "PROJECT ORION";
 
 // shaders
-static const char	*SHADER_ADDRESS_VERT	= "../content/shaders/vertex.vert";
-static const char	*SHADER_ADDRESS_FRAG	= "../content/shaders/fragment.frag";
+static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";
+static const char	*SPRITE_ADDRESS_FRAG	= "../content/shaders/sprite.frag";
+static const char	*DEBUG_ADDRESS_VERT		= "../content/shaders/debug.vert";
+static const char	*DEBUG_ADDRESS_FRAG		= "../content/shaders/debug.frag";
 
-static const char	*SHADER_NAME_SPRITE		= "sprite";
+static const char	*SPRITE_NAME		= "sprite";
+static const char	*DEBUG_NAME			= "debug";
 
 // textures
 static const char	*TEX_ADDRESS_SHIP				= "../content/images/ship.png";
