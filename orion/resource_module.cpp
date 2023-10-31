@@ -14,17 +14,17 @@
 #include "glm/gtc/type_ptr.hpp"
 
 resource_module::resource_module() {
-	init_shaders();
+	init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
+	init_shader(SPRITE_ADDRESS_VERT, SPRITE_ADDRESS_FRAG);
 	load_textures();
 }
-
-void resource_module::init_shaders() {
+void resource_module::init_shader(const char *in_vert_address, const char *in_frag_address) {
 	std::string v_shader_source;
-	if (!load_shader(SHADER_ADDRESS_VERT, v_shader_source)) {
+	if (!load_shader(in_vert_address, v_shader_source)) {
 		return;
 	}
 	std::string f_shader_source;
-	if (!load_shader(SHADER_ADDRESS_FRAG, f_shader_source)) {
+	if (!load_shader(in_frag_address, f_shader_source)) {
 		return;
 	}
 	compile_shaders(v_shader_source, f_shader_source);
@@ -43,10 +43,11 @@ void resource_module::compile_shaders(const std::string &in_vertex_source, const
 	curr_shader.link();
 	curr_shader.use();
 
-	m_shaders.insert(std::make_pair(std::string(SHADER_NAME_SPRITE), std::make_unique<shader_program>(curr_shader)));
-
 	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
-	glUniformMatrix4fv(glGetUniformLocation(m_shaders.at(SHADER_NAME_SPRITE)->id(), "projection"), 1, false, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(curr_shader.id(), "projection"), 1, false, glm::value_ptr(projection));
+	//m_shaders.insert(std::make_pair(std::string(SPRITE_NAME), std::make_unique<shader_program>(curr_shader)));
+	m_shaders.push_back(std::make_unique<shader_program>(curr_shader));
+	
 
 	vert->destroy();
 	frag->destroy();
