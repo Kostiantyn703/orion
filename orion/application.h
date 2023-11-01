@@ -8,6 +8,7 @@
 #include "timer.h"
 #include "game_object.h"
 #include "resource_module.h"
+#include "input_receiver.h"
 
 using objects = std::vector<game_object*>;
 
@@ -44,8 +45,10 @@ private:
 
 	std::unique_ptr<resource_module> m_resources;
 	std::unique_ptr<render_module>	m_renderer;
-	std::unique_ptr<controller>		m_input_handler;
 	std::unique_ptr<timer>			m_timer;
+	
+	std::unique_ptr<controller>		m_input_handler;
+	std::unique_ptr<input_receiver> m_receiver;
 
 	object_storage					m_storage;
 };

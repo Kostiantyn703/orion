@@ -32,6 +32,7 @@ void application::start_up() {
 	m_resources = std::make_unique<resource_module>();
 
 	m_input_handler = std::make_unique<controller>();
+	m_receiver = std::make_unique<input_receiver>();
 
 	point player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
 	m_storage.create_object(object_type::OT_PLAYER, player_pos, m_resources->get_texture(TEX_NAME_SHIP));
@@ -60,6 +61,8 @@ void application::run() {
 		curr_frame = m_timer->get_current_time();
 		delta_time = curr_frame - last_frame;
 		delta_time *= 50.f;
+		
+		m_receiver->receive_key();
 
 		m_input_handler->handle_input(*this);
 		m_storage.update(delta_time);
