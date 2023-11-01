@@ -16,6 +16,15 @@ void object_storage::create_object(float in_x, float in_y, texture *in_texture, 
 	m_objects.push_back(object);
 }
 
+void object_storage::create_object(object_type in_type, point &in_position, texture *in_texture) {
+	game_object *object = new game_object(in_type);
+	object->set_position(in_position);
+	object->set_texture(in_texture);
+	// TODO: temporary test
+	if (in_type == object_type::OT_ENEMY) {object->set_move_dir(move_direction::MD_LEFT);}
+	m_objects.push_back(object);
+}
+
 application::application() : is_active(false) {}
 
 void application::start_up() {
@@ -24,13 +33,13 @@ void application::start_up() {
 
 	m_input_handler = std::make_unique<controller>();
 
-	m_storage.create_object(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.5f, m_resources->get_texture(TEX_NAME_SHIP));
-	m_storage.create_object(WINDOW_WIDTH - 200.f, WINDOW_HEIGHT - 200.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
-	m_storage.create_object(WINDOW_WIDTH - 240.f, 300.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
-	m_storage.create_object(50.f, WINDOW_HEIGHT - 100.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
-	m_storage.create_object(50.f, 100.f, m_resources->get_texture(TEX_NAME_ENEMY));
+	point player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
+	m_storage.create_object(object_type::OT_PLAYER, player_pos, m_resources->get_texture(TEX_NAME_SHIP));
+	point enemy_pos(WINDOW_WIDTH * 0.7f, WINDOW_HEIGHT * 0.2f);
+	m_storage.create_object(object_type::OT_ENEMY, enemy_pos, m_resources->get_texture(TEX_NAME_ENEMY));
+	point meteor_pos(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.5f);
+	m_storage.create_object(object_type::OT_METEOR, meteor_pos, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
 	
-
 	m_renderer->init();
 
 	for (objects::const_iterator it = m_storage.m_objects.begin(); it != m_storage.m_objects.end(); ++it) {

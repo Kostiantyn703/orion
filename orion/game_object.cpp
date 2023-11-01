@@ -10,6 +10,10 @@
 #include "texture.h"
 #include "shader_program.h"
 
+game_object::game_object(object_type in_object_type) : m_type(in_object_type) {
+	set_position(0.f, 0.f);
+}
+
 game_object::game_object(point &initial_point) {
 	set_position(initial_point.x_pos, initial_point.y_pos);
 	m_move_dir = move_direction::MD_NONE;
@@ -21,15 +25,15 @@ game_object::game_object(float initial_x, float initial_y, move_direction in_mov
 }
 
 void game_object::update(float delta_time) {
-	point curr_pos = get_position();
-	point curr_dir = get_move_dir();
-
-	curr_pos.x_pos += curr_dir.x_pos * delta_time * m_velocity;
-	curr_pos.y_pos += curr_dir.y_pos * delta_time * m_velocity;
-
-	m_direction += delta_time * m_velocity;
-
-	set_position(curr_pos.x_pos, curr_pos.y_pos);
+	switch (m_type) {
+	case object_type::OT_ENEMY:
+		m_position.x_pos += get_move_dir().x_pos * delta_time * m_velocity;
+		m_position.x_pos += get_move_dir().y_pos * delta_time * m_velocity;
+	break;
+	case object_type::OT_METEOR:
+		m_direction += delta_time * (m_velocity *3);
+	break;
+	}
 }
 
 void game_object::draw(const shader_program &in_shader) {
@@ -55,6 +59,10 @@ void game_object::draw(const shader_program &in_shader) {
 void game_object::set_position(float in_x, float in_y) {
 	m_position.x_pos = in_x;
 	m_position.y_pos = in_y; 
+}
+
+void game_object::set_position(point &in_position) {
+	m_position = in_position;
 }
 
 point game_object::get_move_dir() const {

@@ -41,7 +41,12 @@ class point {
 public:
 	point() {}
 	point(float in_x, float in_y) : x_pos(in_x), y_pos(in_y) {}
-	
+	point &operator=(const point &rhs) {
+		x_pos = rhs.x_pos;
+		y_pos = rhs.y_pos;
+		return *this;
+	}
+
 	~point() {}
 	
 	float x_pos;

@@ -18,6 +18,7 @@ public:
 
 	void update(float delta_time);
 	void create_object(float in_x, float in_y, texture *in_texture, move_direction in_move_dir = move_direction::MD_NONE);
+	void create_object(object_type in_type, point &in_position,  texture *in_texture);
 
 	objects m_objects;
 };

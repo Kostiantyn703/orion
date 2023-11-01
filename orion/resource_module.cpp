@@ -14,7 +14,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 resource_module::resource_module() {
-	init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
+	//init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
 	init_shader(SPRITE_ADDRESS_VERT, SPRITE_ADDRESS_FRAG);
 	load_textures();
 }
