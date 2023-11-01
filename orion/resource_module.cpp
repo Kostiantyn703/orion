@@ -55,8 +55,10 @@ void resource_module::compile_shaders(const std::string &in_vertex_source, const
 
 void resource_module::load_textures() {
 	create_texture(TEX_ADDRESS_SHIP, TEX_NAME_SHIP);
+	create_texture(TEX_ADDRESS_ENEMY, TEX_NAME_ENEMY);
 	create_texture(TEX_ADDRESS_METEOR_BROWN_BIG, TEX_NAME_METEOR_BROWN_BIG);
 	create_texture(TEX_ADDRESS_METEOR_BROWN_MED, TEX_NAME_METEOR_BROWN_MED);
+
 }
 
 void resource_module::create_texture(const char *in_tex_address, const char *in_tex_name) {

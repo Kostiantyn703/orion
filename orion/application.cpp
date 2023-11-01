@@ -28,6 +28,7 @@ void application::start_up() {
 	m_storage.create_object(WINDOW_WIDTH - 200.f, WINDOW_HEIGHT - 200.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
 	m_storage.create_object(WINDOW_WIDTH - 240.f, 300.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
 	m_storage.create_object(50.f, WINDOW_HEIGHT - 100.f, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
+	m_storage.create_object(50.f, 100.f, m_resources->get_texture(TEX_NAME_ENEMY));
 	
 
 	m_renderer->init();
