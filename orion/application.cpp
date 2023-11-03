@@ -64,7 +64,6 @@ void application::run() {
 		
 		m_receiver->receive_key();
 
-		m_input_handler->handle_input(*this);
 		m_storage.update(delta_time);
 		m_renderer->run(*m_resources.get());
 

@@ -17,9 +17,7 @@ void controller::handle_input(application &in_app) {
 	//	return;
 	//}
 	//// system controls
-	//if (curr_event.key.keysym.sym == SDLK_ESCAPE) {
-	//	in_app.set_active(false);
-	//}
+	
 	//if (curr_event.key.keysym.sym == SDLK_1) {
 	//	in_app.toggle_window_size();
 	//}
