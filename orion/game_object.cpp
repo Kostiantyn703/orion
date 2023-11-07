@@ -16,24 +16,22 @@ game_object::game_object(object_type in_object_type) : m_type(in_object_type) {
 
 game_object::game_object(point &initial_point) {
 	set_position(initial_point.x_pos, initial_point.y_pos);
-	m_move_dir = move_direction::MD_NONE;
+	m_move_dir.x_pos = 0.f;
+	m_move_dir.y_pos = 0.f;
 }
 
-game_object::game_object(float initial_x, float initial_y, move_direction in_move_dir) {
+game_object::game_object(float initial_x, float initial_y) {
 	set_position(initial_x, initial_y);
-	m_move_dir = in_move_dir;
+	m_move_dir.x_pos = 0.f;
+	m_move_dir.y_pos = 0.f;
 }
 
 void game_object::update(float delta_time) {
-	switch (m_type) {
-	case object_type::OT_ENEMY:
-		m_position.x_pos += get_move_dir().x_pos * delta_time * m_velocity;
-		m_position.x_pos += get_move_dir().y_pos * delta_time * m_velocity;
-	break;
-	case object_type::OT_METEOR:
-		m_direction += delta_time * (m_velocity *3);
-	break;
-	}
+	m_position.x_pos += m_move_dir.x_pos * delta_time * m_velocity;
+	m_position.y_pos += m_move_dir.y_pos * delta_time * m_velocity;
+
+	m_move_dir.x_pos = 0.f;
+	m_move_dir.y_pos = 0.f;
 }
 
 void game_object::draw(const shader_program &in_shader) {
@@ -65,21 +63,19 @@ void game_object::set_position(point &in_position) {
 	m_position = in_position;
 }
 
-point game_object::get_move_dir() const {
-	point result(0.f, 0.f);
-	switch (m_move_dir) {
-		case move_direction::MD_UP:
-			result.y_pos = -1.f;
-		break;
-		case move_direction::MD_RIGHT:
-			result.x_pos = 1.f;
-		break;
-		case move_direction::MD_DOWN:
-			result.y_pos = 1.f;
-		break;
-		case move_direction::MD_LEFT:
-			result.x_pos = -1.f;
-		break;
-	}
-	return result;
+void game_object::move_forward() {
+	m_move_dir.y_pos = -1;
 }
+
+void game_object::move_right() {
+	m_move_dir.x_pos = 1;
+}
+
+void game_object::move_backward() {
+	m_move_dir.y_pos = 1;
+}
+
+void game_object::move_left() {
+	m_move_dir.x_pos = -1;
+}
+

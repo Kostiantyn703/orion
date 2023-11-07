@@ -10,8 +10,8 @@ void object_storage::update(float delta_time) {
 	}
 }
 
-void object_storage::create_object(float in_x, float in_y, texture *in_texture, move_direction in_move_dir) {
-	game_object *object = new game_object(in_x, in_y, in_move_dir);
+void object_storage::create_object(float in_x, float in_y, texture *in_texture) {
+	game_object *object = new game_object(in_x, in_y);
 	object->set_texture(in_texture);
 	m_objects.push_back(object);
 }
@@ -20,33 +20,33 @@ void object_storage::create_object(object_type in_type, point &in_position, text
 	game_object *object = new game_object(in_type);
 	object->set_position(in_position);
 	object->set_texture(in_texture);
-	// TODO: temporary test
-	if (in_type == object_type::OT_ENEMY) {object->set_move_dir(move_direction::MD_LEFT);}
+	
 	m_objects.push_back(object);
 }
 
 application::application() : is_active(false) {}
 
-void application::init_player() {
+void application::init_player(controller *in_controller) {
 	point player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
 	m_storage.create_object(object_type::OT_PLAYER, player_pos, m_resources->get_texture(TEX_NAME_SHIP));
+	in_controller->set_owner(*m_storage.m_objects.begin());
 }
 
 void application::init_objects() {
 	point enemy_pos(WINDOW_WIDTH * 0.75f, WINDOW_HEIGHT * 0.2f);
 	m_storage.create_object(object_type::OT_ENEMY, enemy_pos, m_resources->get_texture(TEX_NAME_ENEMY));
-	point meteor_pos(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.5f);
+	point meteor_pos(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.1f);
 	m_storage.create_object(object_type::OT_METEOR, meteor_pos, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
 }
 
 void application::start_up() {
-	m_renderer = std::make_unique<render_module>();
-	m_resources = std::make_unique<resource_module>();
+	m_renderer	= std::make_unique<render_module>();
+	m_resources	= std::make_unique<resource_module>();
 
-	m_input_handler = std::make_unique<controller>();
-	m_receiver = std::make_unique<input_receiver>();
+	m_controller	= std::make_unique<controller>();
+	m_receiver		= std::make_unique<input_receiver>();
 
-	init_player();
+	init_player(m_controller.get());
 	init_objects();
 	
 	m_renderer->init();
@@ -70,8 +70,7 @@ void application::run() {
 		delta_time = curr_frame - last_frame;
 		delta_time *= 50.f;
 		
-		m_receiver->receive_key();
-
+		m_controller->handle_input(m_receiver.get());
 		m_storage.update(delta_time);
 		m_renderer->run(*m_resources.get());
 

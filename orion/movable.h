@@ -21,10 +21,10 @@ class movable {
 public:
 	virtual ~movable() {}
 
-	void set_move_dir(move_direction in_move_dir)	{	m_move_dir = in_move_dir;	}
+	
 	void set_look_dir(look_direction in_look_dir)	{	m_look_dir = in_look_dir;	}
 protected:
-	move_direction m_move_dir;
+	
 	look_direction m_look_dir;
 };
 #endif // MOVABLE_H

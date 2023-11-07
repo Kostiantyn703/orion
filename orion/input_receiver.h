@@ -3,7 +3,7 @@
 
 #include <unordered_set>
 #include <SDL_events.h>
-#include "controller.h"
+
 #include "commands.h"
 
 class input_receiver {
@@ -12,15 +12,16 @@ public:
 	input_receiver()	{}
 	~input_receiver()	{}
 
+	commands_set m_commands;
+
 	void receive_key();
+
+private:
 	void handle_key_down(const SDL_Event &in_event);
 	void handle_key_up(const SDL_Event &in_event);
 
 	bool add_command(command *in_command);
 	bool remove_command(command_type in_type, char in_state);
 
-private:
-	commands_set m_received_commands;
 };
-
 #endif // INPUT_RECEIVER_H

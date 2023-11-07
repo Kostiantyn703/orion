@@ -18,7 +18,7 @@ public:
 	~object_storage() {}
 
 	void update(float delta_time);
-	void create_object(float in_x, float in_y, texture *in_texture, move_direction in_move_dir = move_direction::MD_NONE);
+	void create_object(float in_x, float in_y, texture *in_texture);
 	void create_object(object_type in_type, point &in_position,  texture *in_texture);
 
 	objects m_objects;
@@ -47,12 +47,12 @@ private:
 	std::unique_ptr<render_module>	m_renderer;
 	std::unique_ptr<timer>			m_timer;
 	
-	std::unique_ptr<controller>		m_input_handler;
+	std::unique_ptr<controller>		m_controller;
 	std::unique_ptr<input_receiver> m_receiver;
 
 	object_storage					m_storage;
 
-	void init_player();
+	void init_player(controller *in_controller);
 	void init_objects();
 };
 #endif // APPLICATION_H
