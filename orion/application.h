@@ -51,5 +51,8 @@ private:
 	std::unique_ptr<input_receiver> m_receiver;
 
 	object_storage					m_storage;
+
+	void init_player();
+	void init_objects();
 };
 #endif // APPLICATION_H

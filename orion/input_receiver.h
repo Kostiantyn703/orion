@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include <SDL_events.h>
+#include "controller.h"
 
 enum class event_type {
 	ET_UP,

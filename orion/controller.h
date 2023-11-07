@@ -1,13 +1,13 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-class application;
-
 class controller {
 public:
-	controller();
-	~controller();
+	controller() {}
+	~controller() {}
 
-	void handle_input(application &in_app);
+	void handle_input() {}
+private:
+	
 };
 #endif // CONTROLLER_H
