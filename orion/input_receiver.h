@@ -1,20 +1,13 @@
 #ifndef INPUT_RECEIVER_H
 #define INPUT_RECEIVER_H
 
-#include <unordered_map>
+#include <unordered_set>
 #include <SDL_events.h>
 #include "controller.h"
-
-enum class event_type {
-	ET_UP,
-	ET_RIGHT,
-	ET_DOWN,
-	ET_LEFT,
-	ET_NONE
-};
+#include "commands.h"
 
 class input_receiver {
-	using events_map = std::unordered_map<event_type, char>;
+	using commands_set = std::unordered_set<command*>;
 public:
 	input_receiver()	{}
 	~input_receiver()	{}
@@ -22,12 +15,12 @@ public:
 	void receive_key();
 	void handle_key_down(const SDL_Event &in_event);
 	void handle_key_up(const SDL_Event &in_event);
-	
-	bool add_key(event_type in_type, char in_state);
-	bool remove_key(event_type in_type, char in_state);
+
+	bool add_command(command *in_command);
+	bool remove_command(command_type in_type, char in_state);
 
 private:
-	events_map m_received_events;
+	commands_set m_received_commands;
 };
 
 #endif // INPUT_RECEIVER_H
