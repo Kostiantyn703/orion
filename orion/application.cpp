@@ -40,7 +40,7 @@ void application::run() {
 		
 		m_controller->handle_input(m_receiver.get());
 		m_world->update(delta_time);
-		m_renderer->run(*m_resources.get());
+		m_renderer->run();
 
 		last_frame = m_timer->get_current_time();
 	}

@@ -3,7 +3,12 @@
 #include "globals.h"
 
 world_module::world_module() {}
-world_module::~world_module() {}
+world_module::~world_module() {
+	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+		delete *it;
+	}
+	m_objects.clear();
+}
 
 void world_module::init_player(controller *in_controller, const resource_module &in_resources) {
 	point player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
@@ -27,7 +32,7 @@ void world_module::init_objects(const resource_module &in_resources) {
 	point bullet_pos(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.9f);
 	game_object * bullet = create_object(bullet_pos);
 	bullet->set_texture(in_resources.get_texture(TEX_NAME_BULLET));
-	bullet->set_velocity(1000.f);
+	bullet->set_velocity(1500.f);
 	bullet->set_type(object_type::OT_BULLET);
 	bullet->move_forward();
 	m_objects.push_back(bullet);

@@ -2,21 +2,29 @@
 #define RENDER_MODULE_H
 
 #include <memory>
+#include <string>
+#include <vector>
 
 #include "window.h"
 #include "buffer_object.h"
-#include "resource_module.h"
 #include "vertex_array.h"
 #include "renderable.h"
+#include "shader_program.h"
 
 class render_module {
-using renderables = std::vector<renderable*>;
+	using shader_vec = std::vector<std::unique_ptr<shader_program>>;
+	using renderables = std::vector<renderable*>;
 public:
 	render_module();
 	~render_module();
 
 	void init();
-	void run(resource_module &in_resources);
+
+	void init_shader(const char *in_vert_address, const char *in_frag_address);
+	void compile_shaders(const std::string &in_vertex_source, const std::string &in_fragment_source);
+	bool load_shader(const char *source_address, std::string &out_shader_source);
+
+	void run();
 
 	void add_object(renderable *in_obj);
 	 
@@ -33,6 +41,6 @@ private:
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 
 	renderables m_renderables;
-
+	shader_vec m_shaders;
 };
 #endif // RENDER_MODULE_H
