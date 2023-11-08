@@ -11,6 +11,7 @@ enum class object_type {
 	OT_PLAYER,
 	OT_METEOR,
 	OT_ENEMY,
+	OT_BULLET,
 	OT_NONE
 };
 
@@ -29,6 +30,8 @@ public:
 	void set_position	(float in_x, float in_y);
 	void set_position	(point &in_position);
 	const point &get_position	() const {	return m_position;	}
+
+	void set_velocity	(float in_velocity)	{	m_velocity = in_velocity;	}
 	// ~ controllable interface
 	virtual void move_forward	()	override;
 	virtual void move_right		()	override;

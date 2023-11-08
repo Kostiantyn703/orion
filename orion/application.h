@@ -9,20 +9,7 @@
 #include "game_object.h"
 #include "resource_module.h"
 #include "input_receiver.h"
-
-using objects = std::vector<game_object*>;
-
-class object_storage {
-public:
-	object_storage() {}
-	~object_storage() {}
-
-	void update(float delta_time);
-	void create_object(float in_x, float in_y, texture *in_texture);
-	void create_object(object_type in_type, point &in_position,  texture *in_texture);
-
-	objects m_objects;
-};
+#include "world_module.h"
 
 class application {
 public:
@@ -45,14 +32,11 @@ private:
 
 	std::unique_ptr<resource_module> m_resources;
 	std::unique_ptr<render_module>	m_renderer;
+	std::unique_ptr<world_module>	m_world;
+
 	std::unique_ptr<timer>			m_timer;
 	
 	std::unique_ptr<controller>		m_controller;
 	std::unique_ptr<input_receiver> m_receiver;
-
-	object_storage					m_storage;
-
-	void init_player(controller *in_controller);
-	void init_objects();
 };
 #endif // APPLICATION_H

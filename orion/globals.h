@@ -19,11 +19,13 @@ static const char	*TEX_ADDRESS_ENEMY				= "../content/images/enemy.png";
 static const char	*TEX_ADDRESS_SHIP				= "../content/images/ship.png";
 static const char	*TEX_ADDRESS_METEOR_BROWN_BIG	= "../content/images/meteor_brown_big.png";
 static const char	*TEX_ADDRESS_METEOR_BROWN_MED	= "../content/images/meteor_brown_med.png";
+static const char	*TEX_ADDRESS_BULLET				= "../content/images/bullet.png";
 
 static const char	*TEX_NAME_ENEMY				= "enemy";
 static const char	*TEX_NAME_SHIP				= "ship";
 static const char	*TEX_NAME_METEOR_BROWN_BIG	= "meteor_brown_big";
 static const char	*TEX_NAME_METEOR_BROWN_MED	= "meteor_brown_med";
+static const char	*TEX_NAME_BULLET			= "bullet";
 
 // vertices
 static float vertices[] = {

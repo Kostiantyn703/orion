@@ -4,40 +4,7 @@
 #include "globals.h"
 #include "renderable.h"
 
-void object_storage::update(float delta_time) {
-	for (objects::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
-		(*it)->update(delta_time);
-	}
-}
-
-void object_storage::create_object(float in_x, float in_y, texture *in_texture) {
-	game_object *object = new game_object(in_x, in_y);
-	object->set_texture(in_texture);
-	m_objects.push_back(object);
-}
-
-void object_storage::create_object(object_type in_type, point &in_position, texture *in_texture) {
-	game_object *object = new game_object(in_type);
-	object->set_position(in_position);
-	object->set_texture(in_texture);
-	
-	m_objects.push_back(object);
-}
-
 application::application() : is_active(false) {}
-
-void application::init_player(controller *in_controller) {
-	point player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
-	m_storage.create_object(object_type::OT_PLAYER, player_pos, m_resources->get_texture(TEX_NAME_SHIP));
-	in_controller->set_owner(*m_storage.m_objects.begin());
-}
-
-void application::init_objects() {
-	point enemy_pos(WINDOW_WIDTH * 0.75f, WINDOW_HEIGHT * 0.2f);
-	m_storage.create_object(object_type::OT_ENEMY, enemy_pos, m_resources->get_texture(TEX_NAME_ENEMY));
-	point meteor_pos(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.1f);
-	m_storage.create_object(object_type::OT_METEOR, meteor_pos, m_resources->get_texture(TEX_NAME_METEOR_BROWN_BIG));
-}
 
 void application::start_up() {
 	m_renderer	= std::make_unique<render_module>();
@@ -46,12 +13,13 @@ void application::start_up() {
 	m_controller	= std::make_unique<controller>();
 	m_receiver		= std::make_unique<input_receiver>();
 
-	init_player(m_controller.get());
-	init_objects();
+	m_world = std::make_unique<world_module>();
+	m_world->init_player(m_controller.get(), *m_resources.get());
+	m_world->init_objects(*m_resources.get());
 	
 	m_renderer->init();
 
-	for (objects::const_iterator it = m_storage.m_objects.begin(); it != m_storage.m_objects.end(); ++it) {
+	for (auto it = m_world->m_objects.begin(); it != m_world->m_objects.end(); ++it) {
 		m_renderer->add_object(*it);
 	}
 
@@ -71,7 +39,7 @@ void application::run() {
 		delta_time *= 50.f;
 		
 		m_controller->handle_input(m_receiver.get());
-		m_storage.update(delta_time);
+		m_world->update(delta_time);
 		m_renderer->run(*m_resources.get());
 
 		last_frame = m_timer->get_current_time();

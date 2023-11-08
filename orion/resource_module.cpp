@@ -9,6 +9,7 @@
 #include "stb_image.h"
 #include "shader.h"
 
+#include "glad/glad.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -47,18 +48,17 @@ void resource_module::compile_shaders(const std::string &in_vertex_source, const
 	glUniformMatrix4fv(glGetUniformLocation(curr_shader.id(), "projection"), 1, false, glm::value_ptr(projection));
 	//m_shaders.insert(std::make_pair(std::string(SPRITE_NAME), std::make_unique<shader_program>(curr_shader)));
 	m_shaders.push_back(std::make_unique<shader_program>(curr_shader));
-	
 
 	vert->destroy();
 	frag->destroy();
 }
 
 void resource_module::load_textures() {
-	create_texture(TEX_ADDRESS_SHIP, TEX_NAME_SHIP);
-	create_texture(TEX_ADDRESS_ENEMY, TEX_NAME_ENEMY);
-	create_texture(TEX_ADDRESS_METEOR_BROWN_BIG, TEX_NAME_METEOR_BROWN_BIG);
-	create_texture(TEX_ADDRESS_METEOR_BROWN_MED, TEX_NAME_METEOR_BROWN_MED);
-
+	create_texture(TEX_ADDRESS_SHIP,				TEX_NAME_SHIP				);
+	create_texture(TEX_ADDRESS_ENEMY,				TEX_NAME_ENEMY				);
+	create_texture(TEX_ADDRESS_METEOR_BROWN_BIG,	TEX_NAME_METEOR_BROWN_BIG	);
+	create_texture(TEX_ADDRESS_METEOR_BROWN_MED,	TEX_NAME_METEOR_BROWN_MED	);
+	create_texture(TEX_ADDRESS_BULLET,				TEX_NAME_BULLET				);
 }
 
 void resource_module::create_texture(const char *in_tex_address, const char *in_tex_name) {
