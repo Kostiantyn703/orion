@@ -6,12 +6,12 @@
 #include <memory>
 
 #include "texture.h"
-#include "shader_program.h"
 
 class resource_module {
 	using texture_map = std::unordered_map<std::string, std::unique_ptr<texture>>;
 public:
-	resource_module();
+	static resource_module *get_instance();
+
 	~resource_module() {}
 
 	texture *get_texture(const std::string &in_key)	const	{	return m_textures.at(in_key).get();	}
@@ -19,6 +19,10 @@ public:
 	void load_textures();
 
 private:
+	resource_module();
+
+	static resource_module *instance;
+
 	texture_map m_textures;
 	
 	void create_texture(const char *in_tex_address, const char *in_tex_name);

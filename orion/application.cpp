@@ -1,21 +1,20 @@
 #include "application.h"
 
 #include "SDL.h"
-#include "globals.h"
+//#include "globals.h"
 #include "renderable.h"
 
 application::application() : is_active(false) {}
 
 void application::start_up() {
 	m_renderer	= std::make_unique<render_module>();
-	m_resources	= std::make_unique<resource_module>();
 
 	m_controller	= std::make_unique<controller>();
 	m_receiver		= std::make_unique<input_receiver>();
 
 	m_world = std::make_unique<world_module>();
-	m_world->init_player(m_controller.get(), *m_resources.get());
-	m_world->init_objects(*m_resources.get());
+	m_world->init_player(m_controller.get());
+	m_world->init_objects();
 	
 	m_renderer->init();
 
@@ -37,7 +36,7 @@ void application::run() {
 		curr_frame = m_timer->get_current_time();
 		delta_time = curr_frame - last_frame;
 		delta_time *= 50.f;
-		
+
 		m_controller->handle_input(m_receiver.get());
 		m_world->update(delta_time);
 		m_renderer->run();

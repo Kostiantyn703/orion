@@ -7,7 +7,6 @@
 #include "render_module.h"
 #include "timer.h"
 #include "game_object.h"
-#include "resource_module.h"
 #include "input_receiver.h"
 #include "world_module.h"
 
@@ -30,7 +29,6 @@ public:
 private:
 	bool is_active;
 
-	std::unique_ptr<resource_module> m_resources;
 	std::unique_ptr<render_module>	m_renderer;
 	std::unique_ptr<world_module>	m_world;
 

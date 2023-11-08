@@ -4,8 +4,17 @@
 #include "globals.h"
 #include "stb_image.h"
 
+resource_module *resource_module::instance = nullptr;
+
 resource_module::resource_module() {
 	load_textures();
+}
+
+resource_module *resource_module::get_instance() {
+	if (instance == nullptr) {
+		instance = new resource_module();
+	}
+	return instance;
 }
 
 void resource_module::load_textures() {
