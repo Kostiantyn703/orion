@@ -5,11 +5,12 @@
 #include "controllable.h"
 
 enum class command_type {
-	ET_UP,
-	ET_RIGHT,
-	ET_DOWN,
-	ET_LEFT,
-	ET_NONE
+	CT_UP,
+	CT_RIGHT,
+	CT_DOWN,
+	CT_LEFT,
+	CT_SHOOT,
+	CT_NONE
 };
 
 class command {
@@ -63,6 +64,16 @@ public:
 
 	void execute(controllable *in_controllable) override {
 		in_controllable->move_left();
+	}
+};
+
+class shoot_command : public command {
+public:
+	shoot_command(char in_state, command_type in_type) : command(in_state, in_type) {}
+	virtual ~shoot_command() {}
+
+	void execute(controllable *in_controllable) override {
+		in_controllable->shoot();
 	}
 };
 #endif // COMMANDS_H

@@ -79,3 +79,6 @@ void game_object::move_left() {
 	m_move_dir.x_pos = -1;
 }
 
+void game_object::shoot() {
+	SDL_Log("Shooooot.");
+}

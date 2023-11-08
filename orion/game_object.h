@@ -29,12 +29,13 @@ public:
 	void set_position	(float in_x, float in_y);
 	void set_position	(point &in_position);
 	const point &get_position	() const {	return m_position;	}
-
+	// ~ controllable interface
 	virtual void move_forward	()	override;
 	virtual void move_right		()	override;
 	virtual void move_backward	()	override;
 	virtual void move_left		()	override;
-
+	virtual void shoot			()	override;
+	// ~ end controllable interface
 private:
 	float m_velocity = 750.f;
 	float m_direction = 0.f;

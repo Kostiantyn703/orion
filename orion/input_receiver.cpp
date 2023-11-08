@@ -14,16 +14,19 @@ void input_receiver::handle_key_down(const SDL_Event &in_event) {
 	if (in_event.type & SDL_KEYDOWN) {
 		switch (in_event.key.keysym.sym) {
 		case SDLK_UP:
-			add_command(new	move_forward_command(in_event.key.state, command_type::ET_UP));
+			add_command(new	move_forward_command(in_event.key.state, command_type::CT_UP));
 			break;
 		case SDLK_RIGHT:
-			add_command(new move_right_command(in_event.key.state, command_type::ET_RIGHT));
+			add_command(new move_right_command(in_event.key.state, command_type::CT_RIGHT));
 			break;
 		case SDLK_DOWN:
-			add_command(new move_backward_command(in_event.key.state, command_type::ET_DOWN));
+			add_command(new move_backward_command(in_event.key.state, command_type::CT_DOWN));
 			break;
 		case SDLK_LEFT:
-			add_command(new move_left_command(in_event.key.state, command_type::ET_LEFT));
+			add_command(new move_left_command(in_event.key.state, command_type::CT_LEFT));
+			break;
+		case SDLK_SPACE:
+			add_command(new shoot_command(in_event.key.state, command_type::CT_SHOOT));
 			break;
 		}
 	}
@@ -33,16 +36,19 @@ void input_receiver::handle_key_up(const SDL_Event &in_event) {
 	if (in_event.type & SDL_KEYUP) {
 		switch (in_event.key.keysym.sym) {
 		case SDLK_UP:
-			remove_command(command_type::ET_UP, in_event.key.state);
+			remove_command(command_type::CT_UP, in_event.key.state);
 			break;
 		case SDLK_RIGHT:
-			remove_command(command_type::ET_RIGHT, in_event.key.state);
+			remove_command(command_type::CT_RIGHT, in_event.key.state);
 			break;
 		case SDLK_DOWN:
-			remove_command(command_type::ET_DOWN, in_event.key.state);
+			remove_command(command_type::CT_DOWN, in_event.key.state);
 			break;
 		case SDLK_LEFT:
-			remove_command(command_type::ET_LEFT, in_event.key.state);
+			remove_command(command_type::CT_LEFT, in_event.key.state);
+			break;
+		case SDLK_SPACE:
+			remove_command(command_type::CT_SHOOT, in_event.key.state);
 			break;
 		}
 	}
