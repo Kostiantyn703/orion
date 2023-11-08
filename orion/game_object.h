@@ -17,8 +17,7 @@ enum class object_type {
 
 class game_object : public controllable, public movable, public renderable {
 public:
-	game_object(object_type in_object_type);
-	game_object(point &initial_point);
+	game_object(const point &initial_point);
 	game_object(float initial_x, float initial_y);
 
 	virtual ~game_object() {}
@@ -31,7 +30,8 @@ public:
 	void set_position	(point &in_position);
 	const point &get_position	() const {	return m_position;	}
 
-	void set_velocity	(float in_velocity)	{	m_velocity = in_velocity;	}
+	void set_velocity	(float in_velocity)		{	m_velocity = in_velocity;	}
+	void set_type		(object_type in_type)	{	m_type = in_type;			}
 	// ~ controllable interface
 	virtual void move_forward	()	override;
 	virtual void move_right		()	override;

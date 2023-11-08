@@ -20,8 +20,10 @@ public:
 	void init_player(controller *in_controller, const resource_module &in_resources);
 	void init_objects(const resource_module &in_resources);
 
-	void create_object(float in_x, float in_y, texture *in_texture);
-	void create_object(object_type in_type, point &in_position, texture *in_texture);
+	//void create_object(float in_x, float in_y, texture *in_texture);
+
+	game_object	*create_object(float in_x, float in_y) const;
+	game_object *create_object(const point &in_position) const;
 
 	object_storage					m_objects;
 };
