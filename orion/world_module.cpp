@@ -32,14 +32,6 @@ void world_module::init_objects() {
 	texture *meteor_tex = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
 	meteor->set_texture(meteor_tex);
 	m_objects.push_back(meteor);
-
-	point bullet_pos(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.9f);
-	game_object *bullet = create_object(bullet_pos);
-	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
-	bullet->set_velocity(1500.f);
-	bullet->set_type(object_type::OT_BULLET);
-	bullet->move_forward();
-	m_objects.push_back(bullet);
 }
 
 void world_module::update(float delta_time) {
