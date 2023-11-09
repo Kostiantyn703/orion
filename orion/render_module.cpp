@@ -32,10 +32,6 @@ render_module::render_module() : is_wireframe(false)
 	init_shader(SPRITE_ADDRESS_VERT, SPRITE_ADDRESS_FRAG);
 }
 
-render_module::~render_module() {
-	m_renderables.clear();
-}
-
 void render_module::init() {
 	m_vertex_array = std::make_unique<vertex_array>();
 	m_vertex_buffer = std::make_unique<buffer_object>(GL_ARRAY_BUFFER);
@@ -101,24 +97,20 @@ bool render_module::load_shader(const char *source_address, std::string &out_sha
 	return true;
 }
 
-void render_module::run() {
+void render_module::run(world_module *in_world) {
 	glPolygonMode(GL_FRONT_AND_BACK, is_wireframe ? GL_LINE : GL_FILL);
 
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (int i = 0; i < m_shaders.size(); ++i) {
-		for (renderables::const_iterator it = m_renderables.cbegin(); it != m_renderables.cend(); ++it) {
+		for (int j = 0; j < in_world->m_objects.size(); ++j) {
 			m_shaders[i]->use();
-			(*it)->draw(*m_shaders[i]);
+			in_world->m_objects[j]->draw(*m_shaders[i]);
 			m_vertex_array->bind();
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 			m_vertex_array->unbind();
 		}
 	}
 	m_window->swap();
-}
-
-void render_module::add_object(renderable *in_obj) {
-	m_renderables.push_back(in_obj);
 }

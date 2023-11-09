@@ -10,13 +10,13 @@
 #include "vertex_array.h"
 #include "renderable.h"
 #include "shader_program.h"
+#include "world_module.h"
 
 class render_module {
 	using shader_vec = std::vector<std::unique_ptr<shader_program>>;
-	using renderables = std::vector<renderable*>;
 public:
 	render_module();
-	~render_module();
+	~render_module() {}
 
 	void init();
 
@@ -24,9 +24,7 @@ public:
 	void compile_shaders(const std::string &in_vertex_source, const std::string &in_fragment_source);
 	bool load_shader(const char *source_address, std::string &out_shader_source);
 
-	void run();
-
-	void add_object(renderable *in_obj);
+	void run(world_module *in_world);
 	 
 	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 
@@ -40,7 +38,6 @@ private:
 	std::unique_ptr<vertex_array>	m_vertex_array;
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 
-	renderables m_renderables;
 	shader_vec m_shaders;
 };
 #endif // RENDER_MODULE_H

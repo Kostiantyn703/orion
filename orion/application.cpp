@@ -1,7 +1,6 @@
 #include "application.h"
 
 #include "SDL.h"
-//#include "globals.h"
 #include "renderable.h"
 
 application::application() : is_active(false) {}
@@ -17,10 +16,6 @@ void application::start_up() {
 	m_world->init_objects();
 	
 	m_renderer->init();
-
-	for (auto it = m_world->m_objects.begin(); it != m_world->m_objects.end(); ++it) {
-		m_renderer->add_object(*it);
-	}
 
 	m_timer = std::make_unique<timer>();
 	m_timer->start();
@@ -39,7 +34,7 @@ void application::run() {
 
 		m_controller->handle_input(m_receiver.get());
 		m_world->update(delta_time);
-		m_renderer->run();
+		m_renderer->run(m_world.get());
 
 		last_frame = m_timer->get_current_time();
 	}

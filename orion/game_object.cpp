@@ -9,6 +9,7 @@
 
 #include "texture.h"
 #include "shader_program.h"
+#include "subscriber.h"
 
 game_object::game_object(const point &initial_point) {
 	set_position(initial_point.x_pos, initial_point.y_pos);
@@ -25,6 +26,13 @@ game_object::game_object(float initial_x, float initial_y) {
 void game_object::update(float delta_time) {
 	m_position.x_pos += m_move_dir.x_pos * delta_time * m_velocity;
 	m_position.y_pos += m_move_dir.y_pos * delta_time * m_velocity;
+
+	if (!can_shoot) {
+		m_reload_timer -= delta_time;
+		if (m_reload_timer < 0.f) {
+			can_shoot = true;
+		}
+	}
 
 	if (m_type != object_type::OT_BULLET) {
 		m_move_dir.x_pos = 0.f;
@@ -78,5 +86,9 @@ void game_object::move_left() {
 }
 
 void game_object::shoot() {
-	SDL_Log("Shooooot.");
+	if (can_shoot) {
+		m_listener->on_notify(this);
+		can_shoot = false;
+		m_reload_timer = m_reload_max_time;
+	}
 }

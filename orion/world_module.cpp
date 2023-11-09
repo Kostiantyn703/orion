@@ -3,7 +3,6 @@
 #include "globals.h"
 #include "resource_module.h"
 
-world_module::world_module() {}
 world_module::~world_module() {
 	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
 		delete *it;
@@ -17,6 +16,7 @@ void world_module::init_player(controller *in_controller) {
 	texture *player_tex = resource_module::get_instance()->get_texture(TEX_NAME_SHIP);
 	player->set_texture(player_tex);
 	in_controller->set_owner(player);
+	player->subscribe(this);
 	m_objects.push_back(player);
 }
 
@@ -33,8 +33,8 @@ void world_module::init_objects() {
 	meteor->set_texture(meteor_tex);
 	m_objects.push_back(meteor);
 
-	point bullet_pos(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.9f);
-	game_object * bullet = create_object(bullet_pos);
+	point bullet_pos(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.9f);
+	game_object *bullet = create_object(bullet_pos);
 	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
 	bullet->set_velocity(1500.f);
 	bullet->set_type(object_type::OT_BULLET);
@@ -54,4 +54,17 @@ game_object	*world_module::create_object(float in_x, float in_y) const {
 
 game_object *world_module::create_object(const point &in_position) const {
 	return new game_object(in_position);
+}
+
+void world_module::spawn_bullet(const point &in_position) {
+	game_object *bullet = create_object(in_position);
+	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
+	bullet->set_velocity(BULLET_VELOCITY);
+	bullet->set_type(object_type::OT_BULLET);
+	bullet->move_forward();
+	m_objects.push_back(bullet);
+}
+
+void world_module::on_notify(game_object *in_object) {
+ 	spawn_bullet(in_object->get_position());
 }
