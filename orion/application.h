@@ -12,7 +12,7 @@
 
 class application {
 public:
-	application();
+	application() : is_active(false) {}
 	~application() {}
 
 	void set_active(bool in_val) { is_active = in_val; }

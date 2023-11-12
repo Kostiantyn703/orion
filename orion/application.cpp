@@ -2,10 +2,7 @@
 
 #include "SDL.h"
 #include "renderable.h"
-#include <thread>
 #include <chrono>
-
-application::application() : is_active(false) {}
 
 void application::start_up() {
 	m_renderer	= std::make_unique<render_module>();

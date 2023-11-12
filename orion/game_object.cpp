@@ -40,10 +40,15 @@ void game_object::update(float delta_time) {
 			can_shoot = true;
 		}
 	}
-
+	// TODO: temporary
 	if (m_type != object_type::OT_BULLET) {
 		m_move_dir.x_pos = 0.f;
 		m_move_dir.y_pos = 0.f;
+	}
+	if (m_type == object_type::OT_BULLET) {
+		if (m_position.y_pos < 0.f) {
+			to_remove = true;
+		}
 	}
 }
 

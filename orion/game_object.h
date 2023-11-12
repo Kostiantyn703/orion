@@ -44,6 +44,8 @@ public:
 	virtual void move_left		()	override;
 	virtual void shoot			()	override;
 	// ~ end controllable interface
+
+	bool to_remove = false;
 private:
 	//float m_velocity = PLAYER_VELOCITY;
 	float m_direction = 0.f;
@@ -54,8 +56,6 @@ private:
 	object_type m_type;
 
 	subscriber *m_listener = nullptr;
-
-	bool to_remove = false;
 
 	bool can_shoot = true;
 	float m_reload_timer = 0.f;

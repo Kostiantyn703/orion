@@ -14,6 +14,7 @@ public:
 	virtual ~world_module();
 
 	void update(float delta_time);
+	void remove_objects();
 	
 	void init_player(controller *in_controller);
 	void init_objects();

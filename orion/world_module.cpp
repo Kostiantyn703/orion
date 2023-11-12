@@ -1,5 +1,7 @@
 #include "world_module.h"
 
+#include <algorithm>
+
 #include "globals.h"
 #include "resource_module.h"
 
@@ -38,6 +40,21 @@ void world_module::update(float delta_time) {
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
 		(*it)->update(delta_time);
 	}
+	remove_objects();
+}
+// TODO: probably only one bullet could reach the edge of the screen
+void world_module::remove_objects() {
+	
+	auto pred = [](game_object *object) {
+		return object->to_remove == true;
+	};
+	object_storage::const_iterator it_end = m_objects.end();
+	object_storage::const_iterator it_swap = find_if(m_objects.cbegin(), it_end, pred);
+	if (it_swap != it_end) {
+		swap(it_swap, it_end);
+		delete *it_end;
+		m_objects.erase(it_end);
+	}
 }
 
 game_object	*world_module::create_object(float in_x, float in_y) const {
@@ -51,7 +68,6 @@ game_object *world_module::create_object(const point &in_position) const {
 void world_module::spawn_bullet(const point &in_position) {
 	game_object *bullet = create_object(in_position);
 	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
-	//bullet->set_velocity(BULLET_VELOCITY);
 	bullet->set_type(object_type::OT_BULLET);
 	bullet->move_forward();
 	m_objects.push_back(bullet);
