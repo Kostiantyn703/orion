@@ -6,8 +6,8 @@ constexpr float		WINDOW_WIDTH	= 800.f;
 static const char	*WINDOW_NAME	= "PROJECT ORION";
 
 // objects
-constexpr float		BULLET_VELOCITY	= 2000.f;
-constexpr float		PLAYER_VELOCITY	= 1000.f;
+constexpr float		BULLET_VELOCITY	= 20.f;
+constexpr float		PLAYER_VELOCITY	= 10.f;
 
 // shaders
 static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";

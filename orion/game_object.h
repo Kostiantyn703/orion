@@ -32,7 +32,7 @@ public:
 	void set_position	(point &in_position);
 	const point &get_position	() const {	return m_position;	}
 
-	void set_velocity	(float in_velocity)		{	m_velocity = in_velocity;	}
+	//void set_velocity	(float in_velocity)		{	m_velocity = in_velocity;	}
 	void set_type		(object_type in_type)	{	m_type = in_type;			}
 
 	void subscribe		(subscriber *in_listener)	{	m_listener = in_listener;	}
@@ -45,7 +45,7 @@ public:
 	virtual void shoot			()	override;
 	// ~ end controllable interface
 private:
-	float m_velocity = PLAYER_VELOCITY;
+	//float m_velocity = PLAYER_VELOCITY;
 	float m_direction = 0.f;
 	
 	point m_position;
@@ -55,8 +55,10 @@ private:
 
 	subscriber *m_listener = nullptr;
 
+	bool to_remove = false;
+
 	bool can_shoot = true;
 	float m_reload_timer = 0.f;
-	float m_reload_max_time = 0.2f;
+	float m_reload_max_time = 100.f;
 };
 #endif // GAME_OBJECT_H

@@ -33,8 +33,9 @@ void timer::current_clock() {
 
 float timer::get_current_time() {
 	time_point curr_point = std::chrono::steady_clock::now();
-	std::chrono::duration<float> result = curr_point - m_start_point; 
-	return result.count();
+	float result = curr_point.time_since_epoch().count();
+	SDL_Log("Curr time %f", result);
+	return result;
 }
 
 void timer::show_time(const time_stamp &in_time_stamp) {

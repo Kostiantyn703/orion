@@ -2,6 +2,8 @@
 
 #include "SDL.h"
 #include "renderable.h"
+#include <thread>
+#include <chrono>
 
 application::application() : is_active(false) {}
 
@@ -23,20 +25,15 @@ void application::start_up() {
 	is_active = true;
 }
 
+constexpr int FRAMES_PER_SECOND = 60;
+constexpr std::chrono::milliseconds MS_PER_FRAME = std::chrono::milliseconds(1000 / FRAMES_PER_SECOND);
+constexpr float ACCUMULATOR = 0.01f;
+
 void application::run() {
-	float last_frame = m_timer->get_current_time();
-	float curr_frame = 0.f;
-	float delta_time = 0.f;
 	while (is_active) {
-		curr_frame = m_timer->get_current_time();
-		delta_time = curr_frame - last_frame;
-		delta_time *= 50.f;
-
 		m_controller->handle_input(m_receiver.get());
-		m_world->update(delta_time);
+		m_world->update(MS_PER_FRAME.count() * ACCUMULATOR);
 		m_renderer->run(m_world.get());
-
-		last_frame = m_timer->get_current_time();
 	}
 }
 

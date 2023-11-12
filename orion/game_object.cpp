@@ -24,8 +24,8 @@ game_object::game_object(float initial_x, float initial_y) {
 }
 
 void game_object::update(float delta_time) {
-	m_position.x_pos += m_move_dir.x_pos * delta_time * m_velocity;
-	m_position.y_pos += m_move_dir.y_pos * delta_time * m_velocity;
+	m_position.x_pos += m_move_dir.x_pos * delta_time;
+	m_position.y_pos += m_move_dir.y_pos * delta_time;
 	// TODO: temporary borders
 	if (m_position.x_pos < 0.f) {
 		m_position.x_pos = 1.f;

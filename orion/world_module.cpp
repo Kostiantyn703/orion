@@ -51,7 +51,7 @@ game_object *world_module::create_object(const point &in_position) const {
 void world_module::spawn_bullet(const point &in_position) {
 	game_object *bullet = create_object(in_position);
 	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
-	bullet->set_velocity(BULLET_VELOCITY);
+	//bullet->set_velocity(BULLET_VELOCITY);
 	bullet->set_type(object_type::OT_BULLET);
 	bullet->move_forward();
 	m_objects.push_back(bullet);
