@@ -11,7 +11,7 @@
 #include "shader_program.h"
 #include "subscriber.h"
 
-game_object::game_object(const point &initial_point) {
+game_object::game_object(const vector2f &initial_point) {
 	set_position(initial_point.x_pos, initial_point.y_pos);
 	m_move_dir.x_pos = 0.f;
 	m_move_dir.y_pos = 0.f;
@@ -77,7 +77,7 @@ void game_object::set_position(float in_x, float in_y) {
 	m_position.y_pos = in_y; 
 }
 
-void game_object::set_position(point &in_position) {
+void game_object::set_position(vector2f &in_position) {
 	m_position = in_position;
 }
 

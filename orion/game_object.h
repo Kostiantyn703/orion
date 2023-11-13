@@ -19,7 +19,7 @@ enum class object_type {
 
 class game_object : public controllable, public movable, public renderable {
 public:
-	game_object(const point &initial_point);
+	game_object(const vector2f &initial_point);
 	game_object(float initial_x, float initial_y);
 
 	virtual ~game_object() {}
@@ -29,8 +29,8 @@ public:
 	virtual void draw(const shader_program &in_shader) override;
 
 	void set_position	(float in_x, float in_y);
-	void set_position	(point &in_position);
-	const point &get_position	() const {	return m_position;	}
+	void set_position	(vector2f &in_position);
+	const vector2f &get_position	() const {	return m_position;	}
 
 	void set_type		(object_type in_type)	{	m_type = in_type;			}
 
@@ -49,8 +49,8 @@ private:
 	//float m_velocity = PLAYER_VELOCITY;
 	float m_direction = 0.f;
 	
-	point m_position;
-	point m_move_dir;
+	vector2f m_position;
+	vector2f m_move_dir;
 
 	object_type m_type;
 

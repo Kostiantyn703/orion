@@ -20,12 +20,12 @@ public:
 	void init_objects();
 
 	game_object	*create_object(float in_x, float in_y) const;
-	game_object *create_object(const point &in_position) const;
+	game_object *create_object(const vector2f &in_position) const;
 
 	virtual void on_notify(game_object *in_object) override;
 
 	object_storage					m_objects;
 private:
-	void spawn_bullet(const point &in_position);
+	void spawn_bullet(const vector2f &in_position);
 };
 #endif // WORLD_MODULE_H

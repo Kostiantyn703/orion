@@ -39,17 +39,17 @@ static float vertices[] = {
 };
 
 // point class
-class point {
+class vector2f {
 public:
-	point() {}
-	point(float in_x, float in_y) : x_pos(in_x), y_pos(in_y) {}
-	point &operator=(const point &rhs) {
+	vector2f() {}
+	vector2f(float in_x, float in_y) : x_pos(in_x), y_pos(in_y) {}
+	vector2f &operator=(const vector2f &rhs) {
 		x_pos = rhs.x_pos;
 		y_pos = rhs.y_pos;
 		return *this;
 	}
 
-	~point() {}
+	~vector2f() {}
 	
 	float x_pos;
 	float y_pos;

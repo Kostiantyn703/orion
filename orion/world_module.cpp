@@ -13,7 +13,7 @@ world_module::~world_module() {
 }
 
 void world_module::init_player(controller *in_controller) {
-	point player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
+	vector2f player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
 	game_object *player =  create_object(player_pos);
 	texture *player_tex = resource_module::get_instance()->get_texture(TEX_NAME_SHIP);
 	player->set_texture(player_tex);
@@ -26,22 +26,22 @@ void world_module::init_objects() {
 	texture *meteor_tex_big = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
 	texture *meteor_tex_med = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_MED);
 	
-	point meteor_pos1(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.2f);
+	vector2f meteor_pos1(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.2f);
 	game_object *meteor1 = create_object(meteor_pos1);
 	meteor1->set_texture(meteor_tex_med);
 	m_objects.push_back(meteor1);
 
-	point meteor_pos2(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.15f);
+	vector2f meteor_pos2(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.15f);
 	game_object *meteor2 = create_object(meteor_pos2);
 	meteor2->set_texture(meteor_tex_big);
 	m_objects.push_back(meteor2);
 
-	point meteor_pos3(WINDOW_WIDTH * 0.65f, WINDOW_HEIGHT * 0.3f);
+	vector2f meteor_pos3(WINDOW_WIDTH * 0.65f, WINDOW_HEIGHT * 0.3f);
 	game_object *meteor3 = create_object(meteor_pos3);
 	meteor3->set_texture(meteor_tex_big);
 	m_objects.push_back(meteor3);
 
-	point meteor_pos4(WINDOW_WIDTH * 0.9f, WINDOW_HEIGHT * 0.25f);
+	vector2f meteor_pos4(WINDOW_WIDTH * 0.9f, WINDOW_HEIGHT * 0.25f);
 	game_object *meteor4 = create_object(meteor_pos4);
 	meteor4->set_texture(meteor_tex_med);
 	m_objects.push_back(meteor4);
@@ -72,11 +72,11 @@ game_object	*world_module::create_object(float in_x, float in_y) const {
 	return new game_object(in_x, in_y);
 }
 
-game_object *world_module::create_object(const point &in_position) const {
+game_object *world_module::create_object(const vector2f &in_position) const {
 	return new game_object(in_position);
 }
 
-void world_module::spawn_bullet(const point &in_position) {
+void world_module::spawn_bullet(const vector2f &in_position) {
 	game_object *bullet = create_object(in_position);
 	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
 	bullet->set_type(object_type::OT_BULLET);
