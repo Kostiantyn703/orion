@@ -42,16 +42,16 @@ static float vertices[] = {
 class vector2f {
 public:
 	vector2f() {}
-	vector2f(float in_x, float in_y) : x_pos(in_x), y_pos(in_y) {}
+	vector2f(float in_x, float in_y) : m_x(in_x), m_y(in_y) {}
 	vector2f &operator=(const vector2f &rhs) {
-		x_pos = rhs.x_pos;
-		y_pos = rhs.y_pos;
+		m_x = rhs.m_x;
+		m_y = rhs.m_y;
 		return *this;
 	}
 
 	~vector2f() {}
 	
-	float x_pos;
-	float y_pos;
+	float m_x;
+	float m_y;
 };
 #endif // !GLOBALS_H

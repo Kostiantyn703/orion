@@ -85,5 +85,5 @@ void world_module::spawn_bullet(const vector2f &in_position) {
 }
 
 void world_module::on_notify(game_object *in_object) {
- 	spawn_bullet(in_object->get_position());
+ 	spawn_bullet(in_object->get_origin());
 }

@@ -28,7 +28,7 @@ render_module::render_module() : is_wireframe(false)
 
 	m_window = std::make_unique<window>();
 
-	//init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
+	init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
 	init_shader(SPRITE_ADDRESS_VERT, SPRITE_ADDRESS_FRAG);
 }
 

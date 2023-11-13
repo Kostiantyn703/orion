@@ -25,14 +25,16 @@ public:
 	virtual ~game_object() {}
 
 	void update		(float delta_time);
-
+	// ~ renderable interface
 	virtual void draw(const shader_program &in_shader) override;
+	virtual void set_texture(texture *in_texture) override;
+	// ~ end renderable interface
 
-	void set_position	(float in_x, float in_y);
-	void set_position	(vector2f &in_position);
-	const vector2f &get_position	() const {	return m_position;	}
+	void set_origin				(float in_x, float in_y);
+	void set_origin				(vector2f &in_position);
+	const vector2f &get_origin	() const {	return m_origin;	}
 
-	void set_type		(object_type in_type)	{	m_type = in_type;			}
+	void set_type		(object_type in_type)		{	m_type = in_type;			}
 
 	void subscribe		(subscriber *in_listener)	{	m_listener = in_listener;	}
 
@@ -49,8 +51,9 @@ private:
 	//float m_velocity = PLAYER_VELOCITY;
 	float m_direction = 0.f;
 	
-	vector2f m_position;
+	vector2f m_origin;
 	vector2f m_move_dir;
+	vector2f m_aabb;
 
 	object_type m_type;
 

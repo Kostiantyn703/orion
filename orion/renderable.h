@@ -8,7 +8,7 @@ class renderable {
 public:
 	virtual ~renderable() {}
 	virtual void draw(const shader_program &in_shader) = 0;
-	void set_texture(texture *in_texture)	{	m_texture = in_texture;}
+	virtual void set_texture(texture *in_texture) = 0;
 protected:
 	texture	*m_texture = nullptr;
 };
