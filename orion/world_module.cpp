@@ -23,17 +23,28 @@ void world_module::init_player(controller *in_controller) {
 }
 
 void world_module::init_objects() {
-	point enemy_pos(WINDOW_WIDTH * 0.75f, WINDOW_HEIGHT * 0.2f);
-	game_object *enemy = create_object(enemy_pos);
-	texture *enemy_tex = resource_module::get_instance()->get_texture(TEX_NAME_ENEMY);
-	enemy->set_texture(enemy_tex);
-	m_objects.push_back(enemy);
+	texture *meteor_tex_big = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
+	texture *meteor_tex_med = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_MED);
+	
+	point meteor_pos1(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.2f);
+	game_object *meteor1 = create_object(meteor_pos1);
+	meteor1->set_texture(meteor_tex_med);
+	m_objects.push_back(meteor1);
 
-	point meteor_pos(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.1f);
-	game_object *meteor = create_object(meteor_pos);
-	texture *meteor_tex = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
-	meteor->set_texture(meteor_tex);
-	m_objects.push_back(meteor);
+	point meteor_pos2(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.15f);
+	game_object *meteor2 = create_object(meteor_pos2);
+	meteor2->set_texture(meteor_tex_big);
+	m_objects.push_back(meteor2);
+
+	point meteor_pos3(WINDOW_WIDTH * 0.65f, WINDOW_HEIGHT * 0.3f);
+	game_object *meteor3 = create_object(meteor_pos3);
+	meteor3->set_texture(meteor_tex_big);
+	m_objects.push_back(meteor3);
+
+	point meteor_pos4(WINDOW_WIDTH * 0.9f, WINDOW_HEIGHT * 0.25f);
+	game_object *meteor4 = create_object(meteor_pos4);
+	meteor4->set_texture(meteor_tex_med);
+	m_objects.push_back(meteor4);
 }
 
 void world_module::update(float delta_time) {

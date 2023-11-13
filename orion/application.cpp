@@ -21,15 +21,15 @@ void application::start_up() {
 
 	is_active = true;
 }
-
+// TODO: probably not the best desission, but ok for now
 constexpr int FRAMES_PER_SECOND = 60;
 constexpr std::chrono::milliseconds MS_PER_FRAME = std::chrono::milliseconds(1000 / FRAMES_PER_SECOND);
-constexpr float ACCUMULATOR = 0.01f;
+constexpr float DT_ACCUMULATOR = 0.01f;
 
 void application::run() {
 	while (is_active) {
 		m_controller->handle_input(m_receiver.get());
-		m_world->update(MS_PER_FRAME.count() * ACCUMULATOR);
+		m_world->update(MS_PER_FRAME.count() * DT_ACCUMULATOR);
 		m_renderer->run(m_world.get());
 	}
 }
