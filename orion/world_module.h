@@ -27,5 +27,8 @@ public:
 	object_storage					m_objects;
 private:
 	void spawn_bullet(const vector2f &in_position);
+	// TODO: temporary, add collidable interface, and collision module for such handles
+	void check_collision(game_object *in_object);
+	bool intersect(const aabb &lhs, const aabb &rhs);
 };
 #endif // WORLD_MODULE_H

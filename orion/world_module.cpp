@@ -4,6 +4,7 @@
 
 #include "globals.h"
 #include "resource_module.h"
+#include <SDL_log.h>
 
 world_module::~world_module() {
 	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
@@ -50,12 +51,12 @@ void world_module::init_objects() {
 void world_module::update(float delta_time) {
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
 		(*it)->update(delta_time);
+		check_collision(*it);
 	}
 	remove_objects();
 }
 // TODO: probably only one bullet could reach the edge of the screen
 void world_module::remove_objects() {
-	
 	auto pred = [](game_object *object) {
 		return object->to_remove == true;
 	};
@@ -86,4 +87,27 @@ void world_module::spawn_bullet(const vector2f &in_position) {
 
 void world_module::on_notify(game_object *in_object) {
  	spawn_bullet(in_object->get_origin());
+}
+
+void world_module::check_collision(game_object *in_object) {
+	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
+		if (in_object == *it) {
+			continue;
+		}
+		if (intersect(in_object->get_aabb(), (*it)->get_aabb())) {
+			(*it)->to_remove = true;
+		}
+	}
+}
+
+bool world_module::intersect(const aabb &lhs, const aabb &rhs) {
+	bool x_check_min = lhs.get_origin().get_x() <= (rhs.get_origin().get_x() + rhs.get_size().get_x());
+	bool x_check_max = (lhs.get_origin().get_x() + lhs.get_size().get_x()) >= rhs.get_origin().get_x();
+	
+	bool y_check_min = lhs.get_origin().get_y() <= (rhs.get_origin().get_y() + rhs.get_size().get_y());
+	bool y_check_max = (lhs.get_origin().get_y() + lhs.get_size().get_y()) >= rhs.get_origin().get_y();
+
+	bool result = x_check_min && x_check_max && y_check_min && y_check_max;
+	
+	return result;
 }

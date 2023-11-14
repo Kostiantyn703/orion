@@ -32,7 +32,8 @@ public:
 
 	void set_origin				(float in_x, float in_y);
 	void set_origin				(const vector2f &in_position);
-	const vector2f &get_origin	() const {	return m_origin;	}
+	const vector2f	&get_origin	() const {	return m_origin;	}
+	const aabb		&get_aabb	() const {	return m_aabb;		}
 
 	void set_type		(object_type in_type)		{	m_type = in_type;			}
 
