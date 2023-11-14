@@ -27,9 +27,9 @@ render_module::render_module() : is_wireframe(false)
 	log_error;
 
 	m_window = std::make_unique<window>();
-
-	init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
+	// TODO: change order, made for test
 	init_shader(SPRITE_ADDRESS_VERT, SPRITE_ADDRESS_FRAG);
+	init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
 }
 
 void render_module::init() {
@@ -73,7 +73,6 @@ void render_module::compile_shaders(const std::string &in_vertex_source, const s
 
 	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
 	glUniformMatrix4fv(glGetUniformLocation(curr_shader.id(), "projection"), 1, false, glm::value_ptr(projection));
-	//m_shaders.insert(std::make_pair(std::string(SPRITE_NAME), std::make_unique<shader_program>(curr_shader)));
 	m_shaders.push_back(std::make_unique<shader_program>(curr_shader));
 
 	vert->destroy();

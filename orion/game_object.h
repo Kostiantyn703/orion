@@ -31,7 +31,7 @@ public:
 	// ~ end renderable interface
 
 	void set_origin				(float in_x, float in_y);
-	void set_origin				(vector2f &in_position);
+	void set_origin				(const vector2f &in_position);
 	const vector2f &get_origin	() const {	return m_origin;	}
 
 	void set_type		(object_type in_type)		{	m_type = in_type;			}
@@ -48,12 +48,12 @@ public:
 
 	bool to_remove = false;
 private:
-	//float m_velocity = PLAYER_VELOCITY;
 	float m_direction = 0.f;
 	
 	vector2f m_origin;
+	vector2f m_size;
 	vector2f m_move_dir;
-	vector2f m_aabb;
+	aabb m_aabb;
 
 	object_type m_type;
 
