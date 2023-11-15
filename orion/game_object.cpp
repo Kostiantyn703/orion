@@ -109,3 +109,8 @@ void game_object::shoot() {
 		m_reload_timer = m_reload_max_time;
 	}
 }
+
+void game_object::on_intersect() {
+	SDL_Log("I WAS COLLIDED!!!");
+	set_to_remove(true);
+}

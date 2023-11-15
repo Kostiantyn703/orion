@@ -78,26 +78,4 @@ private:
 	float m_x;
 	float m_y;
 };
-
-class aabb {
-public:
-	aabb() : m_origin(0.f, 0.f), m_size(0.f, 0.f) {}
-	~aabb() {}
-
-	void		set_origin	(const vector2f &in_origin)	{	m_origin = in_origin;	}
-	vector2f	get_origin	()	const					{	return m_origin;		}
-	void		set_size	(const vector2f &in_size)	{	m_size = in_size;		}
-	vector2f	get_size	()	const					{	return m_size;			}
-	// TDOD: this works only for big objects, bullets should have aabb of the full texture size
-	void calculate(vector2f &in_origin, vector2f &in_size) {
-		vector2f aabb_origin = in_origin + (in_size * 0.2f);
-		set_origin(aabb_origin);
-		vector2f aabb_size = in_size * 0.6f;
-		set_size(aabb_size);
-	}
-
-private:
-	vector2f	m_origin;
-	vector2f	m_size;
-};
 #endif // !GLOBALS_H

@@ -2,15 +2,19 @@
 #define WORLD_MODULE_H
 
 #include <vector>
+#include <memory>
 
 #include "game_object.h"
 #include "controller.h"
 #include "subscriber.h"
+#include "collision_module.h"
+
+using object_storage = std::vector<game_object*>;
 
 class world_module : public subscriber {
-	using object_storage = std::vector<game_object*>;
+	
 public:
-	world_module() {}
+	world_module();
 	virtual ~world_module();
 
 	void update(float delta_time);
@@ -26,9 +30,8 @@ public:
 
 	object_storage					m_objects;
 private:
+	std::unique_ptr<collision_module> m_colision_system;
+
 	void spawn_bullet(const vector2f &in_position);
-	// TODO: temporary, add collidable interface, and collision module for such handles
-	void check_collision(game_object *in_object);
-	bool intersect(const aabb &lhs, const aabb &rhs);
 };
 #endif // WORLD_MODULE_H
