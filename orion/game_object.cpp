@@ -54,20 +54,19 @@ void game_object::update(float delta_time) {
 }
 
 void game_object::draw(const shader_program &in_shader) {
+	// draw texture
 	glm::mat4 model = glm::mat4(1.f);
-	glm::mat4 aabb = glm::mat4(1.f);
 	model = glm::translate(model, glm::vec3(m_origin.get_x(), m_origin.get_y(), 0.f));
-	aabb = glm::translate(aabb, glm::vec3(m_aabb.get_origin().get_x(), m_aabb.get_origin().get_y(), 0.f));
-	
-	//model = glm::rotate(model, glm::radians(m_direction), glm::vec3(0.f, 0.f, 1.f));
-
 	glm::vec2 model_size(m_size.get_x(), m_size.get_y());
-	glm::vec2 aabb_size(m_aabb.get_size().get_x(), m_aabb.get_size().get_y());
 	model = glm::scale(model, glm::vec3(model_size, 1.0f));
-	aabb = glm::scale(aabb, glm::vec3(aabb_size, 1.0f));
-
 	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
+	// draw aabb
+	glm::mat4 aabb = glm::mat4(1.f);
+	aabb = glm::translate(aabb, glm::vec3(m_aabb.get_origin().get_x(), m_aabb.get_origin().get_y(), 0.f));
+	glm::vec2 aabb_size(m_aabb.get_size().get_x(), m_aabb.get_size().get_y());
+	aabb = glm::scale(aabb, glm::vec3(aabb_size, 1.0f));
 	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "aabb_model"), 1, false, glm::value_ptr(aabb));
+	
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();
 }
