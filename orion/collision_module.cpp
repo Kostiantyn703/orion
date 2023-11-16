@@ -4,9 +4,9 @@
 
 void collision_module::check_collision(const world_module *in_world, collidable *in_object) {
 	for (object_storage::const_iterator it = in_world->m_objects.cbegin(); it != in_world->m_objects.cend(); ++it) {
-		if (in_object == *it) {
-			continue;
-		}
+		if (in_object == *it)	continue;
+		if (in_object->get_mask() & (*it)->get_mask())	continue;
+
 		if (intersect(in_object->get_aabb(), (*it)->get_aabb())) {
 			(*it)->on_intersect();
 		}

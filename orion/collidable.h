@@ -2,6 +2,7 @@
 #define COLLIDABLE_H
 
 #include "globals.h"
+#include <cstdint>
 
 constexpr float SIZE_SCALAR = 0.2f;
 
@@ -26,6 +27,11 @@ private:
 	vector2f	m_origin;
 	vector2f	m_size;
 };
+// collision masks
+constexpr std::uint8_t MASK_PLAYER			= 1 << 0;
+constexpr std::uint8_t MASK_PLAYER_BULLET	= 1 << 1;
+constexpr std::uint8_t MASK_ENEMY			= 1 << 2;
+constexpr std::uint8_t MASK_ENEMY_BULLET	= 1 << 3;
 
 class collidable {
 public:
@@ -33,8 +39,11 @@ public:
 	virtual void on_intersect() = 0;
 
 	const aabb &get_aabb() const { return m_aabb; }
+	void set_mask(uint8_t in_mask) { m_mask = in_mask; }
+	const std::uint8_t get_mask() const { return m_mask; }
 protected:
 	aabb m_aabb;
+	std::uint8_t m_mask;
 };
 
 #endif //COLLIDABLE_H
