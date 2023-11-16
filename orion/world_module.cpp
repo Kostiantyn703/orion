@@ -90,19 +90,19 @@ game_object	*world_module::create_object(float in_x, float in_y) const {
 	return new game_object(in_x, in_y);
 }
 
-game_object *world_module::create_object(const vector2f &in_position) const {
+game_object *world_module::create_object(vector2f &in_position) const {
 	return new game_object(in_position);
 }
 
-void world_module::spawn_bullet(const vector2f &in_position) {
+void world_module::spawn_bullet(vector2f &in_position) {
 	game_object *bullet = create_object(in_position);
-	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
 	bullet->set_type(object_type::OT_BULLET);
+	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
 	bullet->set_mask(MASK_PLAYER | MASK_PLAYER_BULLET);
 	bullet->move_forward();
 	m_objects.push_back(bullet);
 }
-
-void world_module::on_notify(game_object *in_object) {
- 	spawn_bullet(in_object->get_origin());
+// bullet spawner
+void world_module::on_notify(vector2f &in_position) {
+ 	spawn_bullet(in_position);
 }

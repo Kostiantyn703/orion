@@ -11,16 +11,21 @@
 #include "shader_program.h"
 #include "subscriber.h"
 
-game_object::game_object(const vector2f &initial_point) {
+game_object::game_object(vector2f &initial_point) {
 	set_origin(initial_point);
 	m_move_dir.set_x(0.f);
 	m_move_dir.set_y(0.f);
+	m_weapon = new weapon();
 }
 
 game_object::game_object(float initial_x, float initial_y) {
 	set_origin(initial_x, initial_y);
 	m_move_dir.set_x(0.f);
 	m_move_dir.set_y(0.f);
+}
+
+game_object::~game_object() {
+	delete m_weapon;
 }
 
 void game_object::update(float delta_time) {
@@ -35,10 +40,10 @@ void game_object::update(float delta_time) {
 		m_origin.set_x(WINDOW_WIDTH - 1.f);
 	}
 
-	if (!can_shoot) {
-		m_reload_timer -= delta_time;
-		if (m_reload_timer < 0.f) {
-			can_shoot = true;
+	if (!m_weapon->can_shoot) {
+		m_weapon->m_reload_timer -= delta_time;
+		if (m_weapon->m_reload_timer < 0.f) {
+			m_weapon->can_shoot = true;
 		}
 	}
 	// TODO: temporary
@@ -75,6 +80,14 @@ void game_object::set_texture(texture *in_texture) {
 	m_texture = in_texture;
 	m_size.set_x((float)m_texture->get_width());
 	m_size.set_y((float)m_texture->get_height());
+	// TODO: bad
+	if (m_type == object_type::OT_BULLET) {
+		m_origin.set_x(m_origin.get_x() - m_size.get_x() * 0.5f);
+	}
+	if (m_type == object_type::OT_PLAYER) {
+		vector2f wep_pos(m_size.get_x() * 0.5f, 0.f);
+		m_weapon->set_postition(wep_pos);
+	}
 }
 
 void game_object::set_origin(float in_x, float in_y) {
@@ -103,10 +116,11 @@ void game_object::move_left() {
 }
 
 void game_object::shoot() {
-	if (can_shoot) {
-		m_listener->on_notify(this);
-		can_shoot = false;
-		m_reload_timer = m_reload_max_time;
+	if (m_weapon->can_shoot) {
+		vector2f spawn_pos = m_origin + m_weapon->get_position();
+		m_listener->on_notify(spawn_pos);
+		m_weapon->can_shoot = false;
+		m_weapon->m_reload_timer = m_weapon->m_reload_max_time;
 	}
 }
 

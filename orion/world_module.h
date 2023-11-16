@@ -24,14 +24,14 @@ public:
 	void init_objects();
 
 	game_object	*create_object(float in_x, float in_y) const;
-	game_object *create_object(const vector2f &in_position) const;
+	game_object *create_object(vector2f &in_position) const;
 
-	virtual void on_notify(game_object *in_object) override;
+	virtual void on_notify(vector2f &in_position) override;
 
 	object_storage					m_objects;
 private:
 	std::unique_ptr<collision_module> m_colision_system;
 
-	void spawn_bullet(const vector2f &in_position);
+	void spawn_bullet(vector2f &in_position);
 };
 #endif // WORLD_MODULE_H

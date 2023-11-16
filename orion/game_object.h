@@ -7,6 +7,7 @@
 #include "movable.h"
 #include "renderable.h"
 #include "collidable.h"
+#include "weapon.h"
 
 class subscriber;
 
@@ -20,10 +21,10 @@ enum class object_type {
 
 class game_object : public controllable, public movable, public renderable, public collidable {
 public:
-	game_object(const vector2f &initial_point);
+	game_object(vector2f &initial_point);
 	game_object(float initial_x, float initial_y);
 
-	virtual ~game_object() {}
+	virtual ~game_object();
 
 	void update		(float delta_time);
 	// ~ renderable interface
@@ -63,10 +64,8 @@ private:
 
 	object_type m_type;
 
-	subscriber *m_listener = nullptr;
+	weapon *m_weapon;
 
-	bool can_shoot = true;
-	float m_reload_timer = 0.f;
-	float m_reload_max_time = 300.f;
+	subscriber *m_listener = nullptr;
 };
 #endif // GAME_OBJECT_H
