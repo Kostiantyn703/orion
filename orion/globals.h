@@ -39,19 +39,43 @@ static float vertices[] = {
 };
 
 // point class
-class point {
+class vector2f {
 public:
-	point() {}
-	point(float in_x, float in_y) : x_pos(in_x), y_pos(in_y) {}
-	point &operator=(const point &rhs) {
-		x_pos = rhs.x_pos;
-		y_pos = rhs.y_pos;
+	vector2f() {}
+	vector2f(float in_x, float in_y) : m_x(in_x), m_y(in_y) {}
+	~vector2f() {}
+
+	void	set_x(float in_x)	{	m_x = in_x;	}
+	void	set_y(float in_y)	{	m_y = in_y;	}
+	float	get_x()				{	return m_x;	}
+	float	get_y()				{	return m_y;	}
+
+
+	vector2f &operator=(const vector2f &rhs) {
+		m_x = rhs.m_x;
+		m_y = rhs.m_y;
 		return *this;
 	}
 
-	~point() {}
-	
-	float x_pos;
-	float y_pos;
+	friend vector2f operator*(vector2f lhs, float in_scalar) {
+		lhs.m_x *= in_scalar;
+		lhs.m_y *= in_scalar;
+		return lhs;
+	}
+
+	friend vector2f operator+(vector2f lhs, const vector2f &rhs) {
+		lhs.m_x += rhs.m_x;
+		lhs.m_y += rhs.m_y;
+		return lhs;
+	}
+
+	friend vector2f operator-(vector2f lhs, const vector2f &rhs) {
+		lhs.m_x -= rhs.m_x;
+		lhs.m_y -= rhs.m_y;
+		return lhs;
+	}
+private:
+	float m_x;
+	float m_y;
 };
 #endif // !GLOBALS_H
