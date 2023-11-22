@@ -4,7 +4,7 @@
 #include "globals.h"
 #include <cstdint>
 
-constexpr float SIZE_SCALAR = 0.2f;
+constexpr float SIZE_SCALAR = 0.1f;
 
 class aabb {
 public:

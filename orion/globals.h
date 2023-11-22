@@ -47,9 +47,8 @@ public:
 
 	void	set_x(float in_x)	{	m_x = in_x;	}
 	void	set_y(float in_y)	{	m_y = in_y;	}
-	float	get_x()				{	return m_x;	}
-	float	get_y()				{	return m_y;	}
-
+	float	get_x()	const		{	return m_x;	}
+	float	get_y()	const		{	return m_y;	}
 
 	vector2f &operator=(const vector2f &rhs) {
 		m_x = rhs.m_x;
