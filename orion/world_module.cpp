@@ -1,10 +1,9 @@
 #include "world_module.h"
-
+#include <SDL_log.h>
 #include <algorithm>
 
 #include "globals.h"
 #include "resource_module.h"
-#include <SDL_log.h>
 
 constexpr int OBJECTS_CAPACITY = 20;
 
@@ -26,7 +25,9 @@ void world_module::init_player(controller *in_controller) {
 	spaceship *player =  create_spaceship(player_pos, forward_vec);
 	texture *player_tex = resource_module::get_instance()->get_texture(TEX_NAME_SHIP);
 	player->set_texture(player_tex);
+	player->init();
 	in_controller->set_owner(player);
+	player->set_listener(this);
 	player->set_mask(MASK_PLAYER);
 	m_objects.push_back(player);
 }
@@ -85,10 +86,6 @@ void world_module::remove_objects() {
 	}
 }
 
-game_object	*world_module::create_object(float in_x, float in_y) const {
-	return new game_object(in_x, in_y);
-}
-
 game_object *world_module::create_object(vector2f &in_position) const {
 	return new game_object(in_position);
 }
@@ -97,14 +94,18 @@ spaceship *world_module::create_spaceship(vector2f &in_position, vector2f &in_fo
 	return new spaceship(in_position, in_forward_vector);
 }
 
-void world_module::spawn_bullet(vector2f &in_position) {
-	game_object *bullet = create_object(in_position);
-	bullet->set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BULLET));
-	bullet->set_mask(MASK_PLAYER | MASK_PLAYER_BULLET);
-	//bullet->move_forward();
-	m_objects.push_back(bullet);
+bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) {
+	return new bullet(in_position, in_forward_vector);
 }
 // bullet spawner
-void world_module::on_notify(vector2f &in_position) {
- 	spawn_bullet(in_position);
+void world_module::on_notify(const vector2f &in_position, const vector2f &in_forward_vector) {
+	texture *tex = resource_module::get_instance()->get_texture(TEX_NAME_BULLET);
+	
+	vector2f pos = in_position;
+	pos.set_x(pos.get_x() - tex->get_width() * 0.5f);
+
+ 	bullet *bul = spawn_bullet(pos, in_forward_vector);
+	bul->set_texture(tex);
+	bul->set_mask(MASK_PLAYER | MASK_PLAYER_BULLET);
+	m_objects.push_back(bul);
 }

@@ -2,19 +2,12 @@
 #define GAME_OBJECT_H
 
 #include "globals.h"
-
-#include "controllable.h"
-#include "movable.h"
 #include "renderable.h"
 #include "collidable.h"
-#include "weapon.h"
-
-class subscriber;
 
 class game_object : public renderable, public collidable {
 public:
-	game_object(vector2f &initial_point);
-	game_object(float initial_x, float initial_y);
+	game_object(const vector2f &initial_point);
 
 	virtual ~game_object();
 

@@ -11,12 +11,8 @@
 #include "shader_program.h"
 #include "subscriber.h"
 
-game_object::game_object(vector2f &initial_point) {
+game_object::game_object(const vector2f &initial_point) {
 	set_origin(initial_point);
-}
-
-game_object::game_object(float initial_x, float initial_y) {
-	set_origin(initial_x, initial_y);
 }
 
 game_object::~game_object() {
