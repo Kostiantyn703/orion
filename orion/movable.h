@@ -2,16 +2,16 @@
 #define MOVABLE_H
 
 class movable {
-public:
-	virtual ~movable() {}
-
-	virtual void move_forward()		= 0;
-	virtual void move_right()		= 0;
-	virtual void move_backward()	= 0;
-	virtual void move_left()		= 0;
-
 protected:
-	//vector2f m_move_dir;
-	vector2f m_forward_vector;
+	virtual		~movable()		{}
+
+	void		set_move_dir	(vector2f in_move_dir)	{	m_move_dir = in_move_dir;	}
+	vector2f	get_move_dir	()	const				{	return m_move_dir;			}
+	
+	void		set_forward_vector(vector2f in_forward_vector)	{	m_forward_vector = in_forward_vector;	}
+	vector2f	get_forward_vector()	const					{	return m_forward_vector;				}
+private:
+	vector2f	m_move_dir;
+	vector2f	m_forward_vector;
 };
 #endif // MOVABLE_H

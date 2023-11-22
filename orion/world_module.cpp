@@ -22,7 +22,8 @@ world_module::~world_module() {
 
 void world_module::init_player(controller *in_controller) {
 	vector2f player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
-	spaceship *player =  create_spaceship(player_pos);
+	vector2f forward_vec(0.f, -1.f);
+	spaceship *player =  create_spaceship(player_pos, forward_vec);
 	texture *player_tex = resource_module::get_instance()->get_texture(TEX_NAME_SHIP);
 	player->set_texture(player_tex);
 	in_controller->set_owner(player);
@@ -92,8 +93,8 @@ game_object *world_module::create_object(vector2f &in_position) const {
 	return new game_object(in_position);
 }
 
-spaceship *world_module::create_spaceship(vector2f &in_position) const {
-	return new spaceship(in_position);
+spaceship *world_module::create_spaceship(vector2f &in_position, vector2f &in_forward_vector) const {
+	return new spaceship(in_position, in_forward_vector);
 }
 
 void world_module::spawn_bullet(vector2f &in_position) {

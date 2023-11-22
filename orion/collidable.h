@@ -16,7 +16,7 @@ public:
 	void		set_size(const vector2f &in_size) { m_size = in_size; }
 	vector2f	get_size()	const { return m_size; }
 
-	void calculate(vector2f &in_origin, vector2f &in_size) {
+	void calculate(const vector2f &in_origin, const vector2f &in_size) {
 		vector2f aabb_origin = in_origin + (in_size * SIZE_SCALAR);
 		set_origin(aabb_origin);
 		vector2f aabb_size = in_size * (1.f - (SIZE_SCALAR * 2));

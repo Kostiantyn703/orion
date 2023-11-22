@@ -27,7 +27,7 @@ public:
 	game_object	*create_object(float in_x, float in_y) const;
 	game_object *create_object(vector2f &in_position) const;
 
-	spaceship *create_spaceship(vector2f &in_position) const;
+	spaceship *create_spaceship(vector2f &in_position, vector2f &in_forward_vector) const;
 
 	virtual void on_notify(vector2f &in_position) override;
 
