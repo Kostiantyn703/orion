@@ -10,6 +10,8 @@ protected:
 	
 	void		set_forward_vector(vector2f in_forward_vector)	{	m_forward_vector = in_forward_vector;	}
 	vector2f	get_forward_vector()	const					{	return m_forward_vector;				}
+
+	void		merge_movement(vector2f &in_vector)		{	m_move_dir = m_move_dir + in_vector; }
 private:
 	vector2f	m_move_dir;
 	vector2f	m_forward_vector;

@@ -36,19 +36,23 @@ void spaceship::update(float delta_time) {
 }
 
 void spaceship::move_forward() {
-	set_move_dir(get_forward_vector());
+	vector2f dir = get_forward_vector();
+	merge_movement(dir);
 }
 
 void spaceship::move_right() {
-
+	vector2f dir = get_forward_vector().get_swapped().get_inverse();
+	merge_movement(dir);
 }
 
 void spaceship::move_backward() {
-
+	vector2f dir = get_forward_vector().get_inverse();
+	merge_movement(dir);
 }
 
 void spaceship::move_left() {
-
+	vector2f dir = get_forward_vector().get_swapped();
+	merge_movement(dir);
 }
 
 void spaceship::shoot() {

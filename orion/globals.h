@@ -38,7 +38,7 @@ static float vertices[] = {
 	1.f, 0.f,		1.f, 0.f
 };
 
-// point class
+// vector class
 class vector2f {
 public:
 	vector2f() {}
@@ -49,6 +49,9 @@ public:
 	void	set_y(float in_y)	{	m_y = in_y;	}
 	float	get_x()	const		{	return m_x;	}
 	float	get_y()	const		{	return m_y;	}
+
+	vector2f	get_inverse	()	const	{	return vector2f(m_x * -1, m_y * -1);	}
+	vector2f	get_swapped	()	const	{	return vector2f(m_y, m_x);				}
 
 	vector2f &operator=(const vector2f &rhs) {
 		m_x = rhs.m_x;
