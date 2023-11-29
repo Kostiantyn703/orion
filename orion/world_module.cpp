@@ -22,48 +22,36 @@ world_module::~world_module() {
 void world_module::init_player(controller *in_controller) {
 	vector2f player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
 	vector2f forward_vec(0.f, -1.f);
-	spaceship *player =  create_spaceship(player_pos, forward_vec);
+	spaceship *player =  spawn_spaceship(player_pos, forward_vec);
 	texture *player_tex = resource_module::get_instance()->get_texture(TEX_NAME_SHIP);
 	player->set_texture(player_tex);
 	player->init();
 	in_controller->set_owner(player);
 	player->set_listener(this);
-	player->set_mask(MASK_PLAYER);
+	// TODO: temporary god mod to prevent hit by enemy during test
+	player->set_mask(MASK_PLAYER | MASK_ENEMY);
 	m_objects.push_back(player);
 }
 
-//void world_module::init_objects() {
-//	texture *meteor_tex_big = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
-//	texture *meteor_tex_med = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_MED);
-//	
-//	vector2f meteor_pos1(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.2f);
-//	game_object *meteor1 = create_object(meteor_pos1);
-//	meteor1->set_texture(meteor_tex_med);
-//	meteor1->set_type(object_type::OT_ENEMY);
-//	meteor1->set_mask(MASK_ENEMY);
-//	m_objects.push_back(meteor1);
-//
-//	vector2f meteor_pos2(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.15f);
-//	game_object *meteor2 = create_object(meteor_pos2);
-//	meteor2->set_texture(meteor_tex_big);
-//	meteor2->set_type(object_type::OT_ENEMY);
-//	meteor2->set_mask(MASK_ENEMY);
-//	m_objects.push_back(meteor2);
-//
-//	vector2f meteor_pos3(WINDOW_WIDTH * 0.65f, WINDOW_HEIGHT * 0.3f);
-//	game_object *meteor3 = create_object(meteor_pos3);
-//	meteor3->set_texture(meteor_tex_big);
-//	meteor3->set_type(object_type::OT_ENEMY);
-//	meteor3->set_mask(MASK_ENEMY);
-//	m_objects.push_back(meteor3);
-//
-//	vector2f meteor_pos4(WINDOW_WIDTH * 0.9f, WINDOW_HEIGHT * 0.25f);
-//	game_object *meteor4 = create_object(meteor_pos4);
-//	meteor4->set_texture(meteor_tex_med);
-//	meteor4->set_type(object_type::OT_ENEMY);
-//	meteor4->set_mask(MASK_ENEMY);
-//	m_objects.push_back(meteor4);
-//}
+void world_module::init_objects() {
+	texture *meteor_tex_big = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
+	texture *meteor_tex_med = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_MED);
+	
+	vector2f met_forward_vec(0.f, 1.f);
+	vector2f met_pos(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.2f);
+	meteor *met = spawn_meteor(met_pos, met_forward_vec);
+	met->set_texture(meteor_tex_big);
+	met->set_mask(MASK_ENEMY);
+	m_objects.push_back(met);
+
+	vector2f met_pos2(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.15f);
+	meteor *met2 = spawn_meteor(met_pos2, met_forward_vec);
+	met2->set_texture(meteor_tex_big);
+	met2->set_mask(MASK_ENEMY);
+	m_objects.push_back(met2);
+	//vector2f meteor_pos3(WINDOW_WIDTH * 0.65f, WINDOW_HEIGHT * 0.3f);
+	//vector2f meteor_pos4(WINDOW_WIDTH * 0.9f, WINDOW_HEIGHT * 0.25f);
+}
 
 void world_module::update(float delta_time) {
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
@@ -90,12 +78,16 @@ game_object *world_module::create_object(vector2f &in_position) const {
 	return new game_object(in_position);
 }
 
-spaceship *world_module::create_spaceship(vector2f &in_position, vector2f &in_forward_vector) const {
+spaceship *world_module::spawn_spaceship(vector2f &in_position, vector2f &in_forward_vector) const {
 	return new spaceship(in_position, in_forward_vector);
 }
 
-bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) {
+bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const {
 	return new bullet(in_position, in_forward_vector);
+}
+
+meteor *world_module::spawn_meteor(const vector2f &in_position, const vector2f &in_forward_vector) const {
+	return new meteor(in_position, in_forward_vector);
 }
 // bullet spawner
 void world_module::on_notify(const vector2f &in_position, const vector2f &in_forward_vector) {
