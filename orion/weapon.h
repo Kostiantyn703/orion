@@ -5,18 +5,19 @@
 
 class weapon {
 public:
-	weapon() : m_position(0.f, 0.f) {}
+	weapon() : m_can_shoot(true), m_reload_timer(0.f), m_position(0.f, 0.f) {}
 	~weapon() {}
 
-	bool can_shoot = true;
-	float m_reload_timer = 0.f;
-	float m_reload_max_time = 300.f;
+	void	set_can_shoot	(bool val)	{	m_can_shoot = val;		}
+	float	can_shoot		()	const	{	return m_can_shoot;		}
 
-	void set_postition(const vector2f &in_position)	{	m_position = in_position;	}
-	vector2f get_position() const { return m_position; }
+	void		set_postition	(const vector2f &in_position)	{	m_position = in_position;	}
+	vector2f	get_position	()	const						{	return m_position;			}
 
+	float	m_reload_timer;
+	void	reset_reload_timer() { m_reload_timer = MAX_RELOAD_TIME; }
 private:
-	vector2f m_position;
-
+	bool		m_can_shoot;
+	vector2f	m_position;
 };
 #endif // WEAPON_H

@@ -44,10 +44,6 @@ void game_object::set_texture(texture *in_texture) {
 	m_texture = in_texture;
 	m_size.set_x((float)m_texture->get_width());
 	m_size.set_y((float)m_texture->get_height());
-	// TODO: on bullet creation
-	/*if (m_type == object_type::OT_BULLET) {
-		m_origin.set_x(m_origin.get_x() - m_size.get_x() * 0.5f);
-	}*/
 }
 
 void game_object::set_origin(float in_x, float in_y) {

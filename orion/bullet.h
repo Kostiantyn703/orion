@@ -10,6 +10,6 @@ public:
 	virtual ~bullet() {}
 
 	virtual void update(float delta_time) override;
-};
 
+};
 #endif // BULLET_H
