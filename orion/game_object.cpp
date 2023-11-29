@@ -15,9 +15,7 @@ game_object::game_object(const vector2f &initial_point) {
 	set_origin(initial_point);
 }
 
-game_object::~game_object() {
-
-}
+game_object::~game_object() {}
 
 void game_object::update(float delta_time) {
 }
@@ -56,6 +54,5 @@ void game_object::set_origin(const vector2f &in_position) {
 }
 
 void game_object::on_intersect() {
-	SDL_Log("I WAS COLLIDED!!!");
 	set_to_remove(true);
 }

@@ -12,6 +12,7 @@
 #include "spaceship.h"
 #include "bullet.h"
 #include "meteor.h"
+#include "meteor_spawner.h"
 
 using object_storage = std::vector<game_object*>;
 
@@ -24,19 +25,20 @@ public:
 	void remove_objects();
 	
 	void init_player(controller *in_controller);
-	void init_objects();
 
 	// TODO: create methods should go to spawner classes
 	game_object *create_object(vector2f &in_position) const;
 
 	spaceship *spawn_spaceship(vector2f &in_position, vector2f &in_forward_vector) const;
 	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const;
-	meteor *spawn_meteor(const vector2f &in_position, const vector2f &in_forward_vector) const;
 
 	virtual void on_notify(const vector2f &in_position, const vector2f &in_forward_vector) override;
+	virtual void on_notify(game_object &in_object) override;
 
 	object_storage					m_objects;
 private:
 	std::unique_ptr<collision_module> m_colision_system;
+
+	std::unique_ptr<meteor_spawner> m_meteor_spawner;
 };
 #endif // WORLD_MODULE_H

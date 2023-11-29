@@ -12,7 +12,6 @@ void application::start_up() {
 
 	m_world = std::make_unique<world_module>();
 	m_world->init_player(m_controller.get());
-	m_world->init_objects();
 	
 	m_renderer->init();
 

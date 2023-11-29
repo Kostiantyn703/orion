@@ -9,6 +9,8 @@ constexpr int OBJECTS_CAPACITY = 20;
 
 world_module::world_module() {
 	m_colision_system = std::make_unique<collision_module>();
+	m_meteor_spawner = std::make_unique<meteor_spawner>();
+	m_meteor_spawner->set_listener(this);
 	m_objects.reserve(OBJECTS_CAPACITY);
 }
 
@@ -33,31 +35,12 @@ void world_module::init_player(controller *in_controller) {
 	m_objects.push_back(player);
 }
 
-void world_module::init_objects() {
-	texture *meteor_tex_big = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
-	texture *meteor_tex_med = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_MED);
-	
-	vector2f met_forward_vec(0.f, 1.f);
-	vector2f met_pos(WINDOW_WIDTH * 0.15f, WINDOW_HEIGHT * 0.2f);
-	meteor *met = spawn_meteor(met_pos, met_forward_vec);
-	met->set_texture(meteor_tex_big);
-	met->set_mask(MASK_ENEMY);
-	m_objects.push_back(met);
-
-	vector2f met_pos2(WINDOW_WIDTH * 0.4f, WINDOW_HEIGHT * 0.15f);
-	meteor *met2 = spawn_meteor(met_pos2, met_forward_vec);
-	met2->set_texture(meteor_tex_big);
-	met2->set_mask(MASK_ENEMY);
-	m_objects.push_back(met2);
-	//vector2f meteor_pos3(WINDOW_WIDTH * 0.65f, WINDOW_HEIGHT * 0.3f);
-	//vector2f meteor_pos4(WINDOW_WIDTH * 0.9f, WINDOW_HEIGHT * 0.25f);
-}
-
 void world_module::update(float delta_time) {
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
 		(*it)->update(delta_time);
 		m_colision_system->check_collision(this, *it);
 	}
+	m_meteor_spawner->update(delta_time);
 	remove_objects();
 }
 // TODO: probably only one bullet could reach the edge of the screen
@@ -86,9 +69,6 @@ bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &
 	return new bullet(in_position, in_forward_vector);
 }
 
-meteor *world_module::spawn_meteor(const vector2f &in_position, const vector2f &in_forward_vector) const {
-	return new meteor(in_position, in_forward_vector);
-}
 // bullet spawner
 void world_module::on_notify(const vector2f &in_position, const vector2f &in_forward_vector) {
 	texture *tex = resource_module::get_instance()->get_texture(TEX_NAME_BULLET);
@@ -100,4 +80,8 @@ void world_module::on_notify(const vector2f &in_position, const vector2f &in_for
 	bul->set_texture(tex);
 	bul->set_mask(MASK_PLAYER | MASK_PLAYER_BULLET);
 	m_objects.push_back(bul);
+}
+// meteor spawner
+void world_module::on_notify(game_object &in_object) {
+	m_objects.push_back(&in_object);
 }
