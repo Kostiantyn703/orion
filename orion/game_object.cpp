@@ -20,17 +20,6 @@ game_object::~game_object() {
 }
 
 void game_object::update(float delta_time) {
-	// TODO: refactor behavior
-	//vector2f delta_vec = m_move_dir * delta_time;
-	//m_origin = m_origin + delta_vec;
-	//m_aabb.calculate(m_origin, m_size);
-	//// TODO: temporary borders
-	//if (m_origin.get_x() < 0.f) {
-	//	m_origin.set_x(1.f);
-	//}
-	//if (m_origin.get_x() > WINDOW_WIDTH) {
-	//	m_origin.set_x(WINDOW_WIDTH - 1.f);
-	//}
 }
 
 void game_object::draw(const shader_program &in_shader) {
