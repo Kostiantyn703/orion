@@ -26,6 +26,15 @@ world_module::~world_module() {
 	m_objects.clear();
 }
 
+void world_module::init() {
+	vector2f pos(WINDOW_WIDTH * 0.8f, WINDOW_HEIGHT * 0.2f);
+	vector2f forward_vec(0.f, 1.f);
+	spaceship *enemy = m_ship_spawner->spawn_spaceship(pos, forward_vec);
+	texture *tex = resource_module::get_instance()->get_texture(TEX_NAME_ENEMY);
+	enemy->set_texture(tex);
+	m_objects.push_back(enemy);
+}
+
 void world_module::init_player(controller *in_controller) {
 	vector2f player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
 	vector2f forward_vec(0.f, -1.f);
@@ -64,10 +73,6 @@ void world_module::remove_objects() {
 
 game_object *world_module::create_object(vector2f &in_position) const {
 	return new game_object(in_position);
-}
-
-spaceship *world_module::spawn_spaceship(vector2f &in_position, vector2f &in_forward_vector) const {
-	return new spaceship(in_position, in_forward_vector);
 }
 
 bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const {

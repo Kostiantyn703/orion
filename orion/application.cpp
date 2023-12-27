@@ -11,8 +11,10 @@ void application::start_up() {
 	m_receiver		= std::make_unique<input_receiver>();
 
 	m_world = std::make_unique<world_module>();
+
 	m_world->init_player(m_controller.get());
-	
+	m_world->init();
+
 	m_renderer->init();
 
 	m_timer = std::make_unique<timer>();

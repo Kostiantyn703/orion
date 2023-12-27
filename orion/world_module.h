@@ -22,6 +22,8 @@ public:
 	world_module();
 	virtual ~world_module();
 
+	void init();
+
 	void update(float delta_time);
 	void remove_objects();
 	
@@ -30,7 +32,6 @@ public:
 	// TODO: create methods should go to spawner classes
 	game_object *create_object(vector2f &in_position) const;
 
-	spaceship *spawn_spaceship(vector2f &in_position, vector2f &in_forward_vector) const;
 	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const;
 
 	virtual void on_notify(const vector2f &in_position, const vector2f &in_forward_vector) override;

@@ -31,7 +31,7 @@ void spaceship::update(float delta_time) {
 	set_origin(get_origin() + delta_vec);
 	m_aabb.calculate(get_origin(), get_size());
 	
-	if (!m_weapon->can_shoot()) {
+	if (m_weapon && !m_weapon->can_shoot()) {
 		m_weapon->m_reload_timer -= delta_time;
 		if (m_weapon->m_reload_timer < 0.f) {
 			m_weapon->set_can_shoot(true);
