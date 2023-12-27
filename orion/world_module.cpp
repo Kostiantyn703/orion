@@ -9,8 +9,13 @@ constexpr int OBJECTS_CAPACITY = 20;
 
 world_module::world_module() {
 	m_colision_system = std::make_unique<collision_module>();
+
 	m_meteor_spawner = std::make_unique<meteor_spawner>();
+	m_ship_spawner = std::make_unique<ship_spawner>();
+
 	m_meteor_spawner->set_listener(this);
+	m_ship_spawner->set_listener(this);
+
 	m_objects.reserve(OBJECTS_CAPACITY);
 }
 
@@ -24,7 +29,7 @@ world_module::~world_module() {
 void world_module::init_player(controller *in_controller) {
 	vector2f player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
 	vector2f forward_vec(0.f, -1.f);
-	spaceship *player =  spawn_spaceship(player_pos, forward_vec);
+	spaceship *player = m_ship_spawner->spawn_spaceship(player_pos, forward_vec);
 	texture *player_tex = resource_module::get_instance()->get_texture(TEX_NAME_SHIP);
 	player->set_texture(player_tex);
 	player->init();

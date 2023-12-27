@@ -10,6 +10,7 @@ public:
 	game_object(const vector2f &initial_point);
 	virtual ~game_object();
 
+	virtual void init() {}
 	// TODO: maybe pure virtual 
 	virtual void update		(float delta_time);
 	// ~ renderable interface

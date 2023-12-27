@@ -6,7 +6,7 @@
 
 class meteor_spawner {
 public:
-	meteor_spawner() : m_spawn_time(m_max_spawn_time) {}
+	meteor_spawner() : m_spawn_time(m_max_spawn_time), m_world(nullptr) {}
 	~meteor_spawner() {}
 
 	void update(float delta_time);

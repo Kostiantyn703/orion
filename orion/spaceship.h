@@ -10,10 +10,12 @@ class subscriber;
 
 class spaceship : public game_object, public controllable, public movable {
 public:
-	spaceship(vector2f &initial_point, vector2f &in_forward_vector);
+	spaceship(const vector2f &initial_point, const vector2f &in_forward_vector);
+	spaceship(const vector2f &initial_point, const vector2f &in_forward_vector, float in_velocity);
+
 	virtual ~spaceship();
 
-	void init();
+	virtual void init() override;
 
 	virtual void update(float delta_time) override;
 	// ~ controllable interface

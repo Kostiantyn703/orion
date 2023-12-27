@@ -1,11 +1,18 @@
 #include "spaceship.h"
 #include "world_module.h"
 
-spaceship::spaceship(vector2f &initial_point, vector2f &in_forward_vector)
+spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector)
 	:	game_object(initial_point)
 {
 	set_forward_vector(in_forward_vector);
 	set_velocity(PLAYER_VELOCITY);
+}
+
+spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector, float in_velocity)
+	:	game_object(initial_point)
+{
+	set_forward_vector(in_forward_vector);
+	set_velocity(in_velocity);
 }
 
 spaceship::~spaceship() {

@@ -13,6 +13,7 @@
 #include "bullet.h"
 #include "meteor.h"
 #include "meteor_spawner.h"
+#include "ship_spawner.h"
 
 using object_storage = std::vector<game_object*>;
 
@@ -38,7 +39,8 @@ public:
 	object_storage					m_objects;
 private:
 	std::unique_ptr<collision_module> m_colision_system;
-
+	// spawners 
 	std::unique_ptr<meteor_spawner> m_meteor_spawner;
+	std::unique_ptr<ship_spawner>	m_ship_spawner;
 };
 #endif // WORLD_MODULE_H
