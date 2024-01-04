@@ -4,13 +4,14 @@
 #include "globals.h"
 #include "game_object.h"
 #include "spaceship.h"
-
-class subscriber;
+#include "subscriber.h"
 
 class ship_spawner {
 public:
 	ship_spawner() : m_world(nullptr) {}
 	~ship_spawner() {}
+
+	void update(float delta_time);
 
 	void notify();
 
@@ -22,6 +23,9 @@ public:
 private:
 
 	subscriber *m_world;
+
+	float m_max_spawn_time = 50.f;
+	float m_spawn_time = 0.f;
 };
 
 #endif // SHIP_SPAWNER_H

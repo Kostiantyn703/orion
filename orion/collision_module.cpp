@@ -9,6 +9,8 @@ void collision_module::check_collision(const world_module *in_world, collidable 
 
 		if (intersect(in_object->get_aabb(), (*it)->get_aabb())) {
 			(*it)->on_intersect();
+			// bullet should disappear
+			in_object->on_intersect();
 		}
 	}
 }

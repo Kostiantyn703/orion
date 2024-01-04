@@ -27,12 +27,13 @@ world_module::~world_module() {
 }
 
 void world_module::init() {
-	vector2f pos(WINDOW_WIDTH * 0.8f, WINDOW_HEIGHT * 0.2f);
+	m_ship_spawner->notify();
+	/*vector2f pos(WINDOW_WIDTH * 0.8f, WINDOW_HEIGHT * 0.2f);
 	vector2f forward_vec(0.f, 1.f);
 	spaceship *enemy = m_ship_spawner->spawn_spaceship(pos, forward_vec);
 	texture *tex = resource_module::get_instance()->get_texture(TEX_NAME_ENEMY);
 	enemy->set_texture(tex);
-	m_objects.push_back(enemy);
+	m_objects.push_back(enemy);*/
 }
 
 void world_module::init_player(controller *in_controller) {
@@ -54,7 +55,7 @@ void world_module::update(float delta_time) {
 		(*it)->update(delta_time);
 		m_colision_system->check_collision(this, *it);
 	}
-	m_meteor_spawner->update(delta_time);
+	//m_meteor_spawner->update(delta_time);
 	remove_objects();
 }
 // TODO: probably only one bullet could reach the edge of the screen

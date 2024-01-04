@@ -7,7 +7,7 @@
 class world_module;
 
 class collision_module {
-public: 
+public:
 	collision_module()	{}
 	~collision_module()	{}
 

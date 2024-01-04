@@ -9,7 +9,7 @@ static const char	*WINDOW_NAME	= "PROJECT ORION";
 constexpr float		BULLET_VELOCITY	= 20.f;
 constexpr float		PLAYER_VELOCITY	= 10.f;
 constexpr float		METEOR_VELOCITY	= 2.f;
-constexpr float		MAX_RELOAD_TIME	= 10.f;
+constexpr float		MAX_RELOAD_TIME	= 25.f;
 
 constexpr float		REMOVE_OFFSET	= 15.f;
 

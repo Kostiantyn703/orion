@@ -5,6 +5,7 @@
 #include "game_object.h"
 #include "movable.h"
 #include "weapon.h"
+#include "controller.h"
 
 class subscriber;
 
@@ -16,6 +17,8 @@ public:
 	virtual ~spaceship();
 
 	virtual void init() override;
+	// for enemies 
+	virtual void on_spawn(enemy_controller &in_controller) override;
 
 	virtual void update(float delta_time) override;
 	// ~ controllable interface

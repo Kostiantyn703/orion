@@ -4,6 +4,7 @@
 #include "globals.h"
 #include "renderable.h"
 #include "collidable.h"
+#include "controller.h"
 
 class game_object : public renderable, public collidable {
 public:
@@ -11,6 +12,8 @@ public:
 	virtual ~game_object();
 
 	virtual void init() {}
+	// for spaceship
+	virtual void on_spawn(enemy_controller &in_controller) {}
 	// TODO: maybe pure virtual 
 	virtual void update		(float delta_time);
 	// ~ renderable interface

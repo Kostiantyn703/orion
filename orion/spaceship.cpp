@@ -25,6 +25,11 @@ void spaceship::init() {
 	m_weapon->set_postition(wep_pos);
 }
 
+void spaceship::on_spawn(enemy_controller &in_controller) {
+	in_controller.set_owner(this);
+	move_forward();
+}
+
 void spaceship::update(float delta_time) {
 	// duplicate at least in bullet::update
 	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
