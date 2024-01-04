@@ -13,7 +13,7 @@ public:
 
 	virtual void init() {}
 	// for spaceship
-	virtual void on_spawn(enemy_controller &in_controller) {}
+	virtual void on_spawn() {}
 	// TODO: maybe pure virtual 
 	virtual void update		(float delta_time);
 	// ~ renderable interface

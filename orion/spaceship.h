@@ -18,7 +18,7 @@ public:
 
 	virtual void init() override;
 	// for enemies 
-	virtual void on_spawn(enemy_controller &in_controller) override;
+	virtual void on_spawn() override;
 
 	virtual void update(float delta_time) override;
 	// ~ controllable interface
@@ -35,6 +35,14 @@ private:
 	weapon *m_weapon = nullptr;
 	// for now it's world
 	subscriber *m_listener = nullptr;
+
+	enum class ship_type {
+		ST_PLAYER,
+		ST_ENEMY,
+		ST_NONE
+	};
+
+	ship_type m_type;
 };
 
 #endif // SPACESHIP_H

@@ -23,10 +23,11 @@ void spaceship::init() {
 	m_weapon = new weapon();
 	vector2f wep_pos(get_size().get_x() * 0.5f, 0.f);
 	m_weapon->set_postition(wep_pos);
+	m_type = ship_type::ST_PLAYER;
 }
 
-void spaceship::on_spawn(enemy_controller &in_controller) {
-	in_controller.set_owner(this);
+void spaceship::on_spawn() {
+	m_type = ship_type::ST_ENEMY;
 	move_forward();
 }
 
@@ -42,7 +43,9 @@ void spaceship::update(float delta_time) {
 			m_weapon->set_can_shoot(true);
 		}
 	}
-	set_move_dir(vector2f(0.f, 0.f));
+	if (m_type == ship_type::ST_PLAYER) {
+		set_move_dir(vector2f(0.f, 0.f));
+	}
 }
 
 void spaceship::move_forward() {

@@ -1,14 +1,15 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 // window
-constexpr float		WINDOW_HEIGHT	= 600.f;
-constexpr float		WINDOW_WIDTH	= 800.f;
+constexpr float		WINDOW_HEIGHT	= 1200.f * 0.8f;	// 600.f
+constexpr float		WINDOW_WIDTH	= 1600.f * 0.8f;	// 800.f
 static const char	*WINDOW_NAME	= "PROJECT ORION";
 
+constexpr float		VELOCITY_COEFICIENT = 2.f;
 // values
-constexpr float		BULLET_VELOCITY	= 20.f;
-constexpr float		PLAYER_VELOCITY	= 10.f;
-constexpr float		METEOR_VELOCITY	= 2.f;
+constexpr float		BULLET_VELOCITY	= 20.f * VELOCITY_COEFICIENT;
+constexpr float		PLAYER_VELOCITY	= 10.f * VELOCITY_COEFICIENT;
+constexpr float		METEOR_VELOCITY	= 2.f * VELOCITY_COEFICIENT;
 constexpr float		MAX_RELOAD_TIME	= 25.f;
 
 constexpr float		REMOVE_OFFSET	= 15.f;
