@@ -6,6 +6,7 @@
 #include "movable.h"
 #include "weapon.h"
 #include "controller.h"
+#include "border.h"
 
 class subscriber;
 
@@ -29,9 +30,17 @@ public:
 	virtual void shoot() override;
 	// ~ end controllable interface
 
+	virtual void borders_intersect(border_side in_side) override;
+
 	void set_listener(subscriber *in_listener) { m_listener = in_listener; }
 
+	void reset_movement();
 private:
+	bool blocked_up		= false;
+	bool blocked_right	= false;
+	bool blocked_down	= false;
+	bool blocked_left	= false;
+
 	weapon *m_weapon = nullptr;
 	// for now it's world
 	subscriber *m_listener = nullptr;

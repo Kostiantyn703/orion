@@ -10,7 +10,7 @@ constexpr float		VELOCITY_COEFICIENT = 2.f;
 constexpr float		BULLET_VELOCITY	= 20.f * VELOCITY_COEFICIENT;
 constexpr float		PLAYER_VELOCITY	= 10.f * VELOCITY_COEFICIENT;
 constexpr float		METEOR_VELOCITY	= 2.f * VELOCITY_COEFICIENT;
-constexpr float		MAX_RELOAD_TIME	= 25.f;
+constexpr float		MAX_RELOAD_TIME	= 15.f / VELOCITY_COEFICIENT;
 
 constexpr float		REMOVE_OFFSET	= 15.f;
 
@@ -35,6 +35,8 @@ static const char	*TEX_NAME_SHIP				= "ship";
 static const char	*TEX_NAME_METEOR_BROWN_BIG	= "meteor_brown_big";
 static const char	*TEX_NAME_METEOR_BROWN_MED	= "meteor_brown_med";
 static const char	*TEX_NAME_BULLET			= "bullet";
+
+constexpr float		SIZE_SCALAR = 0.1f;
 
 // vertices
 static float vertices[] = {
@@ -88,5 +90,13 @@ public:
 private:
 	float m_x;
 	float m_y;
+};
+
+enum class border_side {
+	BS_NORTH = 0,
+	BS_EAST,
+	BS_SOUTH,
+	BS_WEST,
+	BS_NONE = -1
 };
 #endif // !GLOBALS_H

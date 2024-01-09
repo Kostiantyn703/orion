@@ -24,8 +24,10 @@ private:
 
 	subscriber *m_world;
 
-	float m_max_spawn_time = 15.f;
+	float m_max_spawn_time = 7.f;
 	float m_spawn_time = 0.f;
+	// temp variable 
+	size_t m_counter = 5;
 };
 
 #endif // SHIP_SPAWNER_H

@@ -32,7 +32,7 @@ game_object *meteor_spawner::spawn_object(const vector2f &in_position, const vec
 
 vector2f meteor_spawner::calculate_position() {
 	int x_rand = std::rand() % int(WINDOW_WIDTH - 20);
-	float y_val = -10.f;
+	float y_val = -20.f;
 
 	return vector2f(float(x_rand), y_val);
 }

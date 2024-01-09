@@ -51,7 +51,7 @@ void world_module::update(float delta_time) {
 		m_colision_system->check_collision(this, *it);
 	}
 	//m_meteor_spawner->update(delta_time);
-	m_ship_spawner->update(delta_time);
+	//m_ship_spawner->update(delta_time);
 	remove_objects();
 }
 // TODO: probably only one bullet could reach the edge of the screen

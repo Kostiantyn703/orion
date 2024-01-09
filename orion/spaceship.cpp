@@ -35,7 +35,7 @@ void spaceship::update(float delta_time) {
 	// duplicate at least in bullet::update
 	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
 	set_origin(get_origin() + delta_vec);
-	m_aabb.calculate(get_origin(), get_size());
+	m_aabb.calculate(get_origin(), get_size(), SIZE_SCALAR);
 	
 	if (m_weapon && !m_weapon->can_shoot()) {
 		m_weapon->m_reload_timer -= delta_time;
@@ -44,26 +44,35 @@ void spaceship::update(float delta_time) {
 		}
 	}
 	if (m_type == ship_type::ST_PLAYER) {
-		set_move_dir(vector2f(0.f, 0.f));
+		reset_movement();
+	}
+	if (m_type == ship_type::ST_ENEMY) {
+		if (get_origin().get_y() > WINDOW_HEIGHT + REMOVE_OFFSET) {
+			set_to_remove(true);
+		}
 	}
 }
 
 void spaceship::move_forward() {
+	if (blocked_up) return;
 	vector2f dir = get_forward_vector();
 	merge_movement(dir);
 }
 
 void spaceship::move_right() {
+	if (blocked_right) return;
 	vector2f dir = get_forward_vector().get_swapped().get_inverse();
 	merge_movement(dir);
 }
 
 void spaceship::move_backward() {
+	if (blocked_down) return;
 	vector2f dir = get_forward_vector().get_inverse();
 	merge_movement(dir);
 }
 
 void spaceship::move_left() {
+	if (blocked_left) return;
 	vector2f dir = get_forward_vector().get_swapped();
 	merge_movement(dir);
 }
@@ -75,4 +84,29 @@ void spaceship::shoot() {
 		m_weapon->set_can_shoot(false);
 		m_weapon->reset_reload_timer();
 	}
+}
+
+void spaceship::borders_intersect(border_side in_side) {
+	switch (in_side) {
+	case border_side::BS_NORTH:
+		blocked_up = true;
+		break;
+	case border_side::BS_EAST:
+		blocked_right = true;
+		break;
+	case border_side::BS_SOUTH:
+		blocked_down = true;
+		break;
+	case border_side::BS_WEST:
+		blocked_left = true;
+		break;
+	}
+}
+
+void spaceship::reset_movement() {
+	set_move_dir	(vector2f(0.f, 0.f));
+	blocked_up		= false;
+	blocked_right	= false;
+	blocked_down	= false;
+	blocked_left	= false;
 }
