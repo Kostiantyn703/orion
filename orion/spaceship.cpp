@@ -25,10 +25,9 @@ void spaceship::init() {
 	m_weapon->set_postition(wep_pos);
 	m_type = ship_type::ST_PLAYER;
 }
-
+// TODO: temporary
 void spaceship::on_spawn() {
 	m_type = ship_type::ST_ENEMY;
-	move_forward();
 }
 
 void spaceship::update(float delta_time) {

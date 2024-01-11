@@ -8,8 +8,8 @@
 
 class ship_spawner {
 public:
-	ship_spawner() : m_world(nullptr) {}
-	~ship_spawner() {}
+	ship_spawner();
+	~ship_spawner();
 
 	void update(float delta_time);
 
@@ -20,14 +20,15 @@ public:
 	game_object *spawn_object(const vector2f &in_position, const vector2f &in_forward_vector) const;
 	// TODO: temporary for player
 	spaceship *spawn_spaceship(const vector2f &in_position, const vector2f &in_forward_vector) const;
+
 private:
-
-	subscriber *m_world;
-
 	float m_max_spawn_time = 7.f;
 	float m_spawn_time = 0.f;
 	// temp variable 
 	size_t m_counter = 5;
+
+	subscriber *m_world;
+	enemy_controller *m_controller;
 };
 
 #endif // SHIP_SPAWNER_H
