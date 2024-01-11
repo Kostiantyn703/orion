@@ -7,7 +7,7 @@ collision_module::collision_module() {
 }
 
 void collision_module::init_borders() {
-	float offset = 15.f;
+	float offset = 20.f;
 
 	vector2f upper_left(0.f, 0.f);
 	vector2f down_left(0.f, WINDOW_HEIGHT - offset);
@@ -49,7 +49,9 @@ void collision_module::init_borders() {
 }
 
 collision_module::~collision_module() {
-
+	for (auto it = m_borders.begin(); it != m_borders.end(); ++it) {
+		delete *it;
+	}
 }
 
 void collision_module::check_collision(const world_module *in_world, collidable *in_object) {
