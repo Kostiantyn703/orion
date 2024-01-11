@@ -18,13 +18,16 @@ game_object::game_object(const vector2f &initial_point) {
 game_object::~game_object() {}
 
 void game_object::update(float delta_time) {
+	m_rotation += delta_time * 2;
 }
 
 void game_object::draw(const shader_program &in_shader) {
 	// draw texture
 	glm::mat4 model = glm::mat4(1.f);
-	model = glm::translate(model, glm::vec3(m_origin.get_x(), m_origin.get_y(), 0.f));
 	glm::vec2 model_size(m_size.get_x(), m_size.get_y());
+	model = glm::translate(model, glm::vec3(m_origin.get_x() + m_size.get_x() * 0.5f, m_origin.get_y() + m_size.get_y() * 0.5f, 0.f));
+	model = glm::rotate(model, glm::radians(m_rotation), glm::vec3(0.f, 0.f, 1.f));
+	model = glm::translate(model, glm::vec3(-m_size.get_x() * 0.5f, -m_size.get_y() * 0.5f, 0.f));
 	model = glm::scale(model, glm::vec3(model_size, 1.0f));
 	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
 	// draw aabb

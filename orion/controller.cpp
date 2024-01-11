@@ -1,5 +1,6 @@
 #include "controller.h"
 #include "input_receiver.h"
+#include "globals.h"
 
 void controller::handle_input(input_receiver *in_receiver) {
 	in_receiver->receive_key();
@@ -17,6 +18,9 @@ void enemy_controller::update(float delta_time) {
 	if (!changed && change_timer < 0.f) {
 		m_owner->reset_movement();
 		changed = true;
-		m_owner->move_right();
+		//m_owner->move_right();
+		vector2f dir(-1.f, 0.f);
+		m_owner->change_direction(dir);
+		m_owner->move_forward();
 	}
 }

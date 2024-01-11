@@ -28,13 +28,15 @@ public:
 	virtual void move_backward() override;
 	virtual void move_left() override;
 	virtual void shoot() override;
+
+	virtual void reset_movement() override;
+	virtual void change_direction(const vector2f &in_forward) override;
 	// ~ end controllable interface
 
 	virtual void borders_intersect(border_side in_side) override;
 
 	void set_listener(subscriber *in_listener) { m_listener = in_listener; }
 
-	void reset_movement();
 private:
 	bool blocked_up		= false;
 	bool blocked_right	= false;

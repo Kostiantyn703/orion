@@ -5,6 +5,7 @@
 #include "renderable.h"
 #include "collidable.h"
 #include "controller.h"
+#include "movable.h"
 
 class game_object : public renderable, public collidable {
 public:
@@ -14,7 +15,7 @@ public:
 	virtual void init() {}
 	// for spaceship
 	virtual void on_spawn() {}
-	// TODO: maybe pure virtual 
+	// TODO: maybe pure virtual
 	virtual void update		(float delta_time);
 	// ~ renderable interface
 	virtual void draw(const shader_program &in_shader) override;
@@ -28,6 +29,8 @@ public:
 	virtual void on_intersect	()	override;
 	// ~ end collidable interface
 protected:
+	void set_rotation(float in_rotation) { m_rotation = in_rotation; }
+
 	void set_origin(float in_x, float in_y);
 	void set_origin(const vector2f &in_position);
 	const vector2f	&get_origin() const { return m_origin; }
@@ -37,6 +40,8 @@ protected:
 private:
 	bool to_remove = false;
 	
+	float m_rotation = 0.f;
+
 	vector2f m_origin;
 	vector2f m_size;
 };
