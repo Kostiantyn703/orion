@@ -28,14 +28,14 @@ public:
 	// ~ collidable interface
 	virtual void on_intersect	()	override;
 	// ~ end collidable interface
+
+	const vector2f	&get_origin() const { return m_origin; }
+	const vector2f	&get_size() const { return m_size; }
 protected:
 	void set_rotation(float in_rotation) { m_rotation = in_rotation; }
 
 	void set_origin(float in_x, float in_y);
 	void set_origin(const vector2f &in_position);
-	const vector2f	&get_origin() const { return m_origin; }
-
-	const vector2f	&get_size() const { return m_size; }
 
 private:
 	bool to_remove = false;

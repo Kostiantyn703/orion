@@ -16,8 +16,6 @@ world_module::world_module() {
 	m_meteor_spawner->set_listener(this);
 	m_ship_spawner->set_listener(this);
 
-	m_enemy_controller = std::make_unique<enemy_controller>();
-
 	m_objects.reserve(OBJECTS_CAPACITY);
 }
 

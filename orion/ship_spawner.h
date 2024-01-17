@@ -28,7 +28,6 @@ private:
 	size_t m_counter = 5;
 
 	subscriber *m_world;
-	enemy_controller *m_controller;
 };
 
 #endif // SHIP_SPAWNER_H

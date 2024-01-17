@@ -6,6 +6,7 @@ spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_v
 {
 	set_forward_vector(in_forward_vector);
 	set_velocity(PLAYER_VELOCITY);
+	m_behavior = std::make_unique<behavior>();
 }
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector, float in_velocity)
@@ -13,6 +14,7 @@ spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_v
 {
 	set_forward_vector(in_forward_vector);
 	set_velocity(in_velocity);
+	m_behavior = std::make_unique<behavior>();
 }
 
 spaceship::~spaceship() {
@@ -31,6 +33,9 @@ void spaceship::on_spawn() {
 }
 
 void spaceship::update(float delta_time) {
+	if (m_type == ship_type::ST_ENEMY) {
+		m_behavior->update(delta_time, *this);
+	}
 	// duplicate at least in bullet::update
 	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
 	set_origin(get_origin() + delta_vec);
@@ -42,9 +47,8 @@ void spaceship::update(float delta_time) {
 			m_weapon->set_can_shoot(true);
 		}
 	}
-	if (m_type == ship_type::ST_PLAYER) {
-		reset_movement();
-	}
+	reset_movement();
+
 	if (m_type == ship_type::ST_ENEMY) {
 		if (get_origin().get_y() > WINDOW_HEIGHT + REMOVE_OFFSET) {
 			set_to_remove(true);

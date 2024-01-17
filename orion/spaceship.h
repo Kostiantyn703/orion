@@ -7,6 +7,8 @@
 #include "weapon.h"
 #include "controller.h"
 #include "border.h"
+#include "behavior.h"
+#include <memory>
 
 class subscriber;
 
@@ -46,6 +48,8 @@ private:
 	weapon *m_weapon = nullptr;
 	// for now it's world
 	subscriber *m_listener = nullptr;
+
+	std::unique_ptr<behavior> m_behavior;
 
 	enum class ship_type {
 		ST_PLAYER,

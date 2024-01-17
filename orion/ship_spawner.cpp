@@ -4,11 +4,9 @@
 #include "resource_module.h"
 
 ship_spawner::ship_spawner() : m_world(nullptr) {
-	m_controller = new enemy_controller();
 }
 
 ship_spawner::~ship_spawner() {
-	delete m_controller;
 }
 
 void ship_spawner::update(float delta_time) {
@@ -18,7 +16,6 @@ void ship_spawner::update(float delta_time) {
 		m_spawn_time = m_max_spawn_time;
 		notify();
 	}
-	m_controller->update(delta_time);
 }
 
 void ship_spawner::notify() {
@@ -31,9 +28,6 @@ void ship_spawner::notify() {
 	enemy->set_mask(MASK_ENEMY);
 	m_world->on_notify(*enemy);
 	--m_counter;
-	if (!m_controller->get_owner()) {
-		m_controller->set_owner(enemy);
-	}
 }
 
 game_object *ship_spawner::spawn_object(const vector2f &in_position, const vector2f &in_forward_vector) const {
