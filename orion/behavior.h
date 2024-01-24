@@ -7,7 +7,8 @@
 class spaceship;
 
 enum class condition_type {
-	CT_POSITION,		// if condition means fly until position on the screen
+	CT_POSITION_X,		// if condition means fly until position on the screen
+	CT_POSITION_Y,
 	CT_NONE
 };
 
@@ -16,10 +17,11 @@ public:
 	void set_type(condition_type in_type) { m_type = in_type; }
 	condition_type get_type() const { return m_type; }
 
-	void set_data(float in_x, float in_y) { m_data = vector2f(in_x, in_y); }
+	void set_data(float in_data) { m_data = in_data; }
+	float get_data() const { return m_data; }
 private:
 	condition_type m_type;
-	vector2f m_data;
+	float m_data;
 };
 
 enum class action_type {
@@ -35,6 +37,8 @@ public:
 	void set_type(action_type in_type) { m_type = in_type; }
 	action_type get_type() const { return m_type; }
 
+	void set_condition(const end_condition &in_cond) { m_condition = in_cond; }
+	const end_condition& get_condition() const { return m_condition; }
 private:
 	action_type m_type;
 	end_condition m_condition;
@@ -45,16 +49,17 @@ public:
 	behavior() {}
 	~behavior() {}
 
+	void init();
+
 	void update(float delta_time, spaceship &in_object);
 
 	void add_action(const action &in_action);
-
 	void handle_action(const action &in_action, spaceship &in_object);
-
+	bool handle_condition(const action &in_action, spaceship &in_object);
 private:
 	std::list<action> m_actions;
 	
-	std::list<action>::const_iterator m_cur_action;
+	std::list<action>::iterator m_cur_action;
 };
 
 #endif // BEHAVIOR_H

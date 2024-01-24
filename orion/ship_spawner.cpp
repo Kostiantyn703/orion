@@ -41,8 +41,48 @@ void ship_spawner::notify() {
 	// setting the behavior
 	action act1;
 	act1.set_type(action_type::AT_MOVE_FORWARD);
+	if (changed) {
+		end_condition cond1;
+		cond1.set_data(WINDOW_HEIGHT * 0.35f);
+		cond1.set_type(condition_type::CT_POSITION_Y);
+		
+		act1.set_condition(cond1);
+		enemy->get_behavior()->add_action(act1);
 
-	enemy->get_behavior()->add_action(act1);
+		action act2;
+		act2.set_type(action_type::AT_MOVE_LEFT);
+
+		end_condition cond2;
+		cond2.set_data(WINDOW_WIDTH * 0.65f);
+		cond2.set_type(condition_type::CT_POSITION_X);
+		act2.set_condition(cond2);
+		enemy->get_behavior()->add_action(act2);
+
+		action act3;
+		act3.set_type(action_type::AT_MOVE_FORWARD);
+		enemy->get_behavior()->add_action(act3);
+	} else {
+		end_condition cond1;
+		cond1.set_data(WINDOW_HEIGHT * 0.65f);
+		cond1.set_type(condition_type::CT_POSITION_Y);
+
+		act1.set_condition(cond1);
+		enemy->get_behavior()->add_action(act1);
+
+		action act2;
+		act2.set_type(action_type::AT_MOVE_RIGHT);
+
+		end_condition cond2;
+		cond2.set_data(WINDOW_WIDTH * 0.25f);
+		cond2.set_type(condition_type::CT_POSITION_X);
+		act2.set_condition(cond2);
+		enemy->get_behavior()->add_action(act2);
+
+		action act3;
+		act3.set_type(action_type::AT_MOVE_FORWARD);
+		enemy->get_behavior()->add_action(act3);
+	}
+	enemy->get_behavior()->init();
 	m_world->on_notify(*enemy);
 
 	--m_counter;
