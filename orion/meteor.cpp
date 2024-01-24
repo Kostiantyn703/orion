@@ -14,7 +14,7 @@ void meteor::update(float delta_time) {
 	set_origin(get_origin() + delta_vec);
 	m_aabb.calculate(get_origin(), get_size(), SIZE_SCALAR);
 
-	if (get_origin().get_y() > WINDOW_HEIGHT + REMOVE_OFFSET) {
+	if (get_origin().get_y() > WINDOW_HEIGHT + OUT_OFFSET) {
 		set_to_remove(true);
 	}
 }

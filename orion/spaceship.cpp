@@ -1,12 +1,12 @@
 #include "spaceship.h"
 #include "world_module.h"
+#include "globals.h"
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector)
 	:	game_object(initial_point)
 {
 	set_forward_vector(in_forward_vector);
 	set_velocity(PLAYER_VELOCITY);
-	m_behavior = std::make_unique<behavior>();
 }
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector, float in_velocity)
@@ -14,7 +14,6 @@ spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_v
 {
 	set_forward_vector(in_forward_vector);
 	set_velocity(in_velocity);
-	m_behavior = std::make_unique<behavior>();
 }
 
 spaceship::~spaceship() {
@@ -30,6 +29,8 @@ void spaceship::init() {
 // TODO: temporary
 void spaceship::on_spawn() {
 	m_type = ship_type::ST_ENEMY;
+	m_behavior = std::make_unique<behavior>();
+	set_mask(MASK_ENEMY);
 }
 
 void spaceship::update(float delta_time) {
@@ -50,7 +51,7 @@ void spaceship::update(float delta_time) {
 	reset_movement();
 
 	if (m_type == ship_type::ST_ENEMY) {
-		if (get_origin().get_y() > WINDOW_HEIGHT + REMOVE_OFFSET) {
+		if (get_origin().get_y() > WINDOW_HEIGHT + OUT_OFFSET) {
 			set_to_remove(true);
 		}
 	}
@@ -114,7 +115,8 @@ void spaceship::reset_movement() {
 	blocked_left	= false;
 }
 
-void spaceship::change_direction(const vector2f &in_forward) {
+void spaceship::change_direction(const int in_dir) {
 	set_rotation(90.f);
-	set_forward_vector(in_forward);
+	set_forward_vector(vector2f(-1.f, 0.f));
+
 }

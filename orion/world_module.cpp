@@ -1,4 +1,5 @@
 #include "world_module.h"
+
 #include <SDL_log.h>
 #include <algorithm>
 
@@ -8,6 +9,7 @@
 constexpr int OBJECTS_CAPACITY = 20;
 
 world_module::world_module() {
+
 	m_colision_system = std::make_unique<collision_module>();
 
 	m_meteor_spawner = std::make_unique<meteor_spawner>();

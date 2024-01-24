@@ -1,5 +1,6 @@
 #ifndef CONTROLLABLE_H
 #define CONTROLLABLE_H
+#include <string>
 
 class vector2f;
 
@@ -14,7 +15,7 @@ public:
 	virtual void shoot			()	= 0;
 
 	virtual void reset_movement	()	= 0;
-	virtual void change_direction(const vector2f &in_forward) = 0;
+	virtual void change_direction(const int in_dir) = 0;
 };
 
 #endif // CONTROLLABLE_H
