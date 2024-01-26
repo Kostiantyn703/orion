@@ -26,6 +26,7 @@ private:
 
 enum class action_type {
 	AT_MOVE_FORWARD,
+	AT_MOVE_BACKWARDS,
 	AT_MOVE_LEFT,
 	AT_MOVE_RIGHT,
 	AT_NONE

@@ -41,13 +41,27 @@ bool behavior::handle_condition(const action &in_action, spaceship &in_object) {
 	const end_condition &cond = in_action.get_condition();
 	switch (cond.get_type()) {
 	case condition_type::CT_POSITION_X:
-		if ((in_object.get_origin().get_x() - cond.get_data()) > 0.001) {
-			result = true;
+		if (in_action.get_type() == action_type::AT_MOVE_LEFT) {
+			if ((in_object.get_origin().get_x() - cond.get_data()) > 0.001) {
+				result = true;
+			}
+		}
+		if (in_action.get_type() == action_type::AT_MOVE_RIGHT) {
+			if ((in_object.get_origin().get_x() - cond.get_data()) < 0.001) {
+				result = true;
+			}
 		}
 		break;
 	case condition_type::CT_POSITION_Y:
-		if ((in_object.get_origin().get_y() - cond.get_data()) > 0.001) {
-			result = true;
+		if (in_action.get_type() == action_type::AT_MOVE_FORWARD) {
+			if ((in_object.get_origin().get_y() - cond.get_data()) > 0.001) {
+				result = true;
+			}
+		}
+		if (in_action.get_type() == action_type::AT_MOVE_BACKWARDS) {
+			if ((in_object.get_origin().get_y() - cond.get_data()) < 0.001) {
+				result = true;
+			}
 		}
 		break;
 	}

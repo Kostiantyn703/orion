@@ -73,7 +73,7 @@ void ship_spawner::notify() {
 		act2.set_type(action_type::AT_MOVE_RIGHT);
 
 		end_condition cond2;
-		cond2.set_data(WINDOW_WIDTH * 0.25f);
+		cond2.set_data(WINDOW_WIDTH * 0.15f);
 		cond2.set_type(condition_type::CT_POSITION_X);
 		act2.set_condition(cond2);
 		enemy->get_behavior()->add_action(act2);
