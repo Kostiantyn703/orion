@@ -6,15 +6,15 @@ constexpr float		WINDOW_HEIGHT	= 1200.f * 0.6f;	// 600.f
 constexpr float		WINDOW_WIDTH	= 1600.f * 0.75f;	// 800.f
 static const char	*WINDOW_NAME	= "PROJECT ORION";
 
-constexpr float		VELOCITY_COEFICIENT = 2.f;
 // values
+constexpr float		VELOCITY_COEFICIENT = 2.f;
 constexpr float		BULLET_VELOCITY	= 20.f * VELOCITY_COEFICIENT;
 constexpr float		PLAYER_VELOCITY	= 10.f * VELOCITY_COEFICIENT;
 constexpr float		METEOR_VELOCITY	= 2.f * VELOCITY_COEFICIENT;
 constexpr float		MAX_RELOAD_TIME	= 15.f / VELOCITY_COEFICIENT;
 
 constexpr float		OUT_OFFSET		= 20.f;
-
+constexpr float		SIZE_SCALAR		= 0.1f;
 // shaders
 static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";
 static const char	*SPRITE_ADDRESS_FRAG	= "../content/shaders/sprite.frag";
@@ -37,7 +37,8 @@ static const char	*TEX_NAME_METEOR_BROWN_BIG	= "meteor_brown_big";
 static const char	*TEX_NAME_METEOR_BROWN_MED	= "meteor_brown_med";
 static const char	*TEX_NAME_BULLET			= "bullet";
 
-constexpr float		SIZE_SCALAR = 0.1f;
+// scripts
+static const char	*SCRIPTS_PATH				= "../content/scripts/";
 
 // vertices
 static float vertices[] = {

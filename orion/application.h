@@ -9,6 +9,7 @@
 #include "game_object.h"
 #include "input_receiver.h"
 #include "world_module.h"
+#include "script_module.h"
 
 class application {
 public:
@@ -36,5 +37,7 @@ private:
 	
 	std::unique_ptr<controller>		m_controller;
 	std::unique_ptr<input_receiver> m_receiver;
+
+	std::unique_ptr<script_module>	m_scripts;
 };
 #endif // APPLICATION_H

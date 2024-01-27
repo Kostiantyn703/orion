@@ -10,8 +10,9 @@ void application::start_up() {
 	m_controller	= std::make_unique<controller>();
 	m_receiver		= std::make_unique<input_receiver>();
 
-	m_world = std::make_unique<world_module>();
+	m_scripts		= std::make_unique<script_module>();
 
+	m_world = std::make_unique<world_module>();
 	m_world->init_player(m_controller.get());
 	m_world->init();
 
