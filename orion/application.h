@@ -22,14 +22,10 @@ public:
 	void run();
 	void shut_down();
 
-	void print_video_info();
-	void toggle_window_size();
-	void toggle_wireframe();
-	void show_current_time();
-
 private:
 	bool is_active;
 
+	std::unique_ptr<script_module>	m_scripts;
 	std::unique_ptr<render_module>	m_renderer;
 	std::unique_ptr<world_module>	m_world;
 
@@ -37,7 +33,5 @@ private:
 	
 	std::unique_ptr<controller>		m_controller;
 	std::unique_ptr<input_receiver> m_receiver;
-
-	std::unique_ptr<script_module>	m_scripts;
 };
 #endif // APPLICATION_H
