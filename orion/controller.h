@@ -16,17 +16,4 @@ public:
 private:
 	controllable *m_owner = nullptr;
 };
-
-class enemy_controller {
-public:
-	enemy_controller() {}
-	~enemy_controller() {}
-
-	void set_owner(controllable *in_controllable) { m_owner = in_controllable; }
-	//void add_object(controllable &in_object);
-private:
-	//std::vector<controllable*> m_enemies;
-	controllable *m_owner = nullptr;
-
-};
 #endif // CONTROLLER_H

@@ -43,6 +43,5 @@ private:
 	// spawners 
 	std::unique_ptr<meteor_spawner> m_meteor_spawner;
 	std::unique_ptr<ship_spawner>	m_ship_spawner;
-	std::unique_ptr<enemy_controller> m_enemy_controller; 
 };
 #endif // WORLD_MODULE_H

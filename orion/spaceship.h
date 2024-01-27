@@ -7,6 +7,8 @@
 #include "weapon.h"
 #include "controller.h"
 #include "border.h"
+#include "behavior.h"
+#include <memory>
 
 class subscriber;
 
@@ -28,13 +30,17 @@ public:
 	virtual void move_backward() override;
 	virtual void move_left() override;
 	virtual void shoot() override;
+
+	virtual void reset_movement() override;
+	virtual void change_direction(const int in_dir) override;
 	// ~ end controllable interface
 
 	virtual void borders_intersect(border_side in_side) override;
 
 	void set_listener(subscriber *in_listener) { m_listener = in_listener; }
 
-	void reset_movement();
+	behavior *get_behavior() const { return m_behavior.get() ; }
+
 private:
 	bool blocked_up		= false;
 	bool blocked_right	= false;
@@ -44,6 +50,8 @@ private:
 	weapon *m_weapon = nullptr;
 	// for now it's world
 	subscriber *m_listener = nullptr;
+
+	std::unique_ptr<behavior> m_behavior;
 
 	enum class ship_type {
 		ST_PLAYER,

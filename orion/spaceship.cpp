@@ -1,5 +1,6 @@
 #include "spaceship.h"
 #include "world_module.h"
+#include "globals.h"
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector)
 	:	game_object(initial_point)
@@ -25,13 +26,17 @@ void spaceship::init() {
 	m_weapon->set_postition(wep_pos);
 	m_type = ship_type::ST_PLAYER;
 }
-
+// TODO: temporary
 void spaceship::on_spawn() {
 	m_type = ship_type::ST_ENEMY;
-	move_forward();
+	m_behavior = std::make_unique<behavior>();
+	set_mask(MASK_ENEMY);
 }
 
 void spaceship::update(float delta_time) {
+	if (m_type == ship_type::ST_ENEMY) {
+		m_behavior->update(delta_time, *this);
+	}
 	// duplicate at least in bullet::update
 	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
 	set_origin(get_origin() + delta_vec);
@@ -43,11 +48,10 @@ void spaceship::update(float delta_time) {
 			m_weapon->set_can_shoot(true);
 		}
 	}
-	if (m_type == ship_type::ST_PLAYER) {
-		reset_movement();
-	}
+	reset_movement();
+
 	if (m_type == ship_type::ST_ENEMY) {
-		if (get_origin().get_y() > WINDOW_HEIGHT + REMOVE_OFFSET) {
+		if (get_origin().get_y() > WINDOW_HEIGHT + OUT_OFFSET) {
 			set_to_remove(true);
 		}
 	}
@@ -109,4 +113,10 @@ void spaceship::reset_movement() {
 	blocked_right	= false;
 	blocked_down	= false;
 	blocked_left	= false;
+}
+
+void spaceship::change_direction(const int in_dir) {
+	set_rotation(90.f);
+	set_forward_vector(vector2f(-1.f, 0.f));
+
 }

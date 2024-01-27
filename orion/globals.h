@@ -1,8 +1,9 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
+
 // window
-constexpr float		WINDOW_HEIGHT	= 1200.f * 0.8f;	// 600.f
-constexpr float		WINDOW_WIDTH	= 1600.f * 0.8f;	// 800.f
+constexpr float		WINDOW_HEIGHT	= 1200.f * 0.6f;	// 600.f
+constexpr float		WINDOW_WIDTH	= 1600.f * 0.75f;	// 800.f
 static const char	*WINDOW_NAME	= "PROJECT ORION";
 
 constexpr float		VELOCITY_COEFICIENT = 2.f;
@@ -12,7 +13,7 @@ constexpr float		PLAYER_VELOCITY	= 10.f * VELOCITY_COEFICIENT;
 constexpr float		METEOR_VELOCITY	= 2.f * VELOCITY_COEFICIENT;
 constexpr float		MAX_RELOAD_TIME	= 15.f / VELOCITY_COEFICIENT;
 
-constexpr float		REMOVE_OFFSET	= 15.f;
+constexpr float		OUT_OFFSET		= 20.f;
 
 // shaders
 static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";
@@ -28,7 +29,7 @@ static const char	*TEX_ADDRESS_ENEMY				= "../content/images/enemy.png";
 static const char	*TEX_ADDRESS_SHIP				= "../content/images/ship.png";
 static const char	*TEX_ADDRESS_METEOR_BROWN_BIG	= "../content/images/meteor_brown_big.png";
 static const char	*TEX_ADDRESS_METEOR_BROWN_MED	= "../content/images/meteor_brown_med.png";
-static const char	*TEX_ADDRESS_BULLET				= "../content/images/bullet.png";
+static const char	*TEX_ADDRESS_BULLET				= "../content/images/bullet_green.png";
 
 static const char	*TEX_NAME_ENEMY				= "enemy";
 static const char	*TEX_NAME_SHIP				= "ship";
@@ -99,4 +100,47 @@ enum class border_side {
 	BS_WEST,
 	BS_NONE = -1
 };
+
+// direction data
+static const char *DIR_UP_STR = "dir_up";
+static const char *DIR_RIGHT_STR = "dir_right";
+static const char *DIR_DOWN_STR = "dir_down";
+static const char *DIR_LEFT_STR = "dir_left";
+
+#include <map>
+#include <string>
+
+using dir_pair = std::pair<int, vector2f>;
+using dir_map = std::map<int, vector2f>;
+
+static dir_map g_dir_map;
+
+static void init_dir_map(dir_map &in_map) {
+	dir_pair up		= std::make_pair<int, vector2f>(0, vector2f(0.f, -1.f));
+	dir_pair right	= std::make_pair<int, vector2f>(1, vector2f(1.f, 0.f));
+	dir_pair down	= std::make_pair<int, vector2f>(2, vector2f(0.f, 1.f));
+	dir_pair left	= std::make_pair<int, vector2f>(3, vector2f(-1.f, 0.f));
+
+	in_map.insert(up);
+	in_map.insert(right);
+	in_map.insert(down);
+	in_map.insert(left);
+}
+
+using rot_pair = std::pair<int, float>;
+using rot_map = std::map<int, float>;
+
+static rot_map g_rot_map;
+
+static void init_rot_map(rot_map &in_map) {
+	rot_pair up		= std::make_pair<int, float>(0, 180.f);
+	rot_pair right	= std::make_pair<int, float>(1, 90.f);
+	rot_pair down	= std::make_pair<int, float>(2, 0.f);
+	rot_pair left	= std::make_pair<int, float>(3, 270.f);
+	
+	in_map.insert(up);
+	in_map.insert(right);
+	in_map.insert(down);
+	in_map.insert(left);
+}
 #endif // !GLOBALS_H
