@@ -17,7 +17,7 @@ script_module::script_module() {
 script_module::~script_module() {
 }
 
-void script_module::collect_scripts(const std::string &in_path, std::vector<float> &out_data) {
+void script_module::collect_scripts(const std::string &in_path, std::vector<game_block> &out_data) {
 	SDL_Log("The path to collect [%s]", in_path.c_str());
 
 	for (const dir_entry &file : dir_it(in_path)) {
@@ -29,8 +29,9 @@ void script_module::collect_scripts(const std::string &in_path, std::vector<floa
 		std::string file_content;
 		if (get_file_content(file_path, file_content)) {
 			SDL_Log("File content \n%s", file_content.c_str());
-			float res = parse_float(file_content);
-			out_data.push_back(res);
+			game_block cur_block;
+			parse_file_content(file_content, cur_block);
+			out_data.push_back(cur_block);
 		}
 	}
 }
@@ -48,6 +49,16 @@ bool script_module::get_file_content(const std::string &in_file, std::string &ou
 	return true;
 }
 
+void script_module::parse_file_content(std::string &in_content, game_block &out_block) {
+	char end_line_token = '\n';
+	size_t end_line_idx = in_content.find_first_of('\n');
+	std::string sub1 = in_content.substr(0, end_line_idx);
+	++end_line_idx;
+	out_block.m_spawn_pos = parse_float(sub1);
+	std::string sub2 = in_content.substr(end_line_idx, sub1.find_first_of(end_line_token));
+	out_block.m_type = parse_int(sub2);
+}
+
 float script_module::parse_float(std::string &in_line) {
 	char token = '=';
 	size_t idx = in_line.find(token);
@@ -55,6 +66,17 @@ float script_module::parse_float(std::string &in_line) {
 		SDL_Log("Bad token.");
 	}
 	std::string sub = in_line.substr(idx+1, in_line.size()-1);
-	float result = std::atof(sub.c_str());
+	float result = (float)std::atof(sub.c_str());
+	return result;
+}
+
+size_t script_module::parse_int(std::string &in_line) {
+	char token = '=';
+	size_t idx = in_line.find(token);
+	if (idx == std::numeric_limits<size_t>::max()) {
+		SDL_Log("Bad token.");
+	}
+	std::string sub = in_line.substr(idx + 1, in_line.size() - 1);
+	size_t result = std::atoi(sub.c_str());
 	return result;
 }

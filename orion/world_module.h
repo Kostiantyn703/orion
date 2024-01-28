@@ -14,6 +14,8 @@
 #include "meteor.h"
 #include "meteor_spawner.h"
 #include "ship_spawner.h"
+#include "game_block.h"
+
 
 using object_storage = std::vector<game_object*>;
 
@@ -36,10 +38,10 @@ public:
 
 	object_storage					m_objects;
 
-	std::vector<float> m_script_data;
+	std::vector<game_block> m_block_data;
 
 	bool m_script_playing = false;
-
+	int cur_block_idx = 0;
 private:
 
 	std::unique_ptr<collision_module> m_colision_system;

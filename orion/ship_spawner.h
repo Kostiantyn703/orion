@@ -6,6 +6,8 @@
 #include "spaceship.h"
 #include "subscriber.h"
 
+struct game_block;
+
 class ship_spawner {
 public:
 	ship_spawner();
@@ -14,9 +16,7 @@ public:
 	void set_spawn_pos(float in_x, float in_y) { m_spawn_pos = vector2f(in_x, in_y); }
 	const vector2f get_spawn_pos() const { return m_spawn_pos; }
 
-	void update(float delta_time);
-
-	void gather_script_data(const float in_script_data);
+	void gather_script_data(const game_block &in_block);
 
 	void notify();
 
@@ -27,13 +27,8 @@ public:
 	spaceship *spawn_spaceship(const vector2f &in_position, const vector2f &in_forward_vector) const;
 
 private:
-	bool changed = false;
-	float m_max_spawn_time = 7.f;
-	float m_spawn_time = 0.f;
-	// temp variable 
-	size_t m_counter = 5;
-
 	vector2f m_spawn_pos;
+	texture *m_cur_tex = nullptr;
 
 	subscriber *m_world;
 };

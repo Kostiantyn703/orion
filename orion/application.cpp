@@ -14,7 +14,7 @@ void application::start_up() {
 	m_world->init_player(m_controller.get());
 
 	m_scripts = std::make_unique<script_module>();
-	m_scripts->collect_scripts(SCRIPTS_PATH, m_world->m_script_data);
+	m_scripts->collect_scripts(SCRIPTS_PATH, m_world->m_block_data);
 	m_world->init();
 
 	m_renderer->init();
