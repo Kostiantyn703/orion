@@ -58,7 +58,7 @@ void world_module::update(float delta_time) {
 	if (!m_script_playing) {
 		m_reload_time -= delta_time;
 		if (m_reload_time < 0.f) {
-			m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % 2]);
+			m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % m_block_data.size()]);
 			m_script_playing = true;
 			++cur_block_idx;
 			m_reload_time = m_max_reload_time;
