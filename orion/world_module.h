@@ -42,6 +42,9 @@ public:
 
 	bool m_script_playing = false;
 	int cur_block_idx = 0;
+
+	float m_reload_time = 0.f;
+	float m_max_reload_time = 20.f;
 private:
 
 	std::unique_ptr<collision_module> m_colision_system;

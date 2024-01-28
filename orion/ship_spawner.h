@@ -10,7 +10,7 @@ struct game_block;
 
 class ship_spawner {
 public:
-	ship_spawner();
+	ship_spawner() : m_world(nullptr) {}
 	~ship_spawner() {}
 
 	void notify_spawn(const game_block &in_block);

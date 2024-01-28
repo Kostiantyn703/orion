@@ -19,6 +19,8 @@ world_module::world_module() {
 	m_ship_spawner->set_listener(this);
 
 	m_objects.reserve(OBJECTS_CAPACITY);
+
+	m_reload_time = m_max_reload_time;
 }
 
 world_module::~world_module() {
@@ -54,9 +56,13 @@ void world_module::update(float delta_time) {
 	//m_meteor_spawner->update(delta_time);
 
 	if (!m_script_playing) {
-		m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % 2]);
-		m_script_playing = true;
-		++cur_block_idx;
+		m_reload_time -= delta_time;
+		if (m_reload_time < 0.f) {
+			m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % 2]);
+			m_script_playing = true;
+			++cur_block_idx;
+			m_reload_time = m_max_reload_time;
+		}
 	}
 	remove_objects();
 }

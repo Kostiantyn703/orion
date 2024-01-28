@@ -4,8 +4,6 @@
 #include "resource_module.h"
 #include "game_block.h"
 
-ship_spawner::ship_spawner() : m_world(nullptr) {}
-
 void ship_spawner::notify_spawn(const game_block &in_block) {
 	vector2f spawn_pos = vector2f(WINDOW_WIDTH * in_block.m_spawn_pos, -OUT_OFFSET);
 	
