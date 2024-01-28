@@ -50,13 +50,19 @@ bool script_module::get_file_content(const std::string &in_file, std::string &ou
 }
 
 void script_module::parse_file_content(std::string &in_content, game_block &out_block) {
+	std::istringstream input;
+	input.str(in_content);
 	char end_line_token = '\n';
-	size_t end_line_idx = in_content.find_first_of('\n');
-	std::string sub1 = in_content.substr(0, end_line_idx);
-	++end_line_idx;
-	out_block.m_spawn_pos = parse_float(sub1);
-	std::string sub2 = in_content.substr(end_line_idx, sub1.find_first_of(end_line_token));
-	out_block.m_type = parse_int(sub2);
+	int idx = 0;
+	for (std::string line; std::getline(input, line);) {
+		if (idx == 0) {
+			out_block.m_spawn_pos = parse_float(line);
+		}
+		if (idx == 1) {
+			out_block.m_type = parse_int(line);
+		}
+		++idx;
+	}
 }
 
 float script_module::parse_float(std::string &in_line) {
