@@ -6,9 +6,14 @@
 #include <sstream>
 
 #include "SDL_Log.h"
+#include <algorithm>
+#include <cctype>
+
 
 using dir_entry	= std::filesystem::directory_entry;
 using dir_it	= std::filesystem::directory_iterator;
+
+const size_t size_t_max	= std::numeric_limits<size_t>::max();
 
 script_module::script_module() {
 	SDL_Log("Script module constructed");
@@ -52,23 +57,30 @@ bool script_module::get_file_content(const std::string &in_file, std::string &ou
 void script_module::parse_file_content(std::string &in_content, game_block &out_block) {
 	std::istringstream input;
 	input.str(in_content);
-	char end_line_token = '\n';
-	int idx = 0;
 	for (std::string line; std::getline(input, line);) {
-		if (idx == 0) {
+		size_t idx = line.find("spawn");
+		if (idx != size_t_max) {
 			out_block.m_spawn_pos = parse_float(line);
+			continue;
 		}
-		if (idx == 1) {
+		idx = size_t_max;
+		idx = line.find("type");
+		if (idx != size_t_max) {
 			out_block.m_type = parse_int(line);
+			continue;
 		}
-		++idx;
+		idx = size_t_max;
+		idx = line.find("behavior");
+		if (idx != size_t_max) {
+			parse_behavior(line, out_block);
+		}
 	}
 }
 
 float script_module::parse_float(std::string &in_line) {
 	char token = '=';
 	size_t idx = in_line.find(token);
-	if (idx == std::numeric_limits<size_t>::max()) {
+	if (idx == size_t_max) {
 		SDL_Log("Bad token.");
 	}
 	std::string sub = in_line.substr(idx+1, in_line.size()-1);
@@ -79,10 +91,26 @@ float script_module::parse_float(std::string &in_line) {
 size_t script_module::parse_int(std::string &in_line) {
 	char token = '=';
 	size_t idx = in_line.find(token);
-	if (idx == std::numeric_limits<size_t>::max()) {
+	if (idx == size_t_max) {
 		SDL_Log("Bad token.");
 	}
 	std::string sub = in_line.substr(idx + 1, in_line.size() - 1);
 	size_t result = std::atoi(sub.c_str());
 	return result;
+}
+
+void script_module::parse_behavior(std::string &in_line, game_block &out_block) {
+	size_t start_idx = in_line.find('{');
+	size_t end_idx = in_line.find('}');
+	std::string sub = in_line.substr(start_idx + 1, end_idx - (start_idx + 1));
+
+	sub.erase(
+			std::remove_if(sub.begin(), sub.end(), [](unsigned char x) { return std::isspace(x); })
+		,	sub.end()
+				);
+
+	behavior_data item;
+	item.m_action_name = sub;
+
+	out_block.m_behavior_data.push_back(item);
 }

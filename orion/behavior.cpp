@@ -33,6 +33,9 @@ void behavior::handle_action(const action &in_action, spaceship &in_object) {
 	case action_type::AT_MOVE_RIGHT:
 		in_object.move_right();
 		break;
+	case action_type::AT_MOVE_BACKWARDS:
+		in_object.move_backward();
+		break;
 	}
 }
 
