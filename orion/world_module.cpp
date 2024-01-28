@@ -54,8 +54,7 @@ void world_module::update(float delta_time) {
 	//m_meteor_spawner->update(delta_time);
 
 	if (!m_script_playing) {
-		m_ship_spawner->gather_script_data(m_block_data[cur_block_idx % 2]);
-		m_ship_spawner->notify();
+		m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % 2]);
 		m_script_playing = true;
 		++cur_block_idx;
 	}
