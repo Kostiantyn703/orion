@@ -10,11 +10,11 @@ void application::start_up() {
 	m_controller	= std::make_unique<controller>();
 	m_receiver		= std::make_unique<input_receiver>();
 
-	m_scripts		= std::make_unique<script_module>();
-	m_scripts->collect_scripts(SCRIPTS_PATH);
-
 	m_world = std::make_unique<world_module>();
 	m_world->init_player(m_controller.get());
+
+	m_scripts = std::make_unique<script_module>();
+	m_scripts->collect_scripts(SCRIPTS_PATH, m_world->m_script_data);
 	m_world->init();
 
 	m_renderer->init();

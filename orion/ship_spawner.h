@@ -16,6 +16,8 @@ public:
 
 	void update(float delta_time);
 
+	void gather_script_data(const float in_script_data);
+
 	void notify();
 
 	void set_listener(subscriber *in_listener) { m_world = in_listener; }

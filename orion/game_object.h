@@ -15,6 +15,7 @@ public:
 	virtual void init() {}
 	// for spaceship
 	virtual void on_spawn() {}
+	virtual void on_remove(bool &in_val) {}
 	// TODO: maybe pure virtual
 	virtual void update		(float delta_time);
 	// ~ renderable interface
@@ -33,6 +34,7 @@ public:
 	const vector2f	&get_size() const { return m_size; }
 protected:
 	void set_rotation(float in_rotation) { m_rotation = in_rotation; }
+	float get_rotation() const { return m_rotation; }
 
 	void set_origin(float in_x, float in_y);
 	void set_origin(const vector2f &in_position);

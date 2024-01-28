@@ -18,7 +18,6 @@ game_object::game_object(const vector2f &initial_point) {
 game_object::~game_object() {}
 
 void game_object::update(float delta_time) {
-	m_rotation += delta_time * 2;
 }
 
 void game_object::draw(const shader_program &in_shader) {

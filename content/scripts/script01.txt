@@ -1,4 +1,1 @@
-{
-test_contents
-0001
-}
+spawn=0.2
