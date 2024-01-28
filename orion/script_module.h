@@ -19,5 +19,11 @@ private:
 	float parse_float(std::string &in_line);
 	size_t parse_int(std::string &in_line);
 	void parse_behavior(std::string &in_line, game_block &out_block);
+
+	bool action_found(const std::string &in_line);
+	bool condition_found(const std::string &in_line);
+
+	std::vector<std::string> m_actions = { "forward", "left", "right" };
+	std::vector<std::string> m_conditions = { "x_pos", "y_pos" };
 };
 #endif // SCRIPT_MODULE_H

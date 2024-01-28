@@ -3,6 +3,19 @@
 #include "spaceship.h"
 #include "resource_module.h"
 #include "game_block.h"
+#include "behavior.h"
+
+std::map<std::string, action_type> g_actions_map = {
+	{	"forward"	,	action_type::AT_MOVE_FORWARD	},
+	{	"backward"	,	action_type::AT_MOVE_BACKWARDS	},
+	{	"left"		,	action_type::AT_MOVE_LEFT		},
+	{	"right"		,	action_type::AT_MOVE_RIGHT		}
+};
+
+std::map<std::string, condition_type> g_cond_map = {
+	{	"x_pos"		,	condition_type::CT_POSITION_X	},
+	{	"y_pos"		,	condition_type::CT_POSITION_Y	}
+};
 
 void ship_spawner::notify_spawn(const game_block &in_block) {
 	vector2f spawn_pos = vector2f(WINDOW_WIDTH * in_block.m_spawn_pos, -OUT_OFFSET);
@@ -26,11 +39,22 @@ void ship_spawner::notify_spawn(const game_block &in_block) {
 void ship_spawner::set_behavior(spaceship &in_ship, const game_block &in_block) {
 	for (std::vector<behavior_data>::const_iterator it = in_block.m_behavior_data.begin(); it != in_block.m_behavior_data.end(); ++it) {
 		action act;
-		if (it->m_action_name == "forward") {
-			act.set_type(action_type::AT_MOVE_FORWARD);
+		auto act_it = g_actions_map.find(it->m_action_name);
+		if (act_it != g_actions_map.end()) {
+			act.set_type(act_it->second);
 		}
 		if (!it->m_condition_name.empty()) {
-			// set condition and data
+			auto cond_it = g_cond_map.find(it->m_condition_name);
+			end_condition cond;
+			cond.set_type(cond_it->second);
+			float coord_data = 0.f;
+			if (cond.get_type() == condition_type::CT_POSITION_X) {
+				coord_data = WINDOW_WIDTH * it->m_condition_data;
+			} else {
+				coord_data = WINDOW_HEIGHT * it->m_condition_data;
+			}
+			cond.set_data(coord_data);
+			act.set_condition(cond);
 		}
 		in_ship.get_behavior()->add_action(act);
 	}

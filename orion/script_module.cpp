@@ -100,17 +100,62 @@ size_t script_module::parse_int(std::string &in_line) {
 }
 
 void script_module::parse_behavior(std::string &in_line, game_block &out_block) {
-	size_t start_idx = in_line.find('{');
-	size_t end_idx = in_line.find('}');
-	std::string sub = in_line.substr(start_idx + 1, end_idx - (start_idx + 1));
+	char token = '=';
+	size_t idx = in_line.find(token);
+	++idx;
+	in_line.erase(in_line.begin(),in_line.begin() + idx);
+	// remove spaces
+	auto space_pred = [](size_t x) { return (size_t)std::isspace(x); };
+	in_line.erase(
+			std::remove_if(in_line.begin(), in_line.end(), space_pred)
+		, in_line.end()
+	);
 
-	sub.erase(
-			std::remove_if(sub.begin(), sub.end(), [](unsigned char x) { return std::isspace(x); })
-		,	sub.end()
-				);
-
-	behavior_data item;
-	item.m_action_name = sub;
-
-	out_block.m_behavior_data.push_back(item);
+	auto brackets_pred = [](char val) { return val == '{' || val == '}'; };
+	
+	std::istringstream sstream;
+	sstream.str(in_line);
+	for (std::string line; std::getline(sstream, line, ';');) {
+		line.erase(
+				std::remove_if(line.begin(), line.end(), brackets_pred)
+			,	line.end()
+		);
+		std::stringstream inner_ss;
+		inner_ss.str(line);
+		behavior_data item;
+		for (std::string inner_line; std::getline(inner_ss, inner_line, ',');) {
+			if (action_found(inner_line)) {
+				item.m_action_name = inner_line;
+				continue;
+			}
+			if (condition_found(inner_line)) {
+				item.m_condition_name = inner_line;
+				continue;
+			}
+			item.m_condition_data = std::atof(inner_line.c_str());
+		}
+		out_block.m_behavior_data.push_back(item);
+	}
 }
+
+bool script_module::action_found(const std::string &in_line) {
+	for (size_t i = 0; i < m_actions.size(); ++i) {
+		size_t idx = in_line.find(m_actions[i]);
+		if (idx != size_t_max) {
+			return	true;
+		}
+	}
+	return	false;
+}
+
+bool script_module::condition_found(const std::string &in_line) {
+	for (size_t i = 0; i < m_conditions.size(); ++i) {
+		size_t idx = in_line.find(m_conditions[i]);
+		if (idx != size_t_max) {
+			return	true;
+		}
+	}
+	return	false;
+
+}
+
