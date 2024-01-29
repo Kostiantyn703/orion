@@ -23,7 +23,7 @@ private:
 	bool action_found(const std::string &in_line);
 	bool condition_found(const std::string &in_line);
 
-	std::vector<std::string> m_actions = { "forward", "left", "right" };
+	std::vector<std::string> m_actions = { "forward", "left", "right", "backward" };
 	std::vector<std::string> m_conditions = { "x_pos", "y_pos" };
 };
 #endif // SCRIPT_MODULE_H
