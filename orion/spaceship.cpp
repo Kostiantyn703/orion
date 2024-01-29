@@ -25,9 +25,11 @@ void spaceship::init() {
 	vector2f wep_pos(get_size().get_x() * 0.5f, 0.f);
 	m_weapon->set_postition(wep_pos);
 	m_type = ship_type::ST_PLAYER;
+	recalc_pos();
 }
 // TODO: temporary
 void spaceship::on_spawn() {
+	recalc_pos();
 	m_type = ship_type::ST_ENEMY;
 	m_behavior = std::make_unique<behavior>();
 	set_mask(MASK_ENEMY);
@@ -41,11 +43,9 @@ void spaceship::update(float delta_time) {
 	if (m_type == ship_type::ST_ENEMY) {
 		m_behavior->update(delta_time, *this);
 	}
-	// duplicate at least in bullet::update
-	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
-	set_origin(get_origin() + delta_vec);
-	m_aabb.calculate(get_origin(), get_size(), SIZE_SCALAR);
-	
+
+	game_object::update(delta_time);
+
 	if (m_weapon && !m_weapon->can_shoot()) {
 		m_weapon->m_reload_timer -= delta_time;
 		if (m_weapon->m_reload_timer < 0.f) {

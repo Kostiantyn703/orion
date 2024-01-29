@@ -12,7 +12,7 @@
 
 class subscriber;
 
-class spaceship : public game_object, public controllable, public movable {
+class spaceship : public game_object, public controllable {
 public:
 	spaceship(const vector2f &initial_point, const vector2f &in_forward_vector);
 	spaceship(const vector2f &initial_point, const vector2f &in_forward_vector, float in_velocity);

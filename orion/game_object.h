@@ -7,7 +7,7 @@
 #include "controller.h"
 #include "movable.h"
 
-class game_object : public renderable, public collidable {
+class game_object : public renderable, public collidable, public movable{
 public:
 	game_object(const vector2f &initial_point);
 	virtual ~game_object();
@@ -30,8 +30,9 @@ public:
 	virtual void on_intersect	()	override;
 	// ~ end collidable interface
 
-	const vector2f	&get_origin() const { return m_origin; }
-	const vector2f	&get_size() const { return m_size; }
+	const vector2f	&get_origin	()	const	{	return m_origin;	}
+	const vector2f	&get_size	()	const	{	return m_size;		}
+	const vector2f	&get_center	()	const	{	return m_center;	}
 
 	void set_rotation(float in_rotation) { m_rotation = in_rotation; }
 	float get_rotation() const { return m_rotation; }
@@ -40,10 +41,17 @@ protected:
 	void set_origin(float in_x, float in_y);
 	void set_origin(const vector2f &in_position);
 
+	void set_center(const vector2f &in_pos);
+
+	void recalc_pos();
+
+
+
 private:
 	bool		to_remove	= false;
 	float		m_rotation	= 0.f;
 	vector2f	m_origin;
 	vector2f	m_size;
+	vector2f	m_center;
 };
 #endif // GAME_OBJECT_H

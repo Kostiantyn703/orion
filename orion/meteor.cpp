@@ -8,14 +8,19 @@ meteor::meteor(const vector2f &initial_point, const vector2f &in_forward_vector)
 	set_velocity		(METEOR_VELOCITY);
 }
 
+void meteor::init() {
+	recalc_pos();
+}
+
 void meteor::update(float delta_time) {
+	game_object::update(delta_time);
 	float cur_rot = get_rotation();
 	cur_rot += delta_time * 2;
 	set_rotation(cur_rot);
 
-	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
+	/*vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
 	set_origin(get_origin() + delta_vec);
-	m_aabb.calculate(get_origin(), get_size(), SIZE_SCALAR);
+	m_aabb.calculate(get_origin(), get_size(), SIZE_SCALAR);*/
 
 	if (get_origin().get_y() > WINDOW_HEIGHT + OUT_OFFSET) {
 		set_to_remove(true);

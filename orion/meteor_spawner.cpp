@@ -21,6 +21,7 @@ void meteor_spawner::notify() {
 	game_object *object = spawn_object(pos, forward_vec);
 	object->set_texture(meteor_tex_big);
 	object->set_mask(MASK_ENEMY);
+	object->init();
 
 	m_world->on_notify(*object);
 }

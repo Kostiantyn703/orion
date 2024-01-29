@@ -4,7 +4,7 @@
 #include "game_object.h"
 #include "movable.h"
 
-class bullet : public game_object, public movable {
+class bullet : public game_object {
 public:
 	bullet(const vector2f &initial_point, const vector2f &in_forward_vector);
 	virtual ~bullet() {}
