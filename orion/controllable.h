@@ -15,7 +15,6 @@ public:
 	virtual void shoot			()	= 0;
 
 	virtual void reset_movement	()	= 0;
-	virtual void change_direction(const int in_dir) = 0;
 };
 
 #endif // CONTROLLABLE_H

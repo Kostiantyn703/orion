@@ -11,7 +11,7 @@ constexpr float		VELOCITY_COEFICIENT = 2.f;
 constexpr float		BULLET_VELOCITY	= 20.f * VELOCITY_COEFICIENT;
 constexpr float		PLAYER_VELOCITY	= 10.f * VELOCITY_COEFICIENT;
 constexpr float		METEOR_VELOCITY	= 2.f * VELOCITY_COEFICIENT;
-constexpr float		MAX_RELOAD_TIME	= 15.f / VELOCITY_COEFICIENT;
+constexpr float		MAX_RELOAD_TIME	= 20.f / VELOCITY_COEFICIENT;
 
 constexpr float		OUT_OFFSET		= 20.f;
 constexpr float		SIZE_SCALAR		= 0.1f;

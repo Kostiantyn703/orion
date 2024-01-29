@@ -57,14 +57,18 @@ public:
 
 	void init();
 
-	void update(float delta_time, spaceship &in_object);
+	void update				(float delta_time, spaceship &in_object);
 
-	void add_action(const action &in_action);
-	void handle_action(const action &in_action, spaceship &in_object);
-	bool handle_condition(const action &in_action, spaceship &in_object);
+	void add_action			(const action &in_action);
+	void handle_action		(const action &in_action, spaceship &in_object);
+	bool handle_condition	(const action &in_action, spaceship &in_object);
+
+	void on_action_change	();
+	void change_rotation	(float in_rot, spaceship &in_object);
 private:
+	bool rotation_changed	= false;
+
 	std::list<action> m_actions;
-	
 	std::list<action>::iterator m_cur_action;
 };
 

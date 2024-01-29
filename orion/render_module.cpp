@@ -16,7 +16,7 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
-render_module::render_module() : is_wireframe(false)
+render_module::render_module()
 {
 	SDL_InitSubSystem(SDL_INIT_VIDEO);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
@@ -97,7 +97,7 @@ bool render_module::load_shader(const char *source_address, std::string &out_sha
 }
 
 void render_module::run(world_module *in_world) {
-	glPolygonMode(GL_FRONT_AND_BACK, is_wireframe ? GL_LINE : GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glClearColor(0.5f, 0.5f, 0.6f, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);

@@ -33,7 +33,6 @@ public:
 	virtual void shoot() override;
 
 	virtual void reset_movement() override;
-	virtual void change_direction(const int in_dir) override;
 	// ~ end controllable interface
 
 	virtual void borders_intersect(border_side in_side) override;

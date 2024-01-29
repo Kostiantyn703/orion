@@ -25,14 +25,10 @@ public:
 	bool load_shader(const char *source_address, std::string &out_shader_source);
 
 	void run(world_module *in_world);
-	 
-	void toggle_wireframe() { is_wireframe = !is_wireframe; }
 
 	window *get_window() const { return m_window.get();	}
 
 private:
-	bool is_wireframe;
-
 	std::unique_ptr<window>	m_window;
 
 	std::unique_ptr<vertex_array>	m_vertex_array;

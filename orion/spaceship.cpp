@@ -118,9 +118,3 @@ void spaceship::reset_movement() {
 	blocked_down	= false;
 	blocked_left	= false;
 }
-
-void spaceship::change_direction(const int in_dir) {
-	set_rotation(90.f);
-	set_forward_vector(vector2f(-1.f, 0.f));
-
-}
