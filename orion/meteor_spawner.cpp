@@ -4,6 +4,13 @@
 
 #include "meteor.h"
 #include "resource_module.h"
+#include "globals.h"
+
+meteor_spawner::meteor_spawner() : m_world(nullptr) {
+	m_max_spawn_time = METEOR_MAX_SPAWN_TIME;
+	m_spawn_range = METEOR_SPAWN_RANGE;
+	m_spawn_time = m_max_spawn_time;
+}
 
 void meteor_spawner::update(float delta_time) {
 	m_spawn_time -= delta_time;

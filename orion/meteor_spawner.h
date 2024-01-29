@@ -6,7 +6,7 @@
 
 class meteor_spawner {
 public:
-	meteor_spawner() : m_spawn_time(m_max_spawn_time), m_world(nullptr) {}
+	meteor_spawner();
 	~meteor_spawner() {}
 
 	void update(float delta_time);
@@ -29,10 +29,10 @@ private:
 	float m_spawn_x = 0.f;
 	float m_spawn_time = 0.f;
 
-	float m_max_spawn_time = 400.f;
-	float m_min_spawn_time = 200.f;
+	float m_max_spawn_time = 0.f;
+	//float m_min_spawn_time = 200.f;
 
-	int m_spawn_range = 100;
+	int m_spawn_range = 0;
 
 	vector2f calculate_position();
 
