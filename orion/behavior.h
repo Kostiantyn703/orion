@@ -2,6 +2,9 @@
 #define BEHAVIOR_H
 
 #include <list>
+#include <map>
+#include <string>
+
 #include "globals.h"
 
 class spaceship;
@@ -32,6 +35,8 @@ enum class action_type {
 	AT_NONE
 };
 
+extern std::map<std::string, action_type> g_actions_map;
+extern std::map<std::string, condition_type> g_cond_map;
 
 class action {
 public:

@@ -33,6 +33,10 @@ void spaceship::on_spawn() {
 	set_mask(MASK_ENEMY);
 }
 
+void spaceship::on_remove(bool &in_val) {
+	in_val = false;
+}
+
 void spaceship::update(float delta_time) {
 	if (m_type == ship_type::ST_ENEMY) {
 		m_behavior->update(delta_time, *this);

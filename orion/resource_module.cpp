@@ -19,9 +19,9 @@ resource_module *resource_module::get_instance() {
 
 void resource_module::load_textures() {
 	create_texture(TEX_ADDRESS_SHIP,				TEX_NAME_SHIP				);
-	create_texture(TEX_ADDRESS_ENEMY,				TEX_NAME_ENEMY				);
+	create_texture(TEX_ADDRESS_ENEMY_00,			TEX_NAME_ENEMY_00			);
+	create_texture(TEX_ADDRESS_ENEMY_01,			TEX_NAME_ENEMY_01			);
 	create_texture(TEX_ADDRESS_METEOR_BROWN_BIG,	TEX_NAME_METEOR_BROWN_BIG	);
-	create_texture(TEX_ADDRESS_METEOR_BROWN_MED,	TEX_NAME_METEOR_BROWN_MED	);
 	create_texture(TEX_ADDRESS_BULLET,				TEX_NAME_BULLET				);
 }
 

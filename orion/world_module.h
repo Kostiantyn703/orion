@@ -14,6 +14,8 @@
 #include "meteor.h"
 #include "meteor_spawner.h"
 #include "ship_spawner.h"
+#include "game_block.h"
+
 
 using object_storage = std::vector<game_object*>;
 
@@ -29,18 +31,24 @@ public:
 	
 	void init_player(controller *in_controller);
 
-	// TODO: create methods should go to spawner classes
-	game_object *create_object(vector2f &in_position) const;
-
 	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const;
 
 	virtual void on_notify(const vector2f &in_position, const vector2f &in_forward_vector) override;
 	virtual void on_notify(game_object &in_object) override;
 
 	object_storage					m_objects;
+
+	std::vector<game_block> m_block_data;
+
+	bool m_script_playing = false;
+	int cur_block_idx = 0;
+
+	float m_reload_time = 0.f;
+	float m_max_reload_time = 20.f;
 private:
+
 	std::unique_ptr<collision_module> m_colision_system;
-	// spawners 
+
 	std::unique_ptr<meteor_spawner> m_meteor_spawner;
 	std::unique_ptr<ship_spawner>	m_ship_spawner;
 };

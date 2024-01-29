@@ -19,6 +19,8 @@ world_module::world_module() {
 	m_ship_spawner->set_listener(this);
 
 	m_objects.reserve(OBJECTS_CAPACITY);
+
+	m_reload_time = m_max_reload_time;
 }
 
 world_module::~world_module() {
@@ -29,6 +31,7 @@ world_module::~world_module() {
 }
 
 void world_module::init() {
+
 }
 
 void world_module::init_player(controller *in_controller) {
@@ -50,11 +53,20 @@ void world_module::update(float delta_time) {
 		(*it)->update(delta_time);
 		m_colision_system->check_collision(this, *it);
 	}
-	m_meteor_spawner->update(delta_time);
-	m_ship_spawner->update(delta_time);
+	//m_meteor_spawner->update(delta_time);
+
+	if (!m_script_playing) {
+		m_reload_time -= delta_time;
+		if (m_reload_time < 0.f) {
+			m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % m_block_data.size()]);
+			m_script_playing = true;
+			++cur_block_idx;
+			m_reload_time = m_max_reload_time;
+		}
+	}
 	remove_objects();
 }
-// TODO: probably only one bullet could reach the edge of the screen
+
 void world_module::remove_objects() {
 	auto pred = [](game_object *object) {
 		return object->should_remove();
@@ -63,13 +75,10 @@ void world_module::remove_objects() {
 	object_storage::const_iterator it_swap = find_if(m_objects.cbegin(), it_end, pred);
 	if (it_swap != it_end) {
 		swap(it_swap, it_end);
+ 		(*it_end)->on_remove(m_script_playing);
 		delete *it_end;
 		m_objects.erase(it_end);
 	}
-}
-
-game_object *world_module::create_object(vector2f &in_position) const {
-	return new game_object(in_position);
 }
 
 bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const {

@@ -20,8 +20,9 @@ public:
 	virtual ~spaceship();
 
 	virtual void init() override;
-	// for enemies 
+
 	virtual void on_spawn() override;
+	virtual void on_remove(bool &in_val) override;
 
 	virtual void update(float delta_time) override;
 	// ~ controllable interface
@@ -39,7 +40,7 @@ public:
 
 	void set_listener(subscriber *in_listener) { m_listener = in_listener; }
 
-	behavior *get_behavior() const { return m_behavior.get() ; }
+	behavior *get_behavior() const { return m_behavior.get(); }
 
 private:
 	bool blocked_up		= false;

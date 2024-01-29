@@ -15,7 +15,6 @@ void meteor_spawner::update(float delta_time) {
 
 void meteor_spawner::notify() {
 	texture *meteor_tex_big = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_BIG);
-	texture *meteor_tex_med = resource_module::get_instance()->get_texture(TEX_NAME_METEOR_BROWN_MED);
 
 	vector2f forward_vec(0.f, 1.f);
 	vector2f pos(calculate_position());
