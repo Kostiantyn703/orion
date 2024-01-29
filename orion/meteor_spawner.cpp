@@ -7,10 +7,6 @@
 
 void meteor_spawner::update(float delta_time) {
 	m_spawn_time -= delta_time;
-	if (m_spawn_time < 0.f) {
-		m_spawn_time = m_max_spawn_time;
-		notify();
-	}
 }
 
 void meteor_spawner::notify() {
@@ -22,7 +18,6 @@ void meteor_spawner::notify() {
 	object->set_texture(meteor_tex_big);
 	object->set_mask(MASK_ENEMY);
 	object->init();
-
 	m_world->on_notify(*object);
 }
 
@@ -31,8 +26,9 @@ game_object *meteor_spawner::spawn_object(const vector2f &in_position, const vec
 }
 
 vector2f meteor_spawner::calculate_position() {
-	int x_rand = std::rand() % int(WINDOW_WIDTH - 20);
+	float area = m_spawn_x - (m_spawn_range / 2.f);
+	int x_rand = std::rand() % int(m_spawn_range);
 	float y_val = -20.f;
 
-	return vector2f(float(x_rand), y_val);
+	return vector2f(float(area + x_rand), y_val);
 }

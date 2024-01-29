@@ -28,6 +28,9 @@ void input_receiver::handle_key_down(const SDL_Event &in_event) {
 		case SDLK_SPACE:
 			add_command(new shoot_command(in_event.key.state, command_type::CT_SHOOT));
 			break;
+		case SDLK_ESCAPE:
+			esc_pressed = true;
+			break;
 		}
 	}
 }

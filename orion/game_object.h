@@ -31,6 +31,7 @@ public:
 	// ~ end collidable interface
 
 	const vector2f	&get_origin	()	const	{	return m_origin;	}
+			vector2f *get_origin_ptr() { return &m_origin; }
 	const vector2f	&get_size	()	const	{	return m_size;		}
 	const vector2f	&get_center	()	const	{	return m_center;	}
 

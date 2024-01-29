@@ -40,8 +40,8 @@ public:
 
 	std::vector<game_block> m_block_data;
 
-	bool m_script_playing = false;
-	int cur_block_idx = 0;
+	bool m_block_playing = false;
+	size_t cur_block_idx = 0;
 
 	float m_reload_time = 0.f;
 	float m_max_reload_time = 20.f;
@@ -51,5 +51,7 @@ private:
 
 	std::unique_ptr<meteor_spawner> m_meteor_spawner;
 	std::unique_ptr<ship_spawner>	m_ship_spawner;
+
+	vector2f *m_player_pos = nullptr;
 };
 #endif // WORLD_MODULE_H

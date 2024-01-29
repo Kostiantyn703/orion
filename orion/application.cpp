@@ -32,6 +32,11 @@ constexpr float DT_DISSIPATOR = 0.001f;
 void application::run() {
 	while (is_active) {
 		m_controller->handle_input	(m_receiver.get());
+		// TODO: quick check
+		if (m_receiver->esc_pressed) {
+			is_active = false;
+		}
+
 		m_world->update				(MS_PER_FRAME.count() * DT_DISSIPATOR);
 		m_renderer->run				(m_world.get());
 	}

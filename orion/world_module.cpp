@@ -45,6 +45,7 @@ void world_module::init_player(controller *in_controller) {
 	player->set_listener(this);
 	// TODO: temporary god mod to prevent hit by enemy during test
 	player->set_mask(MASK_PLAYER | MASK_ENEMY);
+	m_player_pos = player->get_origin_ptr();
 	m_objects.push_back(player);
 }
 
@@ -53,13 +54,17 @@ void world_module::update(float delta_time) {
 		(*it)->update(delta_time);
 		m_colision_system->check_collision(this, *it);
 	}
-	//m_meteor_spawner->update(delta_time);
-
-	if (!m_script_playing) {
+	m_meteor_spawner->update(delta_time);
+	if (m_meteor_spawner->spawn_timer_expired()) {
+		m_meteor_spawner->reload_timer();
+		m_meteor_spawner->set_spawn_pos(m_player_pos->get_x());
+		m_meteor_spawner->notify();
+	}
+	if (!m_block_playing) {
 		m_reload_time -= delta_time;
 		if (m_reload_time < 0.f) {
 			m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % m_block_data.size()]);
-			m_script_playing = true;
+			m_block_playing = true;
 			++cur_block_idx;
 			m_reload_time = m_max_reload_time;
 		}
@@ -75,7 +80,7 @@ void world_module::remove_objects() {
 	object_storage::const_iterator it_swap = find_if(m_objects.cbegin(), it_end, pred);
 	if (it_swap != it_end) {
 		swap(it_swap, it_end);
- 		(*it_end)->on_remove(m_script_playing);
+ 		(*it_end)->on_remove(m_block_playing);
 		delete *it_end;
 		m_objects.erase(it_end);
 	}

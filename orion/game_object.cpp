@@ -18,7 +18,6 @@ game_object::game_object(const vector2f &initial_point) {
 game_object::~game_object() {}
 
 void game_object::update(float delta_time) {
-	// duplicate at least in bullet::update
 	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
 	set_origin(get_origin() + delta_vec);
 	set_center(get_center() + delta_vec);
@@ -71,7 +70,7 @@ void game_object::on_intersect() {
 void game_object::recalc_pos() {
 	vector2f pos = get_origin();
 	set_center(pos);
-	int x_pos = pos.get_x() - get_size().get_x() * 0.5f;
-	int y_pos = pos.get_y() - get_size().get_y() * 0.5f;
+	float x_pos = pos.get_x() - get_size().get_x() * 0.5f;
+	float y_pos = pos.get_y() - get_size().get_y() * 0.5f;
 	set_origin(x_pos, y_pos);
 }

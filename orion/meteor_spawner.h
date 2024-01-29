@@ -14,12 +14,25 @@ public:
 
 	void set_listener(subscriber *in_listener) { m_world = in_listener; }
 
+	void set_spawn_time(float in_time) { m_spawn_time = in_time; }
+	float get_max_spawn_time() const { return m_max_spawn_time; }
+
+	bool spawn_timer_expired() const { return m_spawn_time < 0.f; }
+	void reload_timer() { m_spawn_time = m_max_spawn_time; }
+
+	void set_spawn_pos(float in_x) { m_spawn_x = in_x; }
+
 	game_object *spawn_object(const vector2f &in_position, const vector2f &in_forward_vector) const;
 private:
 	subscriber *m_world;
 
-	float m_max_spawn_time = 50.f;
+	float m_spawn_x = 0.f;
 	float m_spawn_time = 0.f;
+
+	float m_max_spawn_time = 400.f;
+	float m_min_spawn_time = 200.f;
+
+	int m_spawn_range = 100;
 
 	vector2f calculate_position();
 
