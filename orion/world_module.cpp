@@ -2,6 +2,7 @@
 
 #include <SDL_log.h>
 #include <algorithm>
+#include <cstdlib>
 
 #include "globals.h"
 #include "resource_module.h"
@@ -19,8 +20,6 @@ world_module::world_module() {
 	m_ship_spawner->set_listener(this);
 
 	m_objects.reserve(OBJECTS_CAPACITY);
-
-	m_reload_time = m_max_reload_time;
 }
 
 world_module::~world_module() {
@@ -30,9 +29,7 @@ world_module::~world_module() {
 	m_objects.clear();
 }
 
-void world_module::init() {
-
-}
+void world_module::init() {}
 
 void world_module::init_player(controller *in_controller) {
 	vector2f player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
@@ -60,14 +57,12 @@ void world_module::update(float delta_time) {
 		m_meteor_spawner->set_spawn_pos(m_player_pos->get_x());
 		m_meteor_spawner->notify();
 	}
-	if (!m_block_playing) {
-		m_reload_time -= delta_time;
-		if (m_reload_time < 0.f) {
-			m_ship_spawner->notify_spawn(m_block_data[cur_block_idx % m_block_data.size()]);
-			m_block_playing = true;
-			++cur_block_idx;
-			m_reload_time = m_max_reload_time;
-		}
+
+	m_reload_time -= delta_time;
+	if (m_reload_time < 0.f) {
+		size_t idx = calculate_idx(m_block_data.size());
+		m_ship_spawner->notify_spawn(m_block_data[idx]);
+		m_reload_time = m_max_reload_time;
 	}
 	remove_objects();
 }
@@ -80,7 +75,6 @@ void world_module::remove_objects() {
 	object_storage::const_iterator it_swap = find_if(m_objects.cbegin(), it_end, pred);
 	if (it_swap != it_end) {
 		swap(it_swap, it_end);
- 		(*it_end)->on_remove(m_block_playing);
 		delete *it_end;
 		m_objects.erase(it_end);
 	}
@@ -105,4 +99,8 @@ void world_module::on_notify(const vector2f &in_position, const vector2f &in_for
 // meteor spawner
 void world_module::on_notify(game_object &in_object) {
 	m_objects.push_back(&in_object);
+}
+
+size_t world_module::calculate_idx(size_t in_val) {
+	return std::rand() % int(in_val);
 }

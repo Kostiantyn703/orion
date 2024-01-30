@@ -40,11 +40,8 @@ public:
 
 	std::vector<game_block> m_block_data;
 
-	bool m_block_playing = false;
-	size_t cur_block_idx = 0;
-
 	float m_reload_time = 0.f;
-	float m_max_reload_time = 20.f;
+	float m_max_reload_time = 100.f;
 private:
 
 	std::unique_ptr<collision_module> m_colision_system;
@@ -53,5 +50,7 @@ private:
 	std::unique_ptr<ship_spawner>	m_ship_spawner;
 
 	vector2f *m_player_pos = nullptr;
+
+	size_t calculate_idx(size_t in_val);
 };
 #endif // WORLD_MODULE_H
