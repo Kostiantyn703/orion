@@ -13,6 +13,9 @@ public:
 
 	void collect_scripts(const std::string &in_path, std::vector<game_block> &out_data);
 private:
+	std::vector<std::string> m_actions = { "forward", "left", "right", "backward" };
+	std::vector<std::string> m_conditions = { "x_pos", "y_pos" };
+
 	bool get_file_content(const std::string &in_file, std::string &out_content);
 	void parse_file_content(std::string &in_content, game_block &out_block);
 	
@@ -23,7 +26,6 @@ private:
 	bool action_found(const std::string &in_line);
 	bool condition_found(const std::string &in_line);
 
-	std::vector<std::string> m_actions = { "forward", "left", "right", "backward" };
-	std::vector<std::string> m_conditions = { "x_pos", "y_pos" };
+	void erase_spaces(std::string &out_line);
 };
 #endif // SCRIPT_MODULE_H

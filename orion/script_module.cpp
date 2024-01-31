@@ -58,6 +58,7 @@ void script_module::parse_file_content(std::string &in_content, game_block &out_
 	std::istringstream input;
 	input.str(in_content);
 	for (std::string line; std::getline(input, line);) {
+		erase_spaces(line);
 		size_t idx = line.find("spawn");
 		if (idx != size_t_max) {
 			out_block.m_spawn_pos = parse_float(line);
@@ -104,12 +105,6 @@ void script_module::parse_behavior(std::string &in_line, game_block &out_block) 
 	size_t idx = in_line.find(token);
 	++idx;
 	in_line.erase(in_line.begin(),in_line.begin() + idx);
-	// remove spaces
-	auto space_pred = [](size_t x) { return (size_t)std::isspace(x); };
-	in_line.erase(
-			std::remove_if(in_line.begin(), in_line.end(), space_pred)
-		, in_line.end()
-	);
 
 	auto brackets_pred = [](char val) { return val == '{' || val == '}'; };
 	
@@ -156,6 +151,13 @@ bool script_module::condition_found(const std::string &in_line) {
 		}
 	}
 	return	false;
+}
 
+void script_module::erase_spaces(std::string &out_line) {
+	auto space_pred = [](size_t x) { return (size_t)std::isspace(x); };
+	out_line.erase(
+		std::remove_if(out_line.begin(), out_line.end(), space_pred)
+		, out_line.end()
+	);
 }
 
