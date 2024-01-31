@@ -10,7 +10,7 @@ bullet::bullet(const vector2f &initial_point, const vector2f &in_forward_vector)
 
 void bullet::update(float delta_time) {
 	game_object::update(delta_time);
-	if (get_origin().get_y() < 0.f) {
+	if (get_origin().get_y() < 0.f || get_origin().get_y() > WINDOW_HEIGHT) {
 		set_to_remove(true);
 	}
 }

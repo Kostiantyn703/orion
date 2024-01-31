@@ -18,23 +18,26 @@ std::map<std::string, condition_type> g_cond_map = {
 };
 
 void ship_spawner::notify_spawn(const game_block &in_block) {
-	const behavior_item &beh_item = in_block.m_items[std::rand() % int(in_block.m_items.size())];
+	const behavior_item &beh_item = in_block.m_items[idx % in_block.m_items.size()];
 	vector2f spawn_pos = vector2f(WINDOW_WIDTH * beh_item.m_spawn_pos, -OUT_OFFSET);
 	
 	std::string tex_name;
 	if (in_block.m_type == 0) tex_name = TEX_NAME_ENEMY_00;
 	if (in_block.m_type == 1) tex_name = TEX_NAME_ENEMY_01;
+	if (in_block.m_type == 2) tex_name = TEX_NAME_ENEMY_02;
 	texture *cur_tex = resource_module::get_instance()->get_texture(tex_name);
 
 	vector2f forward_vec(0.f, 1.f);
 	spaceship *enemy = spawn_spaceship(spawn_pos, forward_vec);
 	enemy->set_texture(cur_tex);
-	enemy->on_spawn();
+	enemy->set_listener(m_world);
+	enemy->on_spawn(in_block.is_shooter);
 
 	set_behavior(*enemy, beh_item);
 	enemy->get_behavior()->init();
 
 	m_world->on_notify(*enemy);
+	++idx;
 }
 
 void ship_spawner::set_behavior(spaceship &in_ship, const behavior_item &in_item) {

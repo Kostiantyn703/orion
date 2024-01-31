@@ -1,0 +1,8 @@
+type = 2
+shoot
+
+spawn=-0.1
+behavior = { forward, 0.25, y_pos }; { left, 1.1, x_pos }; { forward }
+
+spawn=1.1
+behavior = { forward, 0.25, y_pos }; { right, -0.1, x_pos }; { forward }

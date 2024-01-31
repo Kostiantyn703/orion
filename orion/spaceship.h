@@ -12,6 +12,12 @@
 
 class subscriber;
 
+enum ship_type {
+	ST_PLAYER = 0,
+	ST_ENEMY = 1,
+	ST_NONE
+};
+
 class spaceship : public game_object, public controllable {
 public:
 	spaceship(const vector2f &initial_point, const vector2f &in_forward_vector);
@@ -21,8 +27,7 @@ public:
 
 	virtual void init() override;
 
-	virtual void on_spawn() override;
-	virtual void on_remove(bool &in_val) override;
+	virtual void on_spawn(bool is_shooter) override;
 
 	virtual void update(float delta_time) override;
 	// ~ controllable interface
@@ -39,7 +44,8 @@ public:
 
 	void set_listener(subscriber *in_listener) { m_listener = in_listener; }
 
-	behavior *get_behavior() const { return m_behavior.get(); }
+	weapon		*get_weapon()	const	{	return m_weapon;			}
+	behavior	*get_behavior()	const	{	return m_behavior.get();	}
 
 private:
 	bool blocked_up		= false;
@@ -53,13 +59,9 @@ private:
 
 	std::unique_ptr<behavior> m_behavior;
 
-	enum class ship_type {
-		ST_PLAYER,
-		ST_ENEMY,
-		ST_NONE
-	};
-
 	ship_type m_type;
+
+	void init_weapon();
 };
 
 #endif // SPACESHIP_H

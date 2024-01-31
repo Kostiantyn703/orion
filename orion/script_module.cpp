@@ -67,6 +67,10 @@ void script_module::parse_file_content(std::string &in_content, game_block &out_
 			out_block.m_type = parse_int(line);
 			continue;
 		}
+		idx = line.find("shoot");
+		if (idx != size_t_max) {
+			out_block.is_shooter = true;
+		}
 		idx = line.find("spawn");
 		if (idx != size_t_max) {
 			behavior_item beh_item;

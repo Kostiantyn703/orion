@@ -25,6 +25,8 @@ public:
 
 private:
 	subscriber *m_world;
+
+	size_t idx = 0;
 };
 
 #endif // SHIP_SPAWNER_H

@@ -21,8 +21,10 @@ void resource_module::load_textures() {
 	create_texture(TEX_ADDRESS_SHIP,				TEX_NAME_SHIP				);
 	create_texture(TEX_ADDRESS_ENEMY_00,			TEX_NAME_ENEMY_00			);
 	create_texture(TEX_ADDRESS_ENEMY_01,			TEX_NAME_ENEMY_01			);
+	create_texture(TEX_ADDRESS_ENEMY_02,			TEX_NAME_ENEMY_02			);
 	create_texture(TEX_ADDRESS_METEOR_BROWN_BIG,	TEX_NAME_METEOR_BROWN_BIG	);
-	create_texture(TEX_ADDRESS_BULLET,				TEX_NAME_BULLET				);
+	create_texture(TEX_ADDRESS_BULLET_GREEN,		TEX_NAME_BULLET_GREEN		);
+	create_texture(TEX_ADDRESS_BULLET_RED,			TEX_NAME_BULLET_RED			);
 }
 
 void resource_module::create_texture(const char *in_tex_address, const char *in_tex_name) {

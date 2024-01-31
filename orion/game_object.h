@@ -14,7 +14,7 @@ public:
 
 	virtual void init() {}
 	// for spaceship
-	virtual void on_spawn() {}
+	virtual void on_spawn(bool is_shooter) {}
 	virtual void on_remove(bool &in_val) {}
 	// TODO: maybe pure virtual
 	virtual void update		(float delta_time);
@@ -31,7 +31,7 @@ public:
 	// ~ end collidable interface
 
 	const vector2f	&get_origin	()	const	{	return m_origin;	}
-			vector2f *get_origin_ptr() { return &m_origin; }
+	vector2f		*get_origin_ptr()		{ return &m_origin;		}
 	const vector2f	&get_size	()	const	{	return m_size;		}
 	const vector2f	&get_center	()	const	{	return m_center;	}
 
@@ -45,8 +45,6 @@ protected:
 	void set_center(const vector2f &in_pos);
 
 	void recalc_pos();
-
-
 
 private:
 	bool		to_remove	= false;
