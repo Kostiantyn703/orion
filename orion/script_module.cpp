@@ -58,7 +58,9 @@ void script_module::parse_file_content(std::string &in_content, game_block &out_
 	std::istringstream input;
 	input.str(in_content);
 	for (std::string line; std::getline(input, line);) {
-		erase_spaces(line);
+		if (line.empty())	continue;
+		erase_spaces				(line);
+
 		size_t idx = line.find("spawn");
 		if (idx != size_t_max) {
 			out_block.m_spawn_pos = parse_float(line);
