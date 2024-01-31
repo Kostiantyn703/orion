@@ -60,9 +60,10 @@ void world_module::update(float delta_time) {
 
 	m_reload_time -= delta_time;
 	if (m_reload_time < 0.f) {
-		size_t idx = calculate_idx(m_block_data.size());
-		m_ship_spawner->notify_spawn(m_block_data[idx]);
+		//size_t idx = calculate_idx(m_block_data.size());
+		m_ship_spawner->notify_spawn(m_block_data[block_idx % m_block_data.size()]);
 		m_reload_time = m_max_reload_time;
+		++block_idx;
 	}
 	remove_objects();
 }
@@ -85,15 +86,18 @@ bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &
 }
 
 // bullet spawner
-void world_module::on_notify(const vector2f &in_position, const vector2f &in_forward_vector) {
-	texture *tex = resource_module::get_instance()->get_texture(TEX_NAME_BULLET);
+void world_module::on_notify(const vector2f &in_position, const vector2f &in_forward_vector, int in_type) {
+	texture *tex = resource_module::get_instance()->get_texture(in_type == 0 ? TEX_NAME_BULLET_GREEN : TEX_NAME_BULLET_RED);
 	
 	vector2f pos = in_position;
 	pos.set_x(pos.get_x() - tex->get_width() * 0.5f);
 
  	bullet *bul = spawn_bullet(pos, in_forward_vector);
 	bul->set_texture(tex);
-	bul->set_mask(MASK_PLAYER | MASK_PLAYER_BULLET);
+	bul->set_mask(in_type == 0 ? (MASK_PLAYER | MASK_PLAYER_BULLET) : (MASK_ENEMY | MASK_ENEMY_BULLET));
+	if (in_type == 1) {
+		bul->set_rotation(180.f);
+	}
 	m_objects.push_back(bul);
 }
 // meteor spawner

@@ -33,15 +33,17 @@ public:
 
 	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const;
 
-	virtual void on_notify(const vector2f &in_position, const vector2f &in_forward_vector) override;
+	virtual void on_notify(const vector2f &in_position, const vector2f &in_forward_vector, int in_type) override;
 	virtual void on_notify(game_object &in_object) override;
 
 	object_storage					m_objects;
 
 	std::vector<game_block> m_block_data;
 
+	size_t block_idx = 0;
+
 	float m_reload_time = 0.f;
-	float m_max_reload_time = 150.f;
+	float m_max_reload_time = 120.f;
 private:
 
 	std::unique_ptr<collision_module> m_colision_system;

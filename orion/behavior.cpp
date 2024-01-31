@@ -17,6 +17,12 @@ void behavior::update(float delta_time, spaceship &in_object) {
 			on_action_change();
 		}
 	}
+
+	if (!in_object.get_weapon())	return;
+	
+	if (in_object.get_weapon()->can_shoot()) {
+		in_object.shoot();
+	}
 }
 
 void behavior::add_action(const action &in_action) {

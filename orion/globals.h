@@ -7,11 +7,11 @@ constexpr float		WINDOW_WIDTH	= 1600.f * 0.75f;	// 800.f
 static const char	*WINDOW_NAME	= "PROJECT ORION";
 
 // values
-constexpr float		VELOCITY_COEFICIENT = 2.f;
-constexpr float		BULLET_VELOCITY	= 20.f * VELOCITY_COEFICIENT;
-constexpr float		PLAYER_VELOCITY	= 10.f * VELOCITY_COEFICIENT;
-constexpr float		METEOR_VELOCITY	= 3.f * VELOCITY_COEFICIENT;
-constexpr float		MAX_RELOAD_TIME	= 30.f / VELOCITY_COEFICIENT;
+constexpr float		VELOCITY_COEFICIENT		= 2.f;
+constexpr float		BULLET_VELOCITY			= 20.f * VELOCITY_COEFICIENT;
+constexpr float		PLAYER_VELOCITY			= 10.f * VELOCITY_COEFICIENT;
+constexpr float		METEOR_VELOCITY			= 3.f * VELOCITY_COEFICIENT;
+constexpr float		WEAPON_RELOAD_TIME		= 30.f / VELOCITY_COEFICIENT;
 
 constexpr float		OUT_OFFSET		= 20.f;
 constexpr float		SIZE_SCALAR		= 0.1f;
@@ -31,16 +31,20 @@ static const char	*DEBUG_NAME			= "debug";
 // textures
 static const char	*TEX_ADDRESS_ENEMY_00			= "../content/images/enemy00.png";
 static const char	*TEX_ADDRESS_ENEMY_01			= "../content/images/enemy01.png";
+static const char	*TEX_ADDRESS_ENEMY_02			= "../content/images/enemy02.png";
 static const char	*TEX_ADDRESS_SHIP				= "../content/images/ship.png";
 static const char	*TEX_ADDRESS_METEOR_BROWN_BIG	= "../content/images/meteor_brown_big.png";
-static const char	*TEX_ADDRESS_METEOR_BROWN_MED	= "../content/images/meteor_brown_med.png";
-static const char	*TEX_ADDRESS_BULLET				= "../content/images/bullet_green.png";
+
+static const char	*TEX_ADDRESS_BULLET_GREEN		= "../content/images/bullet_green.png";
+static const char	*TEX_ADDRESS_BULLET_RED			= "../content/images/bullet_red.png";
 
 static const char	*TEX_NAME_ENEMY_00			= "enemy00";
 static const char	*TEX_NAME_ENEMY_01			= "enemy01";
+static const char	*TEX_NAME_ENEMY_02			= "enemy02";
 static const char	*TEX_NAME_SHIP				= "ship";
 static const char	*TEX_NAME_METEOR_BROWN_BIG	= "meteor_brown_big";
-static const char	*TEX_NAME_BULLET			= "bullet";
+static const char	*TEX_NAME_BULLET_GREEN		= "bullet_green";
+static const char	*TEX_NAME_BULLET_RED		= "bullet_red";
 
 // scripts
 static const char	*SCRIPTS_PATH				= "../content/scripts/";

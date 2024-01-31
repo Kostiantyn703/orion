@@ -57,23 +57,33 @@ bool script_module::get_file_content(const std::string &in_file, std::string &ou
 void script_module::parse_file_content(std::string &in_content, game_block &out_block) {
 	std::istringstream input;
 	input.str(in_content);
+	size_t items_idx = size_t_max;
 	for (std::string line; std::getline(input, line);) {
-		erase_spaces(line);
-		size_t idx = line.find("spawn");
-		if (idx != size_t_max) {
-			out_block.m_spawn_pos = parse_float(line);
-			continue;
-		}
-		idx = size_t_max;
-		idx = line.find("type");
+		if (line.empty())	continue;
+		erase_spaces				(line);
+
+		size_t idx = line.find("type");
 		if (idx != size_t_max) {
 			out_block.m_type = parse_int(line);
 			continue;
 		}
-		idx = size_t_max;
+		idx = line.find("shoot");
+		if (idx != size_t_max) {
+			out_block.is_shooter = true;
+		}
+		idx = line.find("spawn");
+		if (idx != size_t_max) {
+			behavior_item beh_item;
+			beh_item.m_spawn_pos = parse_float(line);
+			out_block.add_item(beh_item);
+			++items_idx;
+			continue;
+		}
 		idx = line.find("behavior");
 		if (idx != size_t_max) {
-			parse_behavior(line, out_block);
+			if (!out_block.m_items.empty()) {
+				parse_behavior(line, out_block.m_items[items_idx]);
+			}
 		}
 	}
 }
@@ -100,7 +110,7 @@ size_t script_module::parse_int(std::string &in_line) {
 	return result;
 }
 
-void script_module::parse_behavior(std::string &in_line, game_block &out_block) {
+void script_module::parse_behavior(std::string &in_line, behavior_item &out_item) {
 	char token = '=';
 	size_t idx = in_line.find(token);
 	++idx;
@@ -110,6 +120,7 @@ void script_module::parse_behavior(std::string &in_line, game_block &out_block) 
 	
 	std::istringstream sstream;
 	sstream.str(in_line);
+
 	for (std::string line; std::getline(sstream, line, ';');) {
 		line.erase(
 				std::remove_if(line.begin(), line.end(), brackets_pred)
@@ -117,19 +128,19 @@ void script_module::parse_behavior(std::string &in_line, game_block &out_block) 
 		);
 		std::stringstream inner_ss;
 		inner_ss.str(line);
-		behavior_data item;
+		behavior_data beh_data;
 		for (std::string inner_line; std::getline(inner_ss, inner_line, ',');) {
 			if (action_found(inner_line)) {
-				item.m_action_name = inner_line;
+				beh_data.m_action_name = inner_line;
 				continue;
 			}
 			if (condition_found(inner_line)) {
-				item.m_condition_name = inner_line;
+				beh_data.m_condition_name = inner_line;
 				continue;
 			}
-			item.m_condition_data = std::atof(inner_line.c_str());
+			beh_data.m_condition_data = (float)std::atof(inner_line.c_str());
 		}
-		out_block.m_behavior_data.push_back(item);
+		out_item.m_behavior_data.push_back(beh_data);
 	}
 }
 
@@ -154,7 +165,7 @@ bool script_module::condition_found(const std::string &in_line) {
 }
 
 void script_module::erase_spaces(std::string &out_line) {
-	auto space_pred = [](size_t x) { return (size_t)std::isspace(x); };
+	auto space_pred = [](int x) { return std::isspace(x); };
 	out_line.erase(
 		std::remove_if(out_line.begin(), out_line.end(), space_pred)
 		, out_line.end()

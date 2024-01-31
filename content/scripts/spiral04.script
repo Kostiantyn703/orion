@@ -1,3 +1,0 @@
-spawn=1.1
-type=1
-behavior = { forward, 0.7, y_pos }; { right, -0.1, x_pos }; { backward, 0.15, y_pos }; { left, 1.1, x_pos }; { forward }

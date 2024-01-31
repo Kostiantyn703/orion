@@ -21,22 +21,20 @@ spaceship::~spaceship() {
 }
 
 void spaceship::init() {
-	m_weapon = new weapon();
-	vector2f wep_pos(get_size().get_x() * 0.5f, 0.f);
-	m_weapon->set_postition(wep_pos);
+	init_weapon();
 	m_type = ship_type::ST_PLAYER;
 	recalc_pos();
 }
-// TODO: temporary
-void spaceship::on_spawn() {
-	recalc_pos();
+
+void spaceship::on_spawn(bool is_shooter) {
 	m_type = ship_type::ST_ENEMY;
+	if (is_shooter) {
+		init_weapon();
+	}
+	recalc_pos();
+
 	m_behavior = std::make_unique<behavior>();
 	set_mask(MASK_ENEMY);
-}
-
-void spaceship::on_remove(bool &in_val) {
-	in_val = false;
 }
 
 void spaceship::update(float delta_time) {
@@ -88,7 +86,7 @@ void spaceship::move_left() {
 void spaceship::shoot() {
 	if (m_weapon->can_shoot()) {
 		vector2f spawn_pos = get_origin() + m_weapon->get_position();
-		m_listener->on_notify(spawn_pos, get_forward_vector());
+		m_listener->on_notify(spawn_pos, get_forward_vector(), m_type);
 		m_weapon->set_can_shoot(false);
 		m_weapon->reset_reload_timer();
 	}
@@ -117,4 +115,11 @@ void spaceship::reset_movement() {
 	blocked_right	= false;
 	blocked_down	= false;
 	blocked_left	= false;
+}
+
+void spaceship::init_weapon() {
+	m_weapon = new weapon();
+	vector2f wep_pos(get_size().get_x() * 0.5f, 0.f);
+	m_weapon->set_postition(wep_pos);
+	m_weapon->set_reload_time(WEAPON_RELOAD_TIME);
 }
