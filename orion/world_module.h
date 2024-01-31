@@ -40,6 +40,8 @@ public:
 
 	std::vector<game_block> m_block_data;
 
+	size_t block_idx = 0;
+
 	float m_reload_time = 0.f;
 	float m_max_reload_time = 150.f;
 private:

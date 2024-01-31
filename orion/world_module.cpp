@@ -60,8 +60,8 @@ void world_module::update(float delta_time) {
 
 	m_reload_time -= delta_time;
 	if (m_reload_time < 0.f) {
-		size_t idx = calculate_idx(m_block_data.size());
-		m_ship_spawner->notify_spawn(m_block_data[idx]);
+		//size_t idx = calculate_idx(m_block_data.size());
+		m_ship_spawner->notify_spawn(m_block_data[block_idx % m_block_data.size()]);
 		m_reload_time = m_max_reload_time;
 	}
 	remove_objects();
