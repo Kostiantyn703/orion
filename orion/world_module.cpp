@@ -57,12 +57,11 @@ void world_module::init_player(controller *in_controller) {
 }
 
 void world_module::update(float delta_time) {
-	remove_objects();
+	remove_objects	();
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
-		if (*it != nullptr) {
-			(*it)->update(delta_time);
-			m_colision_system->check_collision(this, *it);
-		}
+		
+		(*it)->update(delta_time);
+		m_colision_system->check_collision(this, *it);
 	}
 	m_meteor_spawner->update(delta_time);
 	if (m_meteor_spawner->spawn_timer_expired()) {
@@ -83,15 +82,22 @@ void world_module::update(float delta_time) {
 }
 
 void world_module::remove_objects() {
+	object_storage::iterator left_bound = m_objects.begin();
+	object_storage::iterator right_bound = m_objects.end();
+	while (left_bound != right_bound) {
+		if ((*left_bound)->should_remove()) {
+			--right_bound;
+			std::iter_swap(left_bound, right_bound);
+			continue;
+		}
+		++left_bound;
+	}
 	auto pred = [](game_object *object) {
 		return object->should_remove();
 	};
-	object_storage::const_iterator it_end = m_objects.end();
-	object_storage::const_iterator it_swap = find_if(m_objects.cbegin(), it_end, pred);
-	if (it_swap != it_end) {
-		swap(it_swap, it_end);
-		delete *it_end;
-		m_objects.erase(it_end);
+	object_storage::iterator it = find_if(m_objects.begin(), m_objects.end(), pred);
+	if (it != m_objects.end()) {
+		m_objects.erase(it, m_objects.end());
 	}
 }
 
