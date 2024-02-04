@@ -114,5 +114,7 @@ enum class border_side {
 struct range {
 	int m_min = 0;
 	int m_max = 0;
+
+	bool is_valid() const { return m_min != m_max; }
 };
 #endif // !GLOBALS_H

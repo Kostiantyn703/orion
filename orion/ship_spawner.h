@@ -25,5 +25,7 @@ public:
 
 private:
 	subscriber *m_world;
+
+	float calculate_coordinate(const range &in_range);
 };
 #endif // SHIP_SPAWNER_H

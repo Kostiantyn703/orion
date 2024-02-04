@@ -140,8 +140,9 @@ void script_module::parse_behavior(std::string &in_line, behavior_item &out_item
 			}
 			if (inner_line.front() == '[') {
 				parse_range(inner_line, beh_data.m_range);
+			} else {
+				beh_data.m_condition_data = (float)std::atof(inner_line.c_str());
 			}
-			beh_data.m_condition_data = (float)std::atof(inner_line.c_str());
 		}
 		out_item.m_behavior_data.push_back(beh_data);
 	}

@@ -52,10 +52,11 @@ void ship_spawner::set_behavior(spaceship &in_ship, const behavior_item &in_item
 			end_condition cond;
 			cond.set_type(cond_it->second);
 			float coord_data = 0.f;
+			float cond_data = it->m_range.is_valid() ? calculate_coordinate(it->m_range) : it->m_condition_data;
 			if (cond.get_type() == condition_type::CT_POSITION_X) {
-				coord_data = WINDOW_WIDTH * it->m_condition_data;
+				coord_data = WINDOW_WIDTH * cond_data;
 			} else {
-				coord_data = WINDOW_HEIGHT * it->m_condition_data;
+				coord_data = WINDOW_HEIGHT * cond_data;
 			}
 			cond.set_data(coord_data);
 			act.set_condition(cond);
@@ -70,4 +71,11 @@ game_object *ship_spawner::spawn_object(const vector2f &in_position, const vecto
 
 spaceship *ship_spawner::spawn_spaceship(const vector2f &in_position, const vector2f &in_forward_vector) const {
 	return new spaceship(in_position, in_forward_vector);
+}
+
+float ship_spawner::calculate_coordinate(const range &in_range) {
+	int diff = in_range.m_max - in_range.m_min;
+	int result = in_range.m_min + (std::rand() % diff);
+
+	return result / 100.f;
 }
