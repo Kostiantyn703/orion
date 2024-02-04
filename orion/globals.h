@@ -19,6 +19,9 @@ constexpr float		SIZE_SCALAR		= 0.1f;
 constexpr float		METEOR_MAX_SPAWN_TIME = 100.f;//400.f;
 constexpr int		METEOR_SPAWN_RANGE = 300;
 
+constexpr size_t	METEOR_SCORE = 2;
+constexpr size_t	SPACESHIP_SCORE = 5;
+
 // shaders
 static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";
 static const char	*SPRITE_ADDRESS_FRAG	= "../content/shaders/sprite.frag";

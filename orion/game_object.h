@@ -16,7 +16,7 @@ public:
 	// for spaceship
 	virtual void on_spawn(bool is_shooter) {}
 	virtual void on_remove(bool &in_val) {}
-	// TODO: maybe pure virtual
+
 	virtual void update		(float delta_time);
 	// ~ renderable interface
 	virtual void draw(const shader_program &in_shader) override;
@@ -38,6 +38,8 @@ public:
 	void set_rotation(float in_rotation) { m_rotation = in_rotation; }
 	float get_rotation() const { return m_rotation; }
 
+	size_t get_score_value() const { return m_score; }
+
 protected:
 	void set_origin(float in_x, float in_y);
 	void set_origin(const vector2f &in_position);
@@ -46,9 +48,14 @@ protected:
 
 	void recalc_pos();
 
+	void set_score_value(size_t in_val) { m_score = in_val; }
+
 private:
 	bool		to_remove	= false;
 	float		m_rotation	= 0.f;
+
+	size_t m_score	= 0;
+
 	vector2f	m_origin;
 	vector2f	m_size;
 	vector2f	m_center;

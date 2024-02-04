@@ -54,7 +54,7 @@ collision_module::~collision_module() {
 	}
 }
 
-void collision_module::check_collision(const world_module *in_world, collidable *in_object) {
+void collision_module::check_collision(world_module *in_world, collidable *in_object) {
 	if (in_object->get_mask() & MASK_PLAYER) {
 		for (std::vector<border*>::const_iterator local_it = m_borders.cbegin(); local_it != m_borders.cend(); ++local_it) {
 			if (intersect(in_object->get_aabb(), (*local_it)->get_aabb())) {
@@ -68,6 +68,7 @@ void collision_module::check_collision(const world_module *in_world, collidable 
 		if (in_object->get_mask() & (*it)->get_mask())	continue;
 		if (intersect(in_object->get_aabb(), (*it)->get_aabb())) {
 			(*it)->on_intersect();
+			in_world->add_score((*it)->get_score_value());
 			// bullet should disappear
 			in_object->on_intersect();
 		}

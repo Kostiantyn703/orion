@@ -27,14 +27,14 @@ void spaceship::init() {
 }
 
 void spaceship::on_spawn(bool is_shooter) {
-	m_type = ship_type::ST_ENEMY;
+	m_type			= ship_type::ST_ENEMY;
 	if (is_shooter) {
-		init_weapon();
+		init_weapon	();
 	}
-	recalc_pos();
-
-	m_behavior = std::make_unique<behavior>();
-	set_mask(MASK_ENEMY);
+	recalc_pos		();
+	m_behavior		= std::make_unique<behavior>();
+	set_mask		(MASK_ENEMY);
+	set_score_value	(SPACESHIP_SCORE);
 }
 
 void spaceship::update(float delta_time) {

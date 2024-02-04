@@ -6,6 +6,7 @@ meteor::meteor(const vector2f &initial_point, const vector2f &in_forward_vector)
 	set_forward_vector	(in_forward_vector);
 	set_move_dir		(in_forward_vector);
 	set_velocity		(METEOR_VELOCITY);
+	set_score_value		(METEOR_SCORE);
 }
 
 void meteor::init() {

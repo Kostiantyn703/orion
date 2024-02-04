@@ -15,7 +15,7 @@ public:
 
 	void init_borders();
 
-	void check_collision(const world_module *in_world, collidable *in_object);
+	void check_collision(world_module *in_world, collidable *in_object);
 	bool intersect(const aabb &lhs, const aabb &rhs);
 
 private:
