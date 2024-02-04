@@ -97,7 +97,7 @@ void world_module::on_notify(const vector2f &in_position, const vector2f &in_for
 
  	bullet *bul = spawn_bullet(pos, in_forward_vector);
 	bul->set_texture(tex);
-	bul->set_mask(in_type == 0 ? (MASK_PLAYER | MASK_PLAYER_BULLET) : (MASK_ENEMY | MASK_ENEMY_BULLET));
+	bul->set_mask(in_type == 0 ? (MASK_PLAYER | MASK_PLAYER_BULLET | MASK_ENEMY_BULLET) : (MASK_ENEMY | MASK_ENEMY_BULLET | MASK_PLAYER_BULLET));
 	if (in_type == 1) {
 		bul->set_rotation(180.f);
 	}
