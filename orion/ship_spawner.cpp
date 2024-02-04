@@ -18,7 +18,8 @@ std::map<std::string, condition_type> g_cond_map = {
 };
 
 void ship_spawner::notify_spawn(const game_block &in_block) {
-	const behavior_item &beh_item = in_block.m_items[idx % in_block.m_items.size()];
+	int idx = std::rand() % int(in_block.m_items.size());
+	const behavior_item &beh_item = in_block.m_items[idx];
 	vector2f spawn_pos = vector2f(WINDOW_WIDTH * beh_item.m_spawn_pos, -OUT_OFFSET);
 	
 	std::string tex_name;
@@ -37,7 +38,6 @@ void ship_spawner::notify_spawn(const game_block &in_block) {
 	enemy->get_behavior()->init();
 
 	m_world->on_notify(*enemy);
-	++idx;
 }
 
 void ship_spawner::set_behavior(spaceship &in_ship, const behavior_item &in_item) {

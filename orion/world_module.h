@@ -43,7 +43,7 @@ public:
 	size_t block_idx = 0;
 
 	float m_reload_time = 0.f;
-	float m_max_reload_time = 120.f;
+	float m_max_reload_time = 80.f;
 private:
 
 	std::unique_ptr<collision_module> m_colision_system;

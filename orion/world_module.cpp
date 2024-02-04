@@ -6,6 +6,7 @@
 
 #include "globals.h"
 #include "resource_module.h"
+#include <time.h>
 
 constexpr int OBJECTS_CAPACITY = 20;
 
@@ -20,6 +21,8 @@ world_module::world_module() {
 	m_ship_spawner->set_listener(this);
 
 	m_objects.reserve(OBJECTS_CAPACITY);
+
+	srand(time(0));
 }
 
 world_module::~world_module() {
