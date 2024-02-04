@@ -1,11 +1,11 @@
 #include "bullet.h"
 
-bullet::bullet(const vector2f &initial_point, const vector2f &in_forward_vector) 
+bullet::bullet(const vector2f &initial_point, const vector2f &in_forward_vector, const float in_velocity) 
 	: game_object(initial_point)
 {
 	set_forward_vector(in_forward_vector);
 	set_move_dir(in_forward_vector);
-	set_velocity(BULLET_VELOCITY);
+	set_velocity(in_velocity);
 }
 
 void bullet::update(float delta_time) {

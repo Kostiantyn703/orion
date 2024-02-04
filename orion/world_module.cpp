@@ -57,6 +57,7 @@ void world_module::init_player(controller *in_controller) {
 }
 
 void world_module::update(float delta_time) {
+	remove_objects();
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
 		if (*it != nullptr) {
 			(*it)->update(delta_time);
@@ -77,7 +78,6 @@ void world_module::update(float delta_time) {
 		m_spawn_time = m_max_spawn_time;
 		++block_idx;
 	}
-	remove_objects();
 
 	handle_difficulty(m_score);
 }
@@ -95,21 +95,22 @@ void world_module::remove_objects() {
 	}
 }
 
-bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const {
-	return new bullet(in_position, in_forward_vector);
+bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const {
+	return new bullet(in_position, in_forward_vector, in_velocity);
 }
 
 // bullet spawner
 void world_module::on_notify(const vector2f &in_position, const vector2f &in_forward_vector, int in_type) {
+	bool is_enemy = (in_type == 1);
 	texture *tex = resource_module::get_instance()->get_texture(in_type == 0 ? TEX_NAME_BULLET_GREEN : TEX_NAME_BULLET_RED);
 	
 	vector2f pos = in_position;
 	pos.set_x(pos.get_x() - tex->get_width() * 0.5f);
 
- 	bullet *bul = spawn_bullet(pos, in_forward_vector);
+ 	bullet *bul = spawn_bullet(pos, in_forward_vector, is_enemy ? ENEMY_BULLET_VELOCITY : PLAYER_BULLET_VELOCITY);
 	bul->set_texture(tex);
-	bul->set_mask(in_type == 0 ? (MASK_PLAYER | MASK_PLAYER_BULLET | MASK_ENEMY_BULLET) : (MASK_ENEMY | MASK_ENEMY_BULLET | MASK_PLAYER_BULLET));
-	if (in_type == 1) {
+	bul->set_mask(!is_enemy ? (MASK_PLAYER | MASK_PLAYER_BULLET | MASK_ENEMY_BULLET) : (MASK_ENEMY | MASK_ENEMY_BULLET | MASK_PLAYER_BULLET));
+	if (is_enemy) {
 		bul->set_rotation(180.f);
 	}
 	m_objects.push_back(bul);
@@ -133,6 +134,9 @@ void world_module::handle_difficulty(const size_t &in_cur_score) {
 
 void world_module::on_difficulty_changed() {
 	m_max_spawn_time -= SHIP_SPAWN_TIME_STEP;
+	if (m_max_spawn_time < SHIP_MIN_SPAWN_TIME) {
+		m_max_spawn_time = SHIP_MIN_SPAWN_TIME;
+	}
 	float meteor_velocity = m_meteor_spawner->get_velocity();
 	meteor_velocity += METEOR_VELOCITY_STEP;
 	m_meteor_spawner->set_velocity(meteor_velocity);

@@ -37,7 +37,7 @@ public:
 	
 	void init_player(controller *in_controller);
 
-	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector) const;
+	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const;
 
 	virtual void on_notify(const vector2f &in_position, const vector2f &in_forward_vector, int in_type) override;
 	virtual void on_notify(game_object &in_object) override;

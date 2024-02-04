@@ -36,7 +36,7 @@ game_object *meteor_spawner::spawn_object(const vector2f &in_position, const vec
 vector2f meteor_spawner::calculate_position() {
 	float area = m_spawn_x - (m_spawn_range / 2.f);
 	int x_rand = std::rand() % int(m_spawn_range);
-	float y_val = -20.f;
+	float y_val = -OUT_OFFSET;
 
 	return vector2f(float(area + x_rand), y_val);
 }
