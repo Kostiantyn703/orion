@@ -10,6 +10,7 @@ meteor_spawner::meteor_spawner() : m_world(nullptr) {
 	m_max_spawn_time = METEOR_MAX_SPAWN_TIME;
 	m_spawn_range = METEOR_SPAWN_RANGE;
 	m_spawn_time = m_max_spawn_time;
+	m_meteor_velocity = METEOR_VELOCITY;
 }
 
 void meteor_spawner::update(float delta_time) {
@@ -21,15 +22,15 @@ void meteor_spawner::notify() {
 
 	vector2f forward_vec(0.f, 1.f);
 	vector2f pos(calculate_position());
-	game_object *object = spawn_object(pos, forward_vec);
+	game_object *object = spawn_object(pos, forward_vec, m_meteor_velocity);
 	object->set_texture(meteor_tex_big);
 	object->set_mask(MASK_ENEMY);
 	object->init();
 	m_world->on_notify(*object);
 }
 
-game_object *meteor_spawner::spawn_object(const vector2f &in_position, const vector2f &in_forward_vector) const {
-	return new meteor(in_position, in_forward_vector);
+game_object *meteor_spawner::spawn_object(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const {
+	return new meteor(in_position, in_forward_vector, in_velocity);
 }
 
 vector2f meteor_spawner::calculate_position() {

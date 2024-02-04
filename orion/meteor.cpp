@@ -1,11 +1,11 @@
 #include "meteor.h"
 
-meteor::meteor(const vector2f &initial_point, const vector2f &in_forward_vector)
+meteor::meteor(const vector2f &initial_point, const vector2f &in_forward_vector, const float in_velocity)
 	: game_object(initial_point)
 {
 	set_forward_vector	(in_forward_vector);
 	set_move_dir		(in_forward_vector);
-	set_velocity		(METEOR_VELOCITY);
+	set_velocity		(in_velocity);
 	set_score_value		(METEOR_SCORE);
 }
 

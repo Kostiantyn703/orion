@@ -11,18 +11,24 @@
 constexpr int OBJECTS_CAPACITY = 20;
 
 world_module::world_module() {
-
 	m_colision_system = std::make_unique<collision_module>();
 
 	m_meteor_spawner = std::make_unique<meteor_spawner>();
 	m_ship_spawner = std::make_unique<ship_spawner>();
+
+	m_difficulty = std::make_unique<difficulty>();
 
 	m_meteor_spawner->set_listener(this);
 	m_ship_spawner->set_listener(this);
 
 	m_objects.reserve(OBJECTS_CAPACITY);
 
-	srand(time(0));
+	srand((unsigned int)time(0));
+
+	m_spawn_time = 0.f;
+	m_max_spawn_time = SHIP_SPAWN_TIME;
+
+	m_score = 0;
 }
 
 world_module::~world_module() {
@@ -52,8 +58,10 @@ void world_module::init_player(controller *in_controller) {
 
 void world_module::update(float delta_time) {
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
-		(*it)->update(delta_time);
-		m_colision_system->check_collision(this, *it);
+		if (*it != nullptr) {
+			(*it)->update(delta_time);
+			m_colision_system->check_collision(this, *it);
+		}
 	}
 	m_meteor_spawner->update(delta_time);
 	if (m_meteor_spawner->spawn_timer_expired()) {
@@ -70,6 +78,8 @@ void world_module::update(float delta_time) {
 		++block_idx;
 	}
 	remove_objects();
+
+	handle_difficulty(m_score);
 }
 
 void world_module::remove_objects() {
@@ -111,4 +121,23 @@ void world_module::on_notify(game_object &in_object) {
 
 size_t world_module::calculate_idx(size_t in_val) {
 	return std::rand() % int(in_val);
+}
+
+void world_module::handle_difficulty(const size_t &in_cur_score) {
+	bool should_increase = in_cur_score > m_difficulty->m_cur_level * DIFFICULTY_STEP;
+	if (should_increase) {
+		++m_difficulty->m_cur_level;
+		on_difficulty_changed();
+	}
+}
+
+void world_module::on_difficulty_changed() {
+	m_max_spawn_time -= SHIP_SPAWN_TIME_STEP;
+	float meteor_velocity = m_meteor_spawner->get_velocity();
+	meteor_velocity += METEOR_VELOCITY_STEP;
+	m_meteor_spawner->set_velocity(meteor_velocity);
+	SDL_Log("On difficulty changed");
+	SDL_Log("Level %d", m_difficulty->m_cur_level);
+	SDL_Log("Ship spawn time %f", m_max_spawn_time);
+	SDL_Log("Meteor velocity %f", m_meteor_spawner->get_velocity());
 }

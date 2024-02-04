@@ -22,15 +22,19 @@ public:
 
 	void set_spawn_pos(float in_x) { m_spawn_x = in_x; }
 
-	game_object *spawn_object(const vector2f &in_position, const vector2f &in_forward_vector) const;
+	void set_velocity(float in_val) { m_meteor_velocity = in_val; }
+	float get_velocity() const { return m_meteor_velocity; }
+
+	game_object *spawn_object(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const;
 private:
 	subscriber *m_world;
+
+	float m_meteor_velocity = 0.f;
 
 	float m_spawn_x = 0.f;
 	float m_spawn_time = 0.f;
 
 	float m_max_spawn_time = 0.f;
-	//float m_min_spawn_time = 200.f;
 
 	int m_spawn_range = 0;
 

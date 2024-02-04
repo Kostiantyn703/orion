@@ -10,7 +10,6 @@ static const char	*WINDOW_NAME	= "PROJECT ORION";
 constexpr float		VELOCITY_COEFICIENT		= 2.f;
 constexpr float		BULLET_VELOCITY			= 20.f * VELOCITY_COEFICIENT;
 constexpr float		PLAYER_VELOCITY			= 10.f * VELOCITY_COEFICIENT;
-constexpr float		METEOR_VELOCITY			= 3.f * VELOCITY_COEFICIENT;
 constexpr float		WEAPON_RELOAD_TIME		= 30.f / VELOCITY_COEFICIENT;
 
 constexpr float		OUT_OFFSET		= 20.f;
@@ -21,6 +20,13 @@ constexpr int		METEOR_SPAWN_RANGE = 300;
 
 constexpr size_t	METEOR_SCORE = 2;
 constexpr size_t	SPACESHIP_SCORE = 5;
+
+// difficulty
+constexpr size_t	DIFFICULTY_STEP			= 4;//30;
+constexpr float		METEOR_VELOCITY			= 3.f * VELOCITY_COEFICIENT;
+constexpr float		METEOR_VELOCITY_STEP	= 0.5f;
+constexpr float		SHIP_SPAWN_TIME			= 100.f;
+constexpr float		SHIP_SPAWN_TIME_STEP	= 5.f;
 
 // shaders
 static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";
