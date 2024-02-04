@@ -138,10 +138,24 @@ void script_module::parse_behavior(std::string &in_line, behavior_item &out_item
 				beh_data.m_condition_name = inner_line;
 				continue;
 			}
+			if (inner_line.front() == '[') {
+				parse_range(inner_line, beh_data.m_range);
+			}
 			beh_data.m_condition_data = (float)std::atof(inner_line.c_str());
 		}
 		out_item.m_behavior_data.push_back(beh_data);
 	}
+}
+
+void script_module::parse_range(std::string &in_line, range &out_range) {
+	char token = '-';
+	size_t tok_idx = in_line.find(token);
+
+	std::string min_val = in_line.substr(1, tok_idx - 1);
+	std::string max_val = in_line.substr(tok_idx + 1, in_line.size() - 1);
+
+	out_range.m_min = std::atoi(min_val.c_str());
+	out_range.m_max = std::atoi(max_val.c_str());
 }
 
 bool script_module::action_found(const std::string &in_line) {

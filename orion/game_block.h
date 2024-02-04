@@ -5,14 +5,20 @@
 #include <string>
 #include <vector>
 
+#include "globals.h"
+
 struct behavior_data {
 	std::string	m_action_name;
 	std::string	m_condition_name;
+
+	range		m_range;
 	float		m_condition_data;
 };
 
 struct behavior_item {
 	float m_spawn_pos	= 0.f;
+	range m_range;
+
 	std::vector<behavior_data> m_behavior_data;
 };
 

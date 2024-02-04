@@ -110,4 +110,9 @@ enum class border_side {
 	BS_WEST,
 	BS_NONE = -1
 };
+
+struct range {
+	int m_min = 0;
+	int m_max = 0;
+};
 #endif // !GLOBALS_H

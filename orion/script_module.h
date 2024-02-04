@@ -22,6 +22,7 @@ private:
 	float parse_float(std::string &in_line);
 	size_t parse_int(std::string &in_line);
 	void parse_behavior(std::string &in_line, behavior_item &out_item);
+	void parse_range(std::string &in_line, range &out_range);
 
 	bool action_found(const std::string &in_line);
 	bool condition_found(const std::string &in_line);
