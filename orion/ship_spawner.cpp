@@ -20,7 +20,8 @@ std::map<std::string, condition_type> g_cond_map = {
 void ship_spawner::notify_spawn(const game_block &in_block) {
 	int idx = std::rand() % int(in_block.m_items.size());
 	const behavior_item &beh_item = in_block.m_items[idx];
-	vector2f spawn_pos = vector2f(WINDOW_WIDTH * beh_item.m_spawn_pos, -OUT_OFFSET);
+	float spawn_coord = beh_item.m_spawn_range.is_valid() ? calculate_coordinate(beh_item.m_spawn_range) : beh_item.m_spawn_pos;
+	vector2f spawn_pos = vector2f(WINDOW_WIDTH * spawn_coord, -OUT_OFFSET);
 	
 	std::string tex_name;
 	if (in_block.m_type == 0) tex_name = TEX_NAME_ENEMY_00;

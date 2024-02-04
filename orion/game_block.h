@@ -17,7 +17,7 @@ struct behavior_data {
 
 struct behavior_item {
 	float m_spawn_pos	= 0.f;
-	range m_range;
+	range m_spawn_range;
 
 	std::vector<behavior_data> m_behavior_data;
 };

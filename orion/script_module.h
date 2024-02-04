@@ -19,7 +19,7 @@ private:
 	bool get_file_content(const std::string &in_file, std::string &out_content);
 	void parse_file_content(std::string &in_content, game_block &out_block);
 	
-	float parse_float(std::string &in_line);
+	void parse_spawn(std::string &in_line, behavior_item &out_item);
 	size_t parse_int(std::string &in_line);
 	void parse_behavior(std::string &in_line, behavior_item &out_item);
 	void parse_range(std::string &in_line, range &out_range);

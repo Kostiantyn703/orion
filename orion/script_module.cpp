@@ -74,7 +74,7 @@ void script_module::parse_file_content(std::string &in_content, game_block &out_
 		idx = line.find("spawn");
 		if (idx != size_t_max) {
 			behavior_item beh_item;
-			beh_item.m_spawn_pos = parse_float(line);
+			parse_spawn(line, beh_item);
 			out_block.add_item(beh_item);
 			++items_idx;
 			continue;
@@ -87,16 +87,18 @@ void script_module::parse_file_content(std::string &in_content, game_block &out_
 		}
 	}
 }
-
-float script_module::parse_float(std::string &in_line) {
+void script_module::parse_spawn(std::string &in_line, behavior_item &out_item) {
 	char token = '=';
 	size_t idx = in_line.find(token);
 	if (idx == size_t_max) {
 		SDL_Log("Bad token.");
 	}
 	std::string sub = in_line.substr(idx+1, in_line.size()-1);
-	float result = (float)std::atof(sub.c_str());
-	return result;
+	if (sub.front() == '[') {
+		parse_range(sub, out_item.m_spawn_range);
+	} else {
+		out_item.m_spawn_pos = (float)std::atof(sub.c_str());
+	}
 }
 
 size_t script_module::parse_int(std::string &in_line) {
@@ -186,4 +188,3 @@ void script_module::erase_spaces(std::string &out_line) {
 		, out_line.end()
 	);
 }
-
