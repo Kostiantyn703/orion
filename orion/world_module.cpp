@@ -72,9 +72,11 @@ void world_module::update(float delta_time) {
 	m_spawn_time -= delta_time;
 	if (m_spawn_time < 0.f) {
 		//size_t idx = calculate_idx(m_block_data.size());
-		m_ship_spawner->notify_spawn(m_block_data[block_idx % m_block_data.size()]);
-		m_spawn_time = m_max_spawn_time;
-		++block_idx;
+		if (!m_block_data.empty()) {
+			m_ship_spawner->notify_spawn(m_block_data[block_idx % m_block_data.size()]);
+			m_spawn_time = m_max_spawn_time;
+			++block_idx;
+		}
 	}
 
 	handle_difficulty(m_score);
