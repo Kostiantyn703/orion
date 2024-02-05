@@ -18,6 +18,7 @@ resource_module *resource_module::get_instance() {
 }
 
 void resource_module::load_textures() {
+	create_texture(TEX_ADDRESS_BACKGROUND,			TEX_NAME_BACKGROUND			);
 	create_texture(TEX_ADDRESS_SHIP,				TEX_NAME_SHIP				);
 	create_texture(TEX_ADDRESS_ENEMY_00,			TEX_NAME_ENEMY_00			);
 	create_texture(TEX_ADDRESS_ENEMY_01,			TEX_NAME_ENEMY_01			);

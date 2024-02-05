@@ -23,7 +23,7 @@ constexpr size_t	METEOR_SCORE = 2;
 constexpr size_t	SPACESHIP_SCORE = 5;
 
 // difficulty
-constexpr size_t	DIFFICULTY_STEP			= 30;//30;
+constexpr size_t	DIFFICULTY_STEP			= 1;//30;
 constexpr float		METEOR_VELOCITY			= 3.f * VELOCITY_COEFICIENT;
 constexpr float		METEOR_VELOCITY_STEP	= 1.f;
 constexpr float		SHIP_SPAWN_TIME			= 100.f;
@@ -40,15 +40,16 @@ static const char	*SPRITE_NAME		= "sprite";
 static const char	*DEBUG_NAME			= "debug";
 
 // textures
+static const char	*TEX_ADDRESS_BACKGROUND			= "../content/images/background.png";
 static const char	*TEX_ADDRESS_ENEMY_00			= "../content/images/enemy00.png";
 static const char	*TEX_ADDRESS_ENEMY_01			= "../content/images/enemy01.png";
 static const char	*TEX_ADDRESS_ENEMY_02			= "../content/images/enemy02.png";
 static const char	*TEX_ADDRESS_SHIP				= "../content/images/ship.png";
 static const char	*TEX_ADDRESS_METEOR_BROWN_BIG	= "../content/images/meteor_brown_big.png";
-
 static const char	*TEX_ADDRESS_BULLET_GREEN		= "../content/images/bullet_green.png";
 static const char	*TEX_ADDRESS_BULLET_RED			= "../content/images/bullet_red.png";
 
+static const char	*TEX_NAME_BACKGROUND		= "background";
 static const char	*TEX_NAME_ENEMY_00			= "enemy00";
 static const char	*TEX_NAME_ENEMY_01			= "enemy01";
 static const char	*TEX_NAME_ENEMY_02			= "enemy02";

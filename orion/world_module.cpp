@@ -59,7 +59,6 @@ void world_module::init_player(controller *in_controller) {
 void world_module::update(float delta_time) {
 	remove_objects	();
 	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
-		
 		(*it)->update(delta_time);
 		m_colision_system->check_collision(this, *it);
 	}
@@ -82,6 +81,7 @@ void world_module::update(float delta_time) {
 }
 
 void world_module::remove_objects() {
+	// only one object per frame set to remove
 	object_storage::iterator left_bound = m_objects.begin();
 	object_storage::iterator right_bound = m_objects.end();
 	while (left_bound != right_bound) {
@@ -146,8 +146,4 @@ void world_module::on_difficulty_changed() {
 	float meteor_velocity = m_meteor_spawner->get_velocity();
 	meteor_velocity += METEOR_VELOCITY_STEP;
 	m_meteor_spawner->set_velocity(meteor_velocity);
-	SDL_Log("On difficulty changed");
-	SDL_Log("Level %d", m_difficulty->m_cur_level);
-	SDL_Log("Ship spawn time %f", m_max_spawn_time);
-	SDL_Log("Meteor velocity %f", m_meteor_spawner->get_velocity());
 }
