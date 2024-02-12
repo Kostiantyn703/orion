@@ -26,9 +26,13 @@ void background::init() {
 void background::draw(const shader_program &in_shader) {
 	// draw texture
 	glm::mat4 model = glm::mat4(1.f);
-	glm::vec2 model_size(m_size.get_x(), m_size.get_y());
-	model = glm::scale(model, glm::vec3(model_size, 1.0f));
+	glm::vec2 model_size(WINDOW_WIDTH, WINDOW_HEIGHT);
+	model = glm::scale(model, glm::vec3(model_size, 1.f));
 	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
+
+	float scalar_x = m_size.get_x() / WINDOW_WIDTH; 
+	float scalar_y = m_size.get_y() / WINDOW_HEIGHT;
+	glUniform2f(glGetUniformLocation(in_shader.id(), "scalar"), scalar_x, scalar_y);
 
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();
