@@ -16,6 +16,19 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
+void background::init() {
+
+}
+
+void background::draw(const shader_program &in_shader) {
+
+
+}
+
+void background::set_texture(texture *in_texture) {
+
+}
+
 render_module::render_module()
 {
 	SDL_InitSubSystem(SDL_INIT_VIDEO);

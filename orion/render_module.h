@@ -12,6 +12,18 @@
 #include "shader_program.h"
 #include "world_module.h"
 
+class background : public renderable {
+public:
+	background() {}
+	
+	void init();
+
+	virtual void draw(const shader_program &in_shader) override;
+	virtual void set_texture(texture *in_texture) override;
+
+
+};
+
 class render_module {
 	using shader_vec = std::vector<std::unique_ptr<shader_program>>;
 public:
