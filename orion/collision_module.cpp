@@ -55,6 +55,8 @@ collision_module::~collision_module() {
 }
 
 void collision_module::check_collision(world_module *in_world, collidable *in_object) {
+	if (!in_object) return;
+
 	if (in_object->get_mask() & MASK_PLAYER) {
 		for (std::vector<border*>::const_iterator local_it = m_borders.cbegin(); local_it != m_borders.cend(); ++local_it) {
 			if (intersect(in_object->get_aabb(), (*local_it)->get_aabb())) {

@@ -57,10 +57,10 @@ void world_module::init_player(controller *in_controller) {
 }
 
 void world_module::update(float delta_time) {
-	remove_objects	();
-	for (object_storage::const_iterator it = m_objects.cbegin(); it != m_objects.cend(); ++it) {
-		(*it)->update(delta_time);
-		m_colision_system->check_collision(this, *it);
+	for (object_storage::iterator it = m_objects.begin(); it != m_objects.end(); ++it) {
+		game_object *cur_obj = *it;
+		cur_obj->update(delta_time);
+		m_colision_system->check_collision(this, cur_obj);
 	}
 	m_meteor_spawner->update(delta_time);
 	if (m_meteor_spawner->spawn_timer_expired()) {
@@ -79,6 +79,7 @@ void world_module::update(float delta_time) {
 		}
 	}
 
+	remove_objects();
 	handle_difficulty(m_score);
 }
 
