@@ -19,9 +19,9 @@ public:
 	void init();
 
 	virtual void draw(const shader_program &in_shader) override;
-	virtual void set_texture(texture *in_texture) override;
+	virtual void set_texture(texture *in_texture) override {}
 
-
+	vector2f m_size;
 };
 
 class render_module {
@@ -47,5 +47,7 @@ private:
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 
 	shader_vec m_shaders;
+
+	background m_background;
 };
 #endif // RENDER_MODULE_H

@@ -4,7 +4,7 @@
 
 
 texture::texture()
-	: m_target (GL_TEXTURE_2D), m_format (GL_RGBA) , m_width (0), m_height (0), m_channels (0)
+	: m_target (GL_TEXTURE_2D), m_width (0), m_height (0), m_channels (0)
 {
 }
 
@@ -39,6 +39,7 @@ void texture::init_data(unsigned char *data, const int &in_width, const int &in_
 	m_width		= in_width;
 	m_height	= in_height;
 	m_channels	= in_channels;
+	m_format = (m_channels == 3) ? GL_RGB : GL_RGBA;
 	
 	create();
 	bind();
