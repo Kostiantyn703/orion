@@ -13,8 +13,31 @@
 
 #include "shader.h"
 #include "globals.h"
+#include "resource_module.h"
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
+
+void background::init() {
+	m_texture = resource_module::get_instance()->get_texture(TEX_NAME_BACKGROUND);
+	m_size.set_x((float)m_texture->get_width());
+	m_size.set_y((float)m_texture->get_height());
+}
+
+void background::draw(const shader_program &in_shader) {
+	// draw texture
+	glm::mat4 model = glm::mat4(1.f);
+	glm::vec2 model_size(WINDOW_WIDTH, WINDOW_HEIGHT);
+	model = glm::scale(model, glm::vec3(model_size, 1.f));
+	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
+
+	float scalar_x = m_size.get_x() / WINDOW_WIDTH; 
+	float scalar_y = m_size.get_y() / WINDOW_HEIGHT;
+	glUniform2f(glGetUniformLocation(in_shader.id(), "scalar"), scalar_x, scalar_y);
+	glUniform1f(glGetUniformLocation(in_shader.id(), "scroll"), m_scroll_offset / 100.f);
+
+	glActiveTexture(GL_TEXTURE0);
+	m_texture->bind();
+}
 
 render_module::render_module()
 {
@@ -44,6 +67,9 @@ void render_module::init() {
 
 	m_vertex_buffer->unbind();
 	m_vertex_array->unbind();
+
+	// TODO: temporary
+	m_background.init();
 }
 
 void render_module::init_shader(const char *in_vert_address, const char *in_frag_address) {
@@ -103,8 +129,12 @@ void render_module::run(world_module *in_world) {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	for (int i = 0; i < m_shaders.size(); ++i) {
+		m_shaders[i]->use();
+		m_background.draw(*m_shaders[i]);
+		m_vertex_array->bind();
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		m_vertex_array->unbind();
 		for (int j = 0; j < in_world->m_objects.size(); ++j) {
-			m_shaders[i]->use();
 			in_world->m_objects[j]->draw(*m_shaders[i]);
 			m_vertex_array->bind();
 			glDrawArrays(GL_TRIANGLES, 0, 6);

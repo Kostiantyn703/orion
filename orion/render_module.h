@@ -12,6 +12,19 @@
 #include "shader_program.h"
 #include "world_module.h"
 
+class background : public renderable {
+public:
+	background() {}
+	
+	void init();
+
+	virtual void draw(const shader_program &in_shader) override;
+	virtual void set_texture(texture *in_texture) override {}
+
+	vector2f m_size;
+	float m_scroll_offset = 0.f;
+};
+
 class render_module {
 	using shader_vec = std::vector<std::unique_ptr<shader_program>>;
 public:
@@ -28,6 +41,7 @@ public:
 
 	window *get_window() const { return m_window.get();	}
 
+	background m_background;
 private:
 	std::unique_ptr<window>	m_window;
 

@@ -29,7 +29,7 @@ constexpr int FRAMES_PER_SECOND = 60;
 constexpr std::chrono::milliseconds MS_PER_FRAME = std::chrono::milliseconds(1000 / FRAMES_PER_SECOND);
 constexpr float DT_DISSIPATOR = 0.001f;
 std::chrono::milliseconds FRAME_DELAY = std::chrono::milliseconds(0);
-constexpr std::chrono::milliseconds FRAME_DELAY_TIME = std::chrono::milliseconds(1000);
+constexpr std::chrono::milliseconds FRAME_DELAY_TIME = std::chrono::milliseconds(1200);
 
 void application::run() {
 	while (is_active) {
@@ -46,6 +46,7 @@ void application::run() {
 		}
 		float delta_time = MS_PER_FRAME.count() * DT_DISSIPATOR;
 		m_world->update				(delta_time);
+		m_renderer->m_background.m_scroll_offset += delta_time;
 		m_renderer->run				(m_world.get());
 	}
 }
