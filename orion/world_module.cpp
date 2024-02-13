@@ -100,6 +100,7 @@ void world_module::remove_objects() {
 	};
 	object_storage::iterator it = find_if(m_objects.begin(), m_objects.end(), pred);
 	if (it != m_objects.end()) {
+		delete *it;
 		m_objects.erase(it, m_objects.end());
 	}
 }

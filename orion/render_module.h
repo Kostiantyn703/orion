@@ -22,6 +22,7 @@ public:
 	virtual void set_texture(texture *in_texture) override {}
 
 	vector2f m_size;
+	float m_scroll_offset = 0.f;
 };
 
 class render_module {
@@ -40,6 +41,7 @@ public:
 
 	window *get_window() const { return m_window.get();	}
 
+	background m_background;
 private:
 	std::unique_ptr<window>	m_window;
 
@@ -47,7 +49,5 @@ private:
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
 
 	shader_vec m_shaders;
-
-	background m_background;
 };
 #endif // RENDER_MODULE_H

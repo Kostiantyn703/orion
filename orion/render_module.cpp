@@ -33,6 +33,7 @@ void background::draw(const shader_program &in_shader) {
 	float scalar_x = m_size.get_x() / WINDOW_WIDTH; 
 	float scalar_y = m_size.get_y() / WINDOW_HEIGHT;
 	glUniform2f(glGetUniformLocation(in_shader.id(), "scalar"), scalar_x, scalar_y);
+	glUniform1f(glGetUniformLocation(in_shader.id(), "scroll"), m_scroll_offset / 100.f);
 
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();

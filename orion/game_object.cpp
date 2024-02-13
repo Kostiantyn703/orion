@@ -34,6 +34,7 @@ void game_object::draw(const shader_program &in_shader) {
 	model = glm::scale(model, glm::vec3(model_size, 1.0f));
 	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
 	glUniform2f(glGetUniformLocation(in_shader.id(), "scalar"), 1.f, 1.f);
+	glUniform1f(glGetUniformLocation(in_shader.id(), "scroll"), 0.f);
 	// draw aabb
 	glm::mat4 aabb = glm::mat4(1.f);
 	aabb = glm::translate(aabb, glm::vec3(m_aabb.get_origin().get_x(), m_aabb.get_origin().get_y(), 0.f));
