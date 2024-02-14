@@ -11,3 +11,9 @@ behavior = { forward, [55-85], y_pos }; { right, -0.1, x_pos }; { backward, [15-
 
 spawn=-0.1
 behavior = { forward, [55-85], y_pos }; { left, 1.1, x_pos }; { backward, [15-45], y_pos }; { right, -0.1, x_pos }; { forward }
+
+spawn = [35-65]
+behavior = { forward, y_pos, [70-90] }; { left, x_pos, [70-90] }; { backward, y_pos, [10-30] }; { right, x_pos, [10-30] }; { forward }
+
+spawn = [35-65]
+behavior = { forward, y_pos, [70-90] }; { right, x_pos, [10-30] }; { backward, y_pos, [10-30] }; { left, x_pos, [70-90] }; { forward }

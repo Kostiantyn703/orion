@@ -1,0 +1,13 @@
+type = 1
+
+spawn = [10-50]
+behavior = { forward, y_pos, [10-35] }; { left, x_pos, [50-90] }; { forward, y_pos, [35-65] }; { right, x_pos, [10-50] }; { forward, y_pos, [65-90] }; { left, x_pos, [50-90] }; {forward};
+
+spawn = [50-90]
+behavior = { forward, y_pos, [10-35] }; { right, x_pos, [10-50] }; { forward, y_pos, [35-65] }; { left, x_pos, [50-90] }; { forward, y_pos, [65-90] }; { right, x_pos, [10-50] }; {forward};
+
+spawn = -0.1
+behavior = { forward, y_pos, [20-40] }; { left, x_pos, [10-35]}; { forward, y_pos, [50-90] }; { left, x_pos, [35-65] }; { backward, y_pos, [10-50] }; { left, x_pos, [65-90] }; {forward};
+
+spawn = 1.1
+behavior = { forward, y_pos, [20-40] }; { right, x_pos, [65-90] }; { forward, y_pos, [50-90] }; { right, x_pos, [35-65] }; { backward, y_pos, [10-50] }; { right, x_pos, [10-35] }; {forward};

@@ -23,10 +23,10 @@ constexpr size_t	METEOR_SCORE = 2;
 constexpr size_t	SPACESHIP_SCORE = 5;
 
 // difficulty
-constexpr size_t	DIFFICULTY_STEP			= 10;//30;
+constexpr size_t	DIFFICULTY_STEP			= 20;//30;
 constexpr float		METEOR_VELOCITY			= 3.f * VELOCITY_COEFICIENT;
 constexpr float		METEOR_VELOCITY_STEP	= 1.f;
-constexpr float		SHIP_SPAWN_TIME			= 80.f;
+constexpr float		SHIP_SPAWN_TIME			= 100.f;
 constexpr float		SHIP_MIN_SPAWN_TIME		= 15.f;
 constexpr float		SHIP_SPAWN_TIME_STEP	= 3.f;
 
