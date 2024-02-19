@@ -17,7 +17,8 @@ public:
 	void receive_key();
 
 	bool esc_pressed = false;
-
+	bool enter_pressed = false;
+	
 private:
 	void handle_key_down(const SDL_Event &in_event);
 	void handle_key_up(const SDL_Event &in_event);

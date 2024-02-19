@@ -11,9 +11,11 @@
 #include "world_module.h"
 #include "script_module.h"
 
+class game_state;
+
 class application {
 public:
-	application() : is_active(false) {}
+	application() : is_active(false), m_curr_state(nullptr) {}
 	~application() {}
 
 	void set_active(bool in_val) { is_active = in_val; }
@@ -22,8 +24,19 @@ public:
 	void run();
 	void shut_down();
 
+	void init_game();
+	void clear_objects();
+
+	void render();
+	void handle_input();
+	void update_world(float delta_time);
+
+	void change_state();
+
 private:
 	bool is_active;
+
+	game_state *m_curr_state;
 
 	std::unique_ptr<script_module>	m_scripts;
 	std::unique_ptr<render_module>	m_renderer;

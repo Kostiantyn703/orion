@@ -1,8 +1,5 @@
 #ifndef CONTROLLABLE_H
 #define CONTROLLABLE_H
-#include <string>
-
-class vector2f;
 
 class controllable {
 public:

@@ -36,6 +36,7 @@ public:
 	void remove_objects();
 	
 	void init_player(controller *in_controller);
+	void clear_objects();
 
 	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const;
 

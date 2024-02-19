@@ -143,3 +143,7 @@ void render_module::run(world_module *in_world) {
 	}
 	m_window->swap();
 }
+
+void render_module::scroll_background(float delta_time) {
+	m_background.m_scroll_offset += delta_time;
+}

@@ -38,6 +38,7 @@ public:
 	bool load_shader(const char *source_address, std::string &out_shader_source);
 
 	void run(world_module *in_world);
+	void scroll_background(float delta_time);
 
 	window *get_window() const { return m_window.get();	}
 

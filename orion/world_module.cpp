@@ -32,10 +32,7 @@ world_module::world_module() {
 }
 
 world_module::~world_module() {
-	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
-		delete *it;
-	}
-	m_objects.clear();
+	clear_objects();
 	SDL_Log("Your score %d", m_score);
 }
 
@@ -54,6 +51,13 @@ void world_module::init_player(controller *in_controller) {
 	player->set_mask(MASK_PLAYER | MASK_ENEMY);
 	m_player_pos = player->get_origin_ptr();
 	m_objects.push_back(player);
+}
+
+void world_module::clear_objects() {
+	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+		delete *it;
+	}
+	m_objects.clear();
 }
 
 void world_module::update(float delta_time) {
