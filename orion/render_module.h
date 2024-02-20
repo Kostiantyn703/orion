@@ -4,6 +4,10 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <map>
+
+#include "glad/glad.h"
+#include "glm/glm.hpp"
 
 #include "window.h"
 #include "buffer_object.h"
@@ -23,6 +27,34 @@ public:
 
 	vector2f m_size;
 	float m_scroll_offset = 0.f;
+};
+
+struct character {
+	size_t m_id;
+	glm::ivec2 m_size;
+	glm::ivec2 m_bearing;
+	size_t m_advance;
+};
+
+class text_render_module {
+	using char_map = std::map<char, character>;
+public:
+	text_render_module();
+	~text_render_module();
+
+	void init();
+
+	void draw();
+
+	void load();
+
+private:
+	std::unique_ptr<shader> m_shader;
+
+	std::unique_ptr<vertex_array>	m_vertex_array;
+	std::unique_ptr<buffer_object>	m_vertex_buffer;
+
+	char_map m_characters;
 };
 
 class render_module {

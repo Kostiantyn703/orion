@@ -6,8 +6,7 @@
 #include <sstream>
 
 #include "SDL.h"
-#include "glad/glad.h"
-#include "glm/glm.hpp"
+
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
@@ -38,6 +37,29 @@ void background::draw(const shader_program &in_shader) {
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();
 }
+
+text_render_module::text_render_module() {
+
+}
+
+text_render_module::~text_render_module() {
+
+}
+
+void text_render_module::init() {
+
+
+}
+
+void text_render_module::draw() {
+
+
+}
+
+void text_render_module::load() {
+
+}
+
 
 render_module::render_module()
 {

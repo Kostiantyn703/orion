@@ -39,7 +39,7 @@ static const char	*DEBUG_ADDRESS_FRAG		= "../content/shaders/debug.frag";
 static const char	*SPRITE_NAME		= "sprite";
 static const char	*DEBUG_NAME			= "debug";
 
-// textures
+// textures addresses
 static const char	*TEX_ADDRESS_BACKGROUND			= "../content/images/background.png";
 static const char	*TEX_ADDRESS_ENEMY_00			= "../content/images/enemy00.png";
 static const char	*TEX_ADDRESS_ENEMY_01			= "../content/images/enemy01.png";
@@ -49,6 +49,7 @@ static const char	*TEX_ADDRESS_METEOR_BROWN_BIG	= "../content/images/meteor_brow
 static const char	*TEX_ADDRESS_BULLET_GREEN		= "../content/images/bullet_green.png";
 static const char	*TEX_ADDRESS_BULLET_RED			= "../content/images/bullet_red.png";
 
+// textures names
 static const char	*TEX_NAME_BACKGROUND		= "background";
 static const char	*TEX_NAME_ENEMY_00			= "enemy00";
 static const char	*TEX_NAME_ENEMY_01			= "enemy01";
@@ -60,6 +61,9 @@ static const char	*TEX_NAME_BULLET_RED		= "bullet_red";
 
 // scripts
 static const char	*SCRIPTS_PATH				= "../content/scripts/";
+
+// fonts
+static const char	*FONTS_PATH					= "../content/fonts/kenvector_future.ttf";
 
 // vertices
 static float vertices[] = {
