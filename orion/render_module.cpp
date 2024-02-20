@@ -1,10 +1,5 @@
 #include "render_module.h"
 
-#include <vector>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-
 #include "SDL.h"
 
 #include "glm/gtc/matrix_transform.hpp"
@@ -90,17 +85,16 @@ void render_module::init() {
 	m_vertex_buffer->unbind();
 	m_vertex_array->unbind();
 
-	// TODO: temporary
 	m_background.init();
 }
 
 void render_module::init_shader(const char *in_vert_address, const char *in_frag_address) {
 	std::string v_shader_source;
-	if (!load_shader(in_vert_address, v_shader_source)) {
+	if (!resource_module::get_instance()->load_shader(in_vert_address, v_shader_source)) {
 		return;
 	}
 	std::string f_shader_source;
-	if (!load_shader(in_frag_address, f_shader_source)) {
+	if (!resource_module::get_instance()->load_shader(in_frag_address, f_shader_source)) {
 		return;
 	}
 	compile_shaders(v_shader_source, f_shader_source);
@@ -125,23 +119,6 @@ void render_module::compile_shaders(const std::string &in_vertex_source, const s
 
 	vert->destroy();
 	frag->destroy();
-}
-
-bool render_module::load_shader(const char *source_address, std::string &out_shader_source) {
-	std::ifstream read_stream(source_address);
-	if (!read_stream.is_open()) {
-		SDL_LogError(0, "Shader source was failed to load from file.\nFile address [%s]", source_address);
-		return false;
-	}
-
-	std::stringstream str_stream;
-	str_stream << read_stream.rdbuf();
-	out_shader_source = str_stream.str();
-	if (out_shader_source.empty()) {
-		SDL_LogError(0, "Shader source code was empty.");
-		return false;
-	}
-	return true;
 }
 
 void render_module::run(world_module *in_world) {

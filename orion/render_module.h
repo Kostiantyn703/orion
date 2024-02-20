@@ -49,7 +49,7 @@ public:
 	void load();
 
 private:
-	std::unique_ptr<shader> m_shader;
+	std::unique_ptr<shader_program> m_shader;
 
 	std::unique_ptr<vertex_array>	m_vertex_array;
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
@@ -67,7 +67,6 @@ public:
 
 	void init_shader(const char *in_vert_address, const char *in_frag_address);
 	void compile_shaders(const std::string &in_vertex_source, const std::string &in_fragment_source);
-	bool load_shader(const char *source_address, std::string &out_shader_source);
 
 	void run(world_module *in_world);
 	void scroll_background(float delta_time);

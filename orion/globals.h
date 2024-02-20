@@ -35,9 +35,12 @@ static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";
 static const char	*SPRITE_ADDRESS_FRAG	= "../content/shaders/sprite.frag";
 static const char	*DEBUG_ADDRESS_VERT		= "../content/shaders/debug.vert";
 static const char	*DEBUG_ADDRESS_FRAG		= "../content/shaders/debug.frag";
+static const char	*TEXT_ADDRESS_VERT		= "../content/shaders/text.vert";
+static const char	*TEXT_ADDRESS_FRAG		= "../content/shaders/text.frag";
 
 static const char	*SPRITE_NAME		= "sprite";
 static const char	*DEBUG_NAME			= "debug";
+static const char	*TEXT_NAME			= "text";
 
 // textures addresses
 static const char	*TEX_ADDRESS_BACKGROUND			= "../content/images/background.png";
