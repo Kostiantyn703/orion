@@ -66,7 +66,7 @@ static const char	*TEX_NAME_BULLET_RED		= "bullet_red";
 static const char	*SCRIPTS_PATH				= "../content/scripts/";
 
 // fonts
-static const char	*FONTS_PATH					= "../content/fonts/kenvector_future.ttf";
+static const char	*FONT_PATH					= "../content/fonts/kenvector_future.ttf";
 
 // vertices
 static float vertices[] = {

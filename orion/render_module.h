@@ -30,10 +30,10 @@ public:
 };
 
 struct character {
-	size_t m_id;
+	unsigned int m_id;
 	glm::ivec2 m_size;
 	glm::ivec2 m_bearing;
-	size_t m_advance;
+	unsigned int m_advance;
 };
 
 class text_render_module {
@@ -51,10 +51,14 @@ public:
 private:
 	std::unique_ptr<shader_program> m_shader;
 
-	std::unique_ptr<vertex_array>	m_vertex_array;
-	std::unique_ptr<buffer_object>	m_vertex_buffer;
+	unsigned int m_vertex_array;
+	unsigned int m_vertex_buffer;
+	//std::unique_ptr<vertex_array>	m_vertex_array;
+	//std::unique_ptr<buffer_object>	m_vertex_buffer;
 
 	char_map m_characters;
+
+	size_t m_font_size;
 };
 
 class render_module {
