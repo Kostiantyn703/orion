@@ -273,8 +273,10 @@ void render_module::run(world_module *in_world) {
 			m_vertex_array->unbind();
 		}
 	}
-	// TODO: calculate proper position
-	m_text_renderer->draw("ORION", 150.f, WINDOW_HEIGHT / 2.f, 1.8f, glm::vec3(1.f, 0.5f, 0.f));
+
+	if (in_world->show_title) {
+		m_text_renderer->draw("ORION", 150.f, WINDOW_HEIGHT / 2.f - 72.f, 1.8f, glm::vec3(0.4f, 0.6f, 1.f));
+	}
 
 	m_window->swap();
 }

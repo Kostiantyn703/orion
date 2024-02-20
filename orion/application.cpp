@@ -87,4 +87,5 @@ void application::change_state() {
 	delete m_curr_state;
 	m_curr_state = new active_state();
 	m_curr_state->on_transition(*this);
+	m_world->show_title = false;
 }

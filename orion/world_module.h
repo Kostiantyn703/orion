@@ -51,6 +51,8 @@ public:
 	std::vector<game_block>		m_block_data;
 
 	size_t block_idx = 0;
+
+	bool show_title = true;
 private:
 	float m_spawn_time = 0.f;
 	float m_max_spawn_time = 0.f;
