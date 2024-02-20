@@ -37,12 +37,11 @@ void background::draw(const shader_program &in_shader) {
 }
 
 text_render_module::text_render_module() {
-
+	init();
+	load();
 }
 
-text_render_module::~text_render_module() {
-
-}
+text_render_module::~text_render_module() {}
 
 void text_render_module::init() {
 	std::string v_shader_source;
@@ -60,16 +59,15 @@ void text_render_module::init() {
 	std::unique_ptr<shader> frag = std::make_unique<shader>(f_shader_source.data(), GL_FRAGMENT_SHADER);
 	frag->compile();
 
-	shader_program curr_shader;
-	curr_shader.attach_shader(vert->get_id());
-	curr_shader.attach_shader(frag->get_id());
-	curr_shader.link();
-	curr_shader.use();
+	m_shader = std::make_unique<shader_program>();
+	m_shader->attach_shader(vert->get_id());
+	m_shader->attach_shader(frag->get_id());
+	m_shader->link();
+	m_shader->use();
 
-	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
-	glUniformMatrix4fv(glGetUniformLocation(curr_shader.id(), "projection"), 1, false, glm::value_ptr(projection));
-	glUniform1i(glGetUniformLocation(curr_shader.id(), "in_text"), 0);
-	m_shader = std::make_unique<shader_program>(curr_shader);
+	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f);
+	glUniformMatrix4fv(glGetUniformLocation(m_shader->id(), "projection"), 1, false, glm::value_ptr(projection));
+	glUniform1i(glGetUniformLocation(m_shader->id(), "text"), 0);
 
 	vert->destroy();
 	frag->destroy();
@@ -85,9 +83,47 @@ void text_render_module::init() {
 	glBindVertexArray(0);
 }
 
-void text_render_module::draw() {
+void text_render_module::draw(const std::string &in_text, float in_x, float in_y, float in_scale, glm::vec3 in_color) {
+	// activate corresponding render state	
+	m_shader->use();
+	glUniform3f(glGetUniformLocation(m_shader->id(), "text_color"), in_color.x, in_color.y, in_color.z); 
+	glActiveTexture(GL_TEXTURE0);
+	glBindVertexArray(m_vertex_array);
 
+	// iterate through all characters
+	std::string::const_iterator c;
+	for (c = in_text.begin(); c != in_text.end(); c++)
+	{
+		character ch = m_characters[*c];
 
+		float xpos = in_x + ch.m_bearing.x * in_scale;
+		float ypos = in_y + (m_characters['H'].m_bearing.y - ch.m_bearing.y) * in_scale;
+
+		float w = ch.m_size.x * in_scale;
+		float h = ch.m_size.y * in_scale;
+		// update VBO for each character
+		float verts[6][4] = {
+			{ xpos,     ypos + h,   0.0f, 1.0f },
+			{ xpos + w, ypos,       1.0f, 0.0f },
+			{ xpos,     ypos,       0.0f, 0.0f },
+
+			{ xpos,     ypos + h,   0.0f, 1.0f },
+			{ xpos + w, ypos + h,   1.0f, 1.0f },
+			{ xpos + w, ypos,       1.0f, 0.0f }
+		};
+		// render glyph texture over quad
+		glBindTexture(GL_TEXTURE_2D, ch.m_id);
+		// update content of VBO memory
+		glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(verts), verts); // be sure to use glBufferSubData and not glBufferData
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		// render quad
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		// now advance cursors for next glyph
+		in_x += (ch.m_advance >> 6) * in_scale; // bitshift by 6 to get value in pixels (1/64th times 2^6 = 64)
+	}
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void text_render_module::load() {
@@ -182,6 +218,7 @@ void render_module::init() {
 	m_vertex_array->unbind();
 
 	m_background.init();
+	m_text_renderer = std::make_unique<text_render_module>();
 }
 
 void render_module::init_shader(const char *in_vert_address, const char *in_frag_address) {
@@ -236,6 +273,9 @@ void render_module::run(world_module *in_world) {
 			m_vertex_array->unbind();
 		}
 	}
+	// TODO: calculate proper position
+	m_text_renderer->draw("ORION", 150.f, WINDOW_HEIGHT / 2.f, 1.8f, glm::vec3(1.f, 0.5f, 0.f));
+
 	m_window->swap();
 }
 

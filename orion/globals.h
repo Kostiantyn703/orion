@@ -4,7 +4,7 @@
 // window
 constexpr float		WINDOW_HEIGHT	= 1200.f * 0.6f;	// 600.f
 constexpr float		WINDOW_WIDTH	= 1600.f * 0.75f;	// 800.f
-static const char	*WINDOW_NAME	= "PROJECT ORION";
+static const char	*GAME_NAME	= "PROJECT ORION";
 
 // values
 constexpr float		VELOCITY_COEFICIENT		= 2.f;

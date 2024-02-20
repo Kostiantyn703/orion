@@ -12,7 +12,7 @@
 
 window::window() {
 	unsigned int flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
-	m_window = SDL_CreateWindow	(	WINDOW_NAME
+	m_window = SDL_CreateWindow	(	GAME_NAME
 								,	SDL_WINDOWPOS_CENTERED
 								,	SDL_WINDOWPOS_CENTERED
 								,	(int)WINDOW_WIDTH

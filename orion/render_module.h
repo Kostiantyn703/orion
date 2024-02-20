@@ -44,7 +44,7 @@ public:
 
 	void init();
 
-	void draw();
+	void draw(const std::string &in_text, float in_x, float in_y, float in_scale, glm::vec3 in_color);
 
 	void load();
 
@@ -53,12 +53,10 @@ private:
 
 	unsigned int m_vertex_array;
 	unsigned int m_vertex_buffer;
-	//std::unique_ptr<vertex_array>	m_vertex_array;
-	//std::unique_ptr<buffer_object>	m_vertex_buffer;
 
 	char_map m_characters;
 
-	size_t m_font_size;
+	unsigned int m_font_size = 72;
 };
 
 class render_module {
@@ -83,6 +81,8 @@ private:
 
 	std::unique_ptr<vertex_array>	m_vertex_array;
 	std::unique_ptr<buffer_object>	m_vertex_buffer;
+
+	std::unique_ptr<text_render_module> m_text_renderer;
 
 	shader_vec m_shaders;
 };
