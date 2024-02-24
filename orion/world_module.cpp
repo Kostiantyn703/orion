@@ -8,7 +8,7 @@
 #include "resource_module.h"
 #include <time.h>
 
-constexpr int OBJECTS_CAPACITY = 20;
+constexpr int OBJECTS_CAPACITY = 30;
 
 world_module::world_module() {
 	m_colision_system = std::make_unique<collision_module>();
@@ -28,15 +28,15 @@ world_module::world_module() {
 	m_spawn_time = 0.f;
 	m_max_spawn_time = SHIP_SPAWN_TIME;
 
+	is_show_title = true;
+	is_show_score = false;
+	is_game_over = false;
+
 	m_score = 0;
 }
 
 world_module::~world_module() {
-	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
-		delete *it;
-	}
-	m_objects.clear();
-	SDL_Log("Your score %d", m_score);
+	clear_objects();
 }
 
 void world_module::init() {}
@@ -50,10 +50,17 @@ void world_module::init_player(controller *in_controller) {
 	player->init();
 	in_controller->set_owner(player);
 	player->set_listener(this);
-	// TODO: temporary god mod to prevent hit by enemy during test
-	player->set_mask(MASK_PLAYER | MASK_ENEMY);
+
+	player->set_mask(MASK_PLAYER);
 	m_player_pos = player->get_origin_ptr();
 	m_objects.push_back(player);
+}
+
+void world_module::clear_objects() {
+	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+		delete *it;
+	}
+	m_objects.clear();
 }
 
 void world_module::update(float delta_time) {
@@ -71,11 +78,10 @@ void world_module::update(float delta_time) {
 
 	m_spawn_time -= delta_time;
 	if (m_spawn_time < 0.f) {
-		//size_t idx = calculate_idx(m_block_data.size());
+		size_t idx = calculate_idx(m_block_data.size());
 		if (!m_block_data.empty()) {
-			m_ship_spawner->notify_spawn(m_block_data[block_idx % m_block_data.size()]);
+			m_ship_spawner->notify_spawn(m_block_data[idx % m_block_data.size()]);
 			m_spawn_time = m_max_spawn_time;
-			++block_idx;
 		}
 	}
 

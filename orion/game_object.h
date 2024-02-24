@@ -27,7 +27,7 @@ public:
 	bool should_remove			()	const		{	return to_remove;	}
 
 	// ~ collidable interface
-	virtual void on_intersect	()	override;
+	virtual bool on_intersect	()	override;
 	// ~ end collidable interface
 
 	const vector2f	&get_origin	()	const	{	return m_origin;	}

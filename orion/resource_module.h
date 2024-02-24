@@ -17,6 +17,7 @@ public:
 	texture *get_texture(const std::string &in_key)	const	{	return m_textures.at(in_key).get();	}
 
 	void load_textures();
+	bool load_shader(const char *source_address, std::string &out_shader_source);
 
 private:
 	resource_module();

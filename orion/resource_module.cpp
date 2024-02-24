@@ -1,5 +1,9 @@
 #include "resource_module.h"
 
+#include <iostream>
+#include <fstream>
+#include <sstream>
+
 #include "SDL_log.h"
 #include "globals.h"
 #include "stb_image.h"
@@ -26,6 +30,23 @@ void resource_module::load_textures() {
 	create_texture(TEX_ADDRESS_METEOR_BROWN_BIG,	TEX_NAME_METEOR_BROWN_BIG	);
 	create_texture(TEX_ADDRESS_BULLET_GREEN,		TEX_NAME_BULLET_GREEN		);
 	create_texture(TEX_ADDRESS_BULLET_RED,			TEX_NAME_BULLET_RED			);
+}
+
+bool resource_module::load_shader(const char *source_address, std::string &out_shader_source) {
+	std::ifstream read_stream(source_address);
+	if (!read_stream.is_open()) {
+		SDL_LogError(0, "Shader source was failed to load from file.\nFile address [%s]", source_address);
+		return false;
+	}
+
+	std::stringstream str_stream;
+	str_stream << read_stream.rdbuf();
+	out_shader_source = str_stream.str();
+	if (out_shader_source.empty()) {
+		SDL_LogError(0, "Shader source code was empty.");
+		return false;
+	}
+	return true;
 }
 
 void resource_module::create_texture(const char *in_tex_address, const char *in_tex_name) {

@@ -15,25 +15,18 @@ using dir_it	= std::filesystem::directory_iterator;
 
 const size_t size_t_max	= std::numeric_limits<size_t>::max();
 
-script_module::script_module() {
-	SDL_Log("Script module constructed");
-}
+script_module::script_module() {}
 
-script_module::~script_module() {
-}
+script_module::~script_module() {}
 
 void script_module::collect_scripts(const std::string &in_path, std::vector<game_block> &out_data) {
-	SDL_Log("The path to collect [%s]", in_path.c_str());
-
 	for (const dir_entry &file : dir_it(in_path)) {
 		std::string file_path = file.path().string();
 		if (file_path.empty()) {
 			continue;
 		}
-		SDL_Log("Found file [%s]", file_path.c_str());
 		std::string file_content;
 		if (get_file_content(file_path, file_content)) {
-			SDL_Log("File content \n%s", file_content.c_str());
 			game_block cur_block;
 			parse_file_content(file_content, cur_block);
 			out_data.push_back(cur_block);
@@ -87,6 +80,7 @@ void script_module::parse_file_content(std::string &in_content, game_block &out_
 		}
 	}
 }
+
 void script_module::parse_spawn(std::string &in_line, behavior_item &out_item) {
 	char token = '=';
 	size_t idx = in_line.find(token);

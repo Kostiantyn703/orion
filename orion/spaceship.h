@@ -28,6 +28,7 @@ public:
 	virtual void init() override;
 
 	virtual void on_spawn(bool is_shooter) override;
+	virtual bool on_intersect() override;
 
 	virtual void update(float delta_time) override;
 	// ~ controllable interface

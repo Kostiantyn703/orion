@@ -4,7 +4,7 @@
 // window
 constexpr float		WINDOW_HEIGHT	= 1200.f * 0.6f;	// 600.f
 constexpr float		WINDOW_WIDTH	= 1600.f * 0.75f;	// 800.f
-static const char	*WINDOW_NAME	= "PROJECT ORION";
+static const char	*GAME_NAME	= "PROJECT ORION";
 
 // values
 constexpr float		VELOCITY_COEFICIENT		= 2.f;
@@ -35,11 +35,14 @@ static const char	*SPRITE_ADDRESS_VERT	= "../content/shaders/sprite.vert";
 static const char	*SPRITE_ADDRESS_FRAG	= "../content/shaders/sprite.frag";
 static const char	*DEBUG_ADDRESS_VERT		= "../content/shaders/debug.vert";
 static const char	*DEBUG_ADDRESS_FRAG		= "../content/shaders/debug.frag";
+static const char	*TEXT_ADDRESS_VERT		= "../content/shaders/text.vert";
+static const char	*TEXT_ADDRESS_FRAG		= "../content/shaders/text.frag";
 
 static const char	*SPRITE_NAME		= "sprite";
 static const char	*DEBUG_NAME			= "debug";
+static const char	*TEXT_NAME			= "text";
 
-// textures
+// textures addresses
 static const char	*TEX_ADDRESS_BACKGROUND			= "../content/images/background.png";
 static const char	*TEX_ADDRESS_ENEMY_00			= "../content/images/enemy00.png";
 static const char	*TEX_ADDRESS_ENEMY_01			= "../content/images/enemy01.png";
@@ -49,6 +52,7 @@ static const char	*TEX_ADDRESS_METEOR_BROWN_BIG	= "../content/images/meteor_brow
 static const char	*TEX_ADDRESS_BULLET_GREEN		= "../content/images/bullet_green.png";
 static const char	*TEX_ADDRESS_BULLET_RED			= "../content/images/bullet_red.png";
 
+// textures names
 static const char	*TEX_NAME_BACKGROUND		= "background";
 static const char	*TEX_NAME_ENEMY_00			= "enemy00";
 static const char	*TEX_NAME_ENEMY_01			= "enemy01";
@@ -60,6 +64,9 @@ static const char	*TEX_NAME_BULLET_RED		= "bullet_red";
 
 // scripts
 static const char	*SCRIPTS_PATH				= "../content/scripts/";
+
+// fonts
+static const char	*FONT_PATH					= "../content/fonts/kenvector_future.ttf";
 
 // vertices
 static float vertices[] = {

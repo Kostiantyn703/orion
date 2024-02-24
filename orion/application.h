@@ -10,11 +10,12 @@
 #include "input_receiver.h"
 #include "world_module.h"
 #include "script_module.h"
+#include "game_state.h"
 
 class application {
 public:
 	application() : is_active(false) {}
-	~application() {}
+	~application() { m_states.clear(); }
 
 	void set_active(bool in_val) { is_active = in_val; }
 
@@ -22,8 +23,24 @@ public:
 	void run();
 	void shut_down();
 
+	void init_game();
+	void clear_objects();
+
+	void render();
+	void handle_input();
+	void update_world(float delta_time);
+
+	void change_state();
+
+	world_module &get_world() const { return *m_world.get(); }
+
+	bool is_game_started = false;
+
 private:
 	bool is_active;
+
+	size_t m_cur_state_idx = 0;
+	std::vector<std::unique_ptr<game_state>> m_states;
 
 	std::unique_ptr<script_module>	m_scripts;
 	std::unique_ptr<render_module>	m_renderer;

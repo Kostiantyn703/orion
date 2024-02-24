@@ -1,6 +1,7 @@
 #include "spaceship.h"
 #include "world_module.h"
 #include "globals.h"
+#include <SDL_log.h>
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector)
 	:	game_object(initial_point)
@@ -35,6 +36,14 @@ void spaceship::on_spawn(bool is_shooter) {
 	m_behavior		= std::make_unique<behavior>();
 	set_mask		(MASK_ENEMY);
 	set_score_value	(SPACESHIP_SCORE);
+}
+
+bool spaceship::on_intersect() {
+	set_to_remove(true);
+	if (m_type == ship_type::ST_PLAYER) {
+		return true;
+	}
+	return false;
 }
 
 void spaceship::update(float delta_time) {

@@ -12,7 +12,7 @@ public:
 	border_side	get_side()	const { return m_side; }
 	void		set_side(border_side in_side) { m_side = in_side; }
 
-	virtual void on_intersect() {};
+	virtual bool on_intersect() { return false; };
 	virtual void borders_intersect(border_side in_side) {};
 
 private:
