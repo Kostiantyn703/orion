@@ -21,14 +21,17 @@ void application::start_up() {
 
 	m_timer = std::make_unique<timer>();
 	m_timer->start();
-	
-	m_curr_state = new start_state();
+
+	m_states.push_back(std::make_unique<start_state>());
+	m_states.push_back(std::make_unique<active_state>());
+	m_cur_state_idx = 0;
 
 	is_active = true;
 }
 
 void application::init_game() {
 	m_world->init_player(m_controller.get());
+	is_game_started = true;
 }
 
 void application::clear_objects() {
@@ -51,9 +54,8 @@ void application::run() {
 		}
 		handle_input();
 		float delta_time = MS_PER_FRAME.count() * DT_DISSIPATOR;
-		if (m_curr_state) {
-			m_curr_state->process(*this, delta_time);
-		}
+		m_states[m_cur_state_idx]->process(*this, delta_time);
+
 		render();
 	}
 }
@@ -68,24 +70,28 @@ void application::render() {
 
 void application::handle_input() {
 	m_controller->handle_input(m_receiver.get());
-	// TODO: quick check
+
 	if (m_receiver->esc_pressed) {
 		is_active = false;
 	}
-	if (m_receiver->enter_pressed) {
+	if (!is_game_started && m_receiver->enter_pressed && m_cur_state_idx == 0) {
 		change_state();
-		m_receiver->enter_pressed = false;
 	}
 }
 
 void application::update_world(float delta_time) {
 	m_world->update(delta_time);
 	m_renderer->scroll_background(delta_time);
+	if (m_cur_state_idx > 0 && m_world->get_game_over()) {
+		change_state();
+	}
 }
 
 void application::change_state() {
-	delete m_curr_state;
-	m_curr_state = new active_state();
-	m_curr_state->on_transition(*this);
-	m_world->show_title = false;
+	m_states[m_cur_state_idx]->on_transition(*this);
+	if (m_cur_state_idx == 0) {
+		++m_cur_state_idx;
+	} else {
+		--m_cur_state_idx;
+	}
 }

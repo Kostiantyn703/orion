@@ -5,7 +5,7 @@
 void input_receiver::receive_key() {
 	SDL_Event curr_event;
 	SDL_PollEvent(&curr_event);
-
+	enter_pressed = false;
 	handle_key_down(curr_event);
 	handle_key_up(curr_event);
 }
@@ -28,12 +28,8 @@ void input_receiver::handle_key_down(const SDL_Event &in_event) {
 		case SDLK_SPACE:
 			add_command(new shoot_command(in_event.key.state, command_type::CT_SHOOT));
 			break;
-		// app controls
-		case SDLK_ESCAPE:
-			esc_pressed = true;
-			break;
 		case SDLK_RETURN:
-			enter_pressed = true;
+			if (enter_pressed) skip_return = true;
 			break;
 		}
 	}
@@ -56,6 +52,12 @@ void input_receiver::handle_key_up(const SDL_Event &in_event) {
 			break;
 		case SDLK_SPACE:
 			remove_command(command_type::CT_SHOOT, in_event.key.state);
+			break;
+		case SDLK_ESCAPE:
+			esc_pressed = true;
+			break;
+		case SDLK_RETURN:
+			if (!skip_return) enter_pressed = true;
 			break;
 		}
 	}

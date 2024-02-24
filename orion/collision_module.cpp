@@ -69,7 +69,8 @@ void collision_module::check_collision(world_module *in_world, collidable *in_ob
 		if (in_object == *it)	continue;
 		if (in_object->get_mask() & (*it)->get_mask())	continue;
 		if (intersect(in_object->get_aabb(), (*it)->get_aabb())) {
-			(*it)->on_intersect();
+			bool player_killed = (*it)->on_intersect();
+			in_world->set_game_over(player_killed);
 			in_world->add_score((*it)->get_score_value());
 			// bullet should disappear
 			in_object->on_intersect();

@@ -18,6 +18,7 @@ public:
 
 	bool esc_pressed = false;
 	bool enter_pressed = false;
+	bool skip_return = false;
 	
 private:
 	void handle_key_down(const SDL_Event &in_event);

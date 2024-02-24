@@ -46,7 +46,7 @@ public:
 	void load();
 
 	void draw_title();
-	void draw_score(const size_t &in_score);
+	void draw_score(const int in_score);
 
 private:
 	float m_left_offset;

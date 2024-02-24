@@ -65,8 +65,9 @@ void game_object::set_center(const vector2f &in_pos) {
 	m_center = in_pos;
 }
 
-void game_object::on_intersect() {
+bool game_object::on_intersect() {
 	set_to_remove(true);
+	return false;
 }
 
 void game_object::recalc_pos() {

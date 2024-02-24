@@ -1,6 +1,9 @@
+#pragma warning(disable : 4996)
 #include "render_module.h"
 
 #include "SDL.h"
+
+#include <stdlib.h>
 
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -91,8 +94,11 @@ void text_render_module::draw_title() {
 	draw("Press \"Enter\" to start.", m_left_offset, WINDOW_HEIGHT / 2.f + 50.f, 0.25f);
 }
 
-void text_render_module::draw_score(const size_t &in_score) {
-
+void text_render_module::draw_score(const int in_score) {
+	draw("Score:", m_left_offset, WINDOW_HEIGHT / 2.f - 72.f, 1.f);
+	char buff[16];
+	itoa(in_score, buff, 10);
+	draw(buff, m_left_offset, WINDOW_HEIGHT / 2.f, 1.f);
 }
 
 void text_render_module::draw(const std::string &in_text, float in_x, float in_y, float in_scale) {
@@ -190,7 +196,7 @@ void text_render_module::load() {
 			texture,
 			glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
 			glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-			face->glyph->advance.x
+			(unsigned int)face->glyph->advance.x
 		};
 		m_characters.insert(std::pair<char, character>(c, curr_char));
 	}
@@ -211,7 +217,7 @@ render_module::render_module()
 	log_error;
 
 	m_window = std::make_unique<window>();
-	// TODO: change order, made for test
+
 	init_shader(SPRITE_ADDRESS_VERT, SPRITE_ADDRESS_FRAG);
 	//init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
 }
@@ -286,8 +292,11 @@ void render_module::run(world_module *in_world) {
 		}
 	}
 
-	if (in_world->show_title) {
+	if (in_world->get_show_title()) {
 		m_text_renderer->draw_title();
+	}
+	if (in_world->get_show_score()) {
+		m_text_renderer->draw_score((int)in_world->get_score());
 	}
 
 	m_window->swap();

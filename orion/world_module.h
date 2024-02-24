@@ -21,7 +21,7 @@ using object_storage = std::vector<game_object*>;
 class difficulty {
 public:
 	difficulty() : m_cur_level(1) {}
-	
+
 	size_t m_cur_level;
 };
 
@@ -35,6 +35,18 @@ public:
 	void update(float delta_time);
 	void remove_objects();
 	
+	void set_show_title(bool in_val) { is_show_title = in_val; }
+	bool get_show_title() const { return is_show_title; }
+
+	void set_show_score(bool in_val) { is_show_score = in_val; }
+	bool get_show_score() const { return is_show_score; }
+
+	void set_game_over(bool in_val) { is_game_over = in_val; }
+	bool get_game_over() const { return is_game_over; }
+
+	void reset_score() { m_score = 0; }
+	size_t get_score() const { return m_score; }
+
 	void init_player(controller *in_controller);
 	void clear_objects();
 
@@ -50,10 +62,11 @@ public:
 	object_storage				m_objects;
 	std::vector<game_block>		m_block_data;
 
-	size_t block_idx = 0;
-
-	bool show_title = true;
 private:
+	bool is_show_title;
+	bool is_show_score;
+	bool is_game_over;
+
 	float m_spawn_time = 0.f;
 	float m_max_spawn_time = 0.f;
 

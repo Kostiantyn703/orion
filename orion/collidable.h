@@ -37,7 +37,7 @@ constexpr std::uint8_t MASK_BORDER			= 1 << 4;
 class collidable {
 public:
 	virtual ~collidable() {}
-	virtual void on_intersect() = 0;
+	virtual bool on_intersect() = 0;
 	virtual void borders_intersect(border_side in_side) {};
 
 	const aabb &get_aabb() const		{ return m_aabb;	}
