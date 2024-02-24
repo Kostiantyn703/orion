@@ -37,6 +37,9 @@ void background::draw(const shader_program &in_shader) {
 }
 
 text_render_module::text_render_module() {
+	m_text_color = glm::vec3(0.4f, 0.6f, 1.f);
+	m_font_size = 72;
+	m_left_offset = 120.f;
 	init();
 	load();
 }
@@ -83,10 +86,19 @@ void text_render_module::init() {
 	glBindVertexArray(0);
 }
 
-void text_render_module::draw(const std::string &in_text, float in_x, float in_y, float in_scale, glm::vec3 in_color) {
+void text_render_module::draw_title() {
+	draw("ORION", m_left_offset, WINDOW_HEIGHT / 2.f - 72.f, 1.75f);
+	draw("Press \"Enter\" to start.", m_left_offset, WINDOW_HEIGHT / 2.f + 50.f, 0.25f);
+}
+
+void text_render_module::draw_score(const size_t &in_score) {
+
+}
+
+void text_render_module::draw(const std::string &in_text, float in_x, float in_y, float in_scale) {
 	// activate corresponding render state	
 	m_shader->use();
-	glUniform3f(glGetUniformLocation(m_shader->id(), "text_color"), in_color.x, in_color.y, in_color.z); 
+	glUniform3f(glGetUniformLocation(m_shader->id(), "text_color"), m_text_color.x, m_text_color.y, m_text_color.z);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(m_vertex_array);
 
@@ -275,7 +287,7 @@ void render_module::run(world_module *in_world) {
 	}
 
 	if (in_world->show_title) {
-		m_text_renderer->draw("ORION", 150.f, WINDOW_HEIGHT / 2.f - 72.f, 1.8f, glm::vec3(0.4f, 0.6f, 1.f));
+		m_text_renderer->draw_title();
 	}
 
 	m_window->swap();

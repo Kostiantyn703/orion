@@ -43,12 +43,14 @@ public:
 	~text_render_module();
 
 	void init();
-
-	void draw(const std::string &in_text, float in_x, float in_y, float in_scale, glm::vec3 in_color);
-
 	void load();
 
+	void draw_title();
+	void draw_score(const size_t &in_score);
+
 private:
+	float m_left_offset;
+
 	std::unique_ptr<shader_program> m_shader;
 
 	unsigned int m_vertex_array;
@@ -56,7 +58,11 @@ private:
 
 	char_map m_characters;
 
-	unsigned int m_font_size = 72;
+	unsigned int m_font_size;
+
+	glm::vec3 m_text_color;
+
+	void draw(const std::string &in_text, float in_x, float in_y, float in_scale);
 };
 
 class render_module {
