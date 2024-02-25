@@ -14,7 +14,10 @@
 #include "vertex_array.h"
 #include "renderable.h"
 #include "shader_program.h"
-#include "world_module.h"
+#include "../world_module.h"
+
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 class background : public renderable {
 public:

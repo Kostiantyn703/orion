@@ -5,7 +5,7 @@
 #include "SDL.h"
 
 #include "glad/glad.h"
-#include "globals.h"
+#include "../globals.h"
 #include <SDL_opengl.h>
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }

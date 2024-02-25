@@ -2,7 +2,7 @@
 #define GAME_OBJECT_H
 
 #include "globals.h"
-#include "renderable.h"
+#include "render/renderable.h"
 #include "collidable.h"
 #include "controller.h"
 #include "movable.h"

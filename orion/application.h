@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "controller.h"
-#include "render_module.h"
+#include "render/render_module.h"
 #include "game_object.h"
 #include "input_receiver.h"
 #include "world_module.h"

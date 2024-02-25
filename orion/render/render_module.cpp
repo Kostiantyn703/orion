@@ -8,12 +8,9 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 #include "shader.h"
-#include "globals.h"
-#include "resource_module.h"
+#include "../globals.h"
+#include "../resource_module.h"
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 

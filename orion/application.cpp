@@ -1,7 +1,7 @@
 #include "application.h"
 
 #include "SDL.h"
-#include "renderable.h"
+#include "render/renderable.h"
 #include <chrono>
 #include "game_state.h"
 
