@@ -219,9 +219,7 @@ render_module::render_module()
 	m_window = std::make_unique<window>();
 
 	init_shader(SPRITE_ADDRESS_VERT, SPRITE_ADDRESS_FRAG);
-#ifdef DEBUG
-	init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
-#endif // DEBUG
+	//init_shader(DEBUG_ADDRESS_VERT, DEBUG_ADDRESS_FRAG);
 }
 
 void render_module::init() {
