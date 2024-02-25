@@ -5,7 +5,6 @@
 
 #include "controller.h"
 #include "render_module.h"
-#include "timer.h"
 #include "game_object.h"
 #include "input_receiver.h"
 #include "world_module.h"
@@ -46,8 +45,6 @@ private:
 	std::unique_ptr<render_module>	m_renderer;
 	std::unique_ptr<world_module>	m_world;
 
-	std::unique_ptr<timer>			m_timer;
-	
 	std::unique_ptr<controller>		m_controller;
 	std::unique_ptr<input_receiver> m_receiver;
 };

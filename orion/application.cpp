@@ -19,9 +19,6 @@ void application::start_up() {
 
 	m_renderer->init();
 
-	m_timer = std::make_unique<timer>();
-	m_timer->start();
-
 	m_states.push_back(std::make_unique<start_state>());
 	m_states.push_back(std::make_unique<active_state>());
 	m_cur_state_idx = 0;
@@ -60,9 +57,7 @@ void application::run() {
 	}
 }
 
-void application::shut_down() {
-	m_timer->stop();
-}
+void application::shut_down() {}
 
 void application::render() {
 	m_renderer->run(m_world.get());
