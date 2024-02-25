@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "render/texture.h"
+#include "../render/texture.h"
 
 class resource_module {
 	using texture_map = std::unordered_map<std::string, std::unique_ptr<texture>>;

@@ -4,9 +4,10 @@
 #include <fstream>
 #include <sstream>
 
-#include "SDL_log.h"
-#include "globals.h"
-#include "stb_image.h"
+#include <SDL_log.h>
+
+#include "../globals.h"
+#include "../stb_image.h"
 
 resource_module *resource_module::instance = nullptr;
 

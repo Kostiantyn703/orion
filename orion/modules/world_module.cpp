@@ -1,12 +1,13 @@
 #include "world_module.h"
 
-#include <SDL_log.h>
+#include <time.h>
 #include <algorithm>
 #include <cstdlib>
 
-#include "globals.h"
+#include <SDL_log.h>
+
+#include "../globals.h"
 #include "resource_module.h"
-#include <time.h>
 
 constexpr int OBJECTS_CAPACITY = 30;
 

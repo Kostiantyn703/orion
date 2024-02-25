@@ -1,9 +1,10 @@
 #ifndef COLLISION_MODULE_H
 #define COLLISION_MODULE_H
 
-#include "collidable.h"
-#include "globals.h"
 #include <vector>
+
+#include "../collidable.h"
+#include "../globals.h"
 
 class world_module;
 class border;

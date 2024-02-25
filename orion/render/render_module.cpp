@@ -1,16 +1,16 @@
 #pragma warning(disable : 4996)
 #include "render_module.h"
 
-#include "SDL.h"
-
+#include <SDL.h>
 #include <stdlib.h>
 
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#include "shader.h"
 #include "../globals.h"
-#include "../resource_module.h"
+#include "../modules/resource_module.h"
+
+#include "shader.h"
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 

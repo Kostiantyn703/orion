@@ -2,7 +2,7 @@
 
 #include <SDL_log.h>
 
-#include "../world_module.h"
+#include "../modules/world_module.h"
 #include "../globals.h"
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector)

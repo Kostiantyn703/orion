@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "game_block.h"
+#include "../game_block.h"
 
 class script_module {
 public:
