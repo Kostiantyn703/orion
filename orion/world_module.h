@@ -5,7 +5,7 @@
 #include <memory>
 
 #include "game_object.h"
-#include "controller.h"
+#include "input/controller.h"
 #include "subscriber.h"
 #include "collision_module.h"
 

@@ -1,11 +1,11 @@
 #ifndef SPACESHIP_H
 #define SPACESHIP_H
 
-#include "controllable.h"
+#include "input/controllable.h"
 #include "game_object.h"
 #include "movable.h"
 #include "weapon.h"
-#include "controller.h"
+#include "input/controller.h"
 #include "border.h"
 #include "behavior.h"
 #include <memory>

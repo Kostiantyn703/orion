@@ -4,7 +4,7 @@
 #include "globals.h"
 #include "render/renderable.h"
 #include "collidable.h"
-#include "controller.h"
+#include "input/controller.h"
 #include "movable.h"
 
 class game_object : public renderable, public collidable, public movable{

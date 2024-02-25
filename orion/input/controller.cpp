@@ -1,6 +1,6 @@
 #include "controller.h"
 #include "input_receiver.h"
-#include "globals.h"
+#include "../globals.h"
 
 void controller::handle_input(input_receiver *in_receiver) {
 	in_receiver->receive_key();
