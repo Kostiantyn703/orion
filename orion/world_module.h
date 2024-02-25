@@ -4,14 +4,15 @@
 #include <vector>
 #include <memory>
 
-#include "game_object.h"
+#include "objects/game_object.h"
+#include "objects/spaceship.h"
+#include "objects/bullet.h"
+#include "objects/meteor.h"
+
 #include "input/controller.h"
 #include "subscriber.h"
 #include "collision_module.h"
 
-#include "spaceship.h"
-#include "bullet.h"
-#include "meteor.h"
 #include "meteor_spawner.h"
 #include "ship_spawner.h"
 #include "game_block.h"

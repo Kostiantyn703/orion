@@ -4,9 +4,11 @@
 #include <memory>
 
 #include "input/controller.h"
-#include "render/render_module.h"
-#include "game_object.h"
 #include "input/input_receiver.h"
+
+#include "render/render_module.h"
+#include "objects/game_object.h"
+
 #include "world_module.h"
 #include "script_module.h"
 #include "game_state.h"

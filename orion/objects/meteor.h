@@ -2,7 +2,7 @@
 #define METEOR_H
 
 #include "game_object.h"
-#include "movable.h"
+#include "../movable.h"
 
 class meteor : public game_object {
 	using	parent = game_object;

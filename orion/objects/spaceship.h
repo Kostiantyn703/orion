@@ -1,14 +1,17 @@
 #ifndef SPACESHIP_H
 #define SPACESHIP_H
 
-#include "input/controllable.h"
-#include "game_object.h"
-#include "movable.h"
-#include "weapon.h"
-#include "input/controller.h"
-#include "border.h"
-#include "behavior.h"
 #include <memory>
+
+#include "../input/controllable.h"
+#include "../input/controller.h"
+
+#include "../movable.h"
+#include "../border.h"
+#include "../behavior.h"
+
+#include "game_object.h"
+#include "weapon.h"
 
 class subscriber;
 

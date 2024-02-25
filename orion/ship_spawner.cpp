@@ -1,6 +1,6 @@
 #include "ship_spawner.h"
 
-#include "spaceship.h"
+#include "objects/spaceship.h"
 #include "resource_module.h"
 #include "game_block.h"
 #include "behavior.h"

@@ -1,6 +1,8 @@
 #ifndef MOVABLE_H
 #define MOVABLE_H
 
+#include "globals.h"
+
 class movable {
 protected:
 	virtual		~movable()		{}

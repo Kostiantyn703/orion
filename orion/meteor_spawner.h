@@ -1,7 +1,7 @@
 #ifndef METEOR_SPAWNER_H
 #define METEOR_SPAWNER_H
 
-#include "game_object.h"
+#include "objects/game_object.h"
 #include "subscriber.h"
 
 class meteor_spawner {

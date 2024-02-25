@@ -2,7 +2,7 @@
 
 #include <cstdlib>
 
-#include "meteor.h"
+#include "objects/meteor.h"
 #include "resource_module.h"
 #include "globals.h"
 

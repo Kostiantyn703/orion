@@ -2,7 +2,7 @@
 #define BULLET_H
 
 #include "game_object.h"
-#include "movable.h"
+#include "../movable.h"
 
 class bullet : public game_object {
 public:
