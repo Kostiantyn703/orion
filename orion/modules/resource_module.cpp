@@ -6,8 +6,8 @@
 
 #include <SDL_log.h>
 
-#include "../globals.h"
-#include "../stb_image.h"
+#include "../utils/globals.h"
+#include "../utils/stb_image.h"
 
 resource_module *resource_module::instance = nullptr;
 
