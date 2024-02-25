@@ -6,9 +6,6 @@
 #include <vector>
 #include <map>
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
 #include "glad/glad.h"
 #include "glm/glm.hpp"
 
