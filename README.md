@@ -2,7 +2,7 @@
 
 Simple endless vertical scroller shooter.
 
-Tools used:
+### Tools used:
   - SDL
   - OpenGL
   - Glad
