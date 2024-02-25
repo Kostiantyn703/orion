@@ -1,8 +1,8 @@
 #ifndef COLLIDABLE_H
 #define COLLIDABLE_H
 
-#include "globals.h"
 #include <cstdint>
+#include "../globals.h"
 
 class aabb {
 public:

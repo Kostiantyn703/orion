@@ -3,7 +3,7 @@
 #include <cstdlib>
 
 #include "objects/meteor.h"
-#include "resource_module.h"
+#include "modules/resource_module.h"
 #include "globals.h"
 
 meteor_spawner::meteor_spawner() : m_world(nullptr) {

@@ -9,14 +9,14 @@
 #include "../objects/bullet.h"
 #include "../objects/meteor.h"
 
+#include "../interfaces/subscriber.h"
 #include "../input/controller.h"
-#include "../subscriber.h"
-
-#include "collision_module.h"
 
 #include "../meteor_spawner.h"
 #include "../ship_spawner.h"
 #include "../game_block.h"
+
+#include "collision_module.h"
 
 using object_storage = std::vector<game_object*>;
 

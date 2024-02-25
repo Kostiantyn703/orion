@@ -6,7 +6,8 @@
 #include "../input/controllable.h"
 #include "../input/controller.h"
 
-#include "../movable.h"
+#include "../interfaces/movable.h"
+
 #include "../border.h"
 #include "../behavior.h"
 

@@ -2,7 +2,7 @@
 #define METEOR_SPAWNER_H
 
 #include "objects/game_object.h"
-#include "subscriber.h"
+#include "interfaces/subscriber.h"
 
 class meteor_spawner {
 public:

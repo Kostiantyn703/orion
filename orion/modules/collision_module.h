@@ -3,7 +3,8 @@
 
 #include <vector>
 
-#include "../collidable.h"
+#include "../interfaces/collidable.h"
+
 #include "../globals.h"
 
 class world_module;

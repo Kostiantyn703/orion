@@ -2,10 +2,12 @@
 #define GAME_OBJECT_H
 
 #include "../globals.h"
+
 #include "../render/renderable.h"
 #include "../input/controller.h"
-#include "../collidable.h"
-#include "../movable.h"
+
+#include "../interfaces/collidable.h"
+#include "../interfaces/movable.h"
 
 class game_object : public renderable, public collidable, public movable{
 public:

@@ -4,8 +4,9 @@
 #include "objects/game_object.h"
 #include "objects/spaceship.h"
 
+#include "interfaces/subscriber.h"
+
 #include "globals.h"
-#include "subscriber.h"
 
 struct behavior_item;
 struct game_block;

@@ -1,7 +1,7 @@
 #ifndef BORDER_H
 #define BORDER_H
 
-#include "collidable.h"
+#include "interfaces/collidable.h"
 #include "globals.h"
 
 class border : public collidable {

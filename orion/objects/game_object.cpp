@@ -7,9 +7,10 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "../interfaces/subscriber.h"
+
 #include "../render/texture.h"
 #include "../render/shader_program.h"
-#include "../subscriber.h"
 
 game_object::game_object(const vector2f &initial_point) {
 	set_origin(initial_point);
