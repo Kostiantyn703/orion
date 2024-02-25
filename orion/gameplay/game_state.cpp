@@ -8,6 +8,7 @@ void start_state::process(application &in_game, float delta_time) {}
 void start_state::on_transition(application &in_game) {
 	world_module &world = in_game.get_world();
 	world.reset_score();
+	world.reset_difficulty();
 	world.set_show_title(false);
 	world.set_show_score(false);
 	in_game.init_game();

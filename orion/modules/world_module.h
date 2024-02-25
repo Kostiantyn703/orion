@@ -49,6 +49,8 @@ public:
 	void reset_score() { m_score = 0; }
 	size_t get_score() const { return m_score; }
 
+	void reset_difficulty() { m_difficulty->m_cur_level = 1; }
+
 	void init_player(controller *in_controller);
 	void clear_objects();
 
