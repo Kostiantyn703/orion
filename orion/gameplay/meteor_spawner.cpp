@@ -2,9 +2,9 @@
 
 #include <cstdlib>
 
-#include "objects/meteor.h"
-#include "modules/resource_module.h"
-#include "globals.h"
+#include "../objects/meteor.h"
+#include "../modules/resource_module.h"
+#include "../utils/globals.h"
 
 meteor_spawner::meteor_spawner() : m_world(nullptr) {
 	m_max_spawn_time = METEOR_MAX_SPAWN_TIME;

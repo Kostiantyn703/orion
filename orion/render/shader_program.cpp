@@ -1,6 +1,5 @@
 #include "shader_program.h"
 
-#include "SDL.h"
 #include "glad/glad.h"
 
 shader_program::shader_program() {

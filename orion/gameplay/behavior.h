@@ -5,7 +5,7 @@
 #include <map>
 #include <string>
 
-#include "globals.h"
+#include "../utils/globals.h"
 
 class spaceship;
 

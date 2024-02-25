@@ -3,7 +3,7 @@
 #include <SDL_log.h>
 
 #include "../modules/world_module.h"
-#include "../globals.h"
+#include "../utils/globals.h"
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector)
 	:	game_object(initial_point)

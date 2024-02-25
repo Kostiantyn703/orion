@@ -4,8 +4,7 @@
 #include <vector>
 
 #include "../interfaces/collidable.h"
-
-#include "../globals.h"
+#include "../utils/globals.h"
 
 class world_module;
 class border;

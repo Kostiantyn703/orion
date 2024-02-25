@@ -8,8 +8,8 @@
 
 #include "../interfaces/movable.h"
 
-#include "../border.h"
-#include "../behavior.h"
+#include "../gameplay/border.h"
+#include "../gameplay/behavior.h"
 
 #include "game_object.h"
 #include "weapon.h"

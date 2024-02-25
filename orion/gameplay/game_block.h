@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "globals.h"
+#include "../utils/globals.h"
 
 struct behavior_data {
 	std::string	m_action_name;

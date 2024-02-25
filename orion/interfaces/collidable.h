@@ -2,7 +2,7 @@
 #define COLLIDABLE_H
 
 #include <cstdint>
-#include "../globals.h"
+#include "../utils/globals.h"
 
 class aabb {
 public:

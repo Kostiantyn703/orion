@@ -1,7 +1,7 @@
 #include "behavior.h"
 
-#include "spaceship.h"
-#include "globals.h"
+#include "../objects/spaceship.h"
+#include "../utils/globals.h"
 
 void behavior::init() {
 	m_cur_action = m_actions.begin();

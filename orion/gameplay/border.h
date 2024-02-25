@@ -1,8 +1,8 @@
 #ifndef BORDER_H
 #define BORDER_H
 
-#include "interfaces/collidable.h"
-#include "globals.h"
+#include "../interfaces/collidable.h"
+#include "../utils/globals.h"
 
 class border : public collidable {
 public:

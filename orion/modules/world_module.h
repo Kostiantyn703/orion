@@ -12,9 +12,9 @@
 #include "../interfaces/subscriber.h"
 #include "../input/controller.h"
 
-#include "../meteor_spawner.h"
-#include "../ship_spawner.h"
-#include "../game_block.h"
+#include "../gameplay/meteor_spawner.h"
+#include "../gameplay/ship_spawner.h"
+#include "../gameplay/game_block.h"
 
 #include "collision_module.h"
 

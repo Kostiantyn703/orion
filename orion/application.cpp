@@ -1,9 +1,11 @@
 #include "application.h"
 
-#include "SDL.h"
-#include "render/renderable.h"
 #include <chrono>
-#include "game_state.h"
+
+#include <SDL.h>
+
+#include "render/renderable.h"
+#include "gameplay/game_state.h"
 
 void application::start_up() {
 	m_renderer	= std::make_unique<render_module>();

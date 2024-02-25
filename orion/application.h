@@ -6,12 +6,12 @@
 #include "input/controller.h"
 #include "input/input_receiver.h"
 
-#include "render/render_module.h"
 #include "modules/world_module.h"
 #include "modules/script_module.h"
 
+#include "render/render_module.h"
 #include "objects/game_object.h"
-#include "game_state.h"
+#include "gameplay/game_state.h"
 
 class application {
 public:

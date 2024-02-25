@@ -1,12 +1,12 @@
 #ifndef SHIP_SPAWNER_H
 #define SHIP_SPAWNER_H
 
-#include "objects/game_object.h"
-#include "objects/spaceship.h"
+#include "../objects/game_object.h"
+#include "../objects/spaceship.h"
 
-#include "interfaces/subscriber.h"
+#include "../interfaces/subscriber.h"
 
-#include "globals.h"
+#include "../utils/globals.h"
 
 struct behavior_item;
 struct game_block;

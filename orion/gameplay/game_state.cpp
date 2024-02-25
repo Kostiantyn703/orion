@@ -1,6 +1,7 @@
 #include "game_state.h"
-#include "application.h"
-#include "render/render_module.h"
+
+#include "../application.h"
+#include "../render/render_module.h"
 
 void start_state::process(application &in_game, float delta_time) {}
 

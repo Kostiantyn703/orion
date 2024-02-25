@@ -1,12 +1,12 @@
 #include "window.h"
 
-#include "SDL_video.h"
-#include "SDL_log.h"
-#include "SDL.h"
+#include <SDL_video.h>
+#include <SDL_log.h>
+#include <SDL.h>
 
 #include "glad/glad.h"
-#include "../globals.h"
-#include <SDL_opengl.h>
+
+#include "../utils/globals.h"
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 

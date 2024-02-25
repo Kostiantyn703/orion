@@ -6,7 +6,8 @@
 
 #include <SDL_log.h>
 
-#include "../globals.h"
+#include "../utils/globals.h"
+
 #include "resource_module.h"
 
 constexpr int OBJECTS_CAPACITY = 30;

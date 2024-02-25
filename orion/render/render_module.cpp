@@ -7,7 +7,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-#include "../globals.h"
+#include "../utils/globals.h"
 #include "../modules/resource_module.h"
 
 #include "shader.h"

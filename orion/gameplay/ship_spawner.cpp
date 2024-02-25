@@ -1,7 +1,7 @@
 #include "ship_spawner.h"
 
-#include "modules/resource_module.h"
-#include "objects/spaceship.h"
+#include "../modules/resource_module.h"
+#include "../objects/spaceship.h"
 
 #include "game_block.h"
 #include "behavior.h"

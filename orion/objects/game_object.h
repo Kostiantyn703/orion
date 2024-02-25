@@ -1,7 +1,7 @@
 #ifndef GAME_OBJECT_H
 #define GAME_OBJECT_H
 
-#include "../globals.h"
+#include "../utils/globals.h"
 
 #include "../render/renderable.h"
 #include "../input/controller.h"
