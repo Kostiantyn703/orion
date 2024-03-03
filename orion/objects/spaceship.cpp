@@ -9,7 +9,7 @@ spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_v
 	:	game_object(initial_point)
 {
 	set_forward_vector(in_forward_vector);
-	set_velocity(PLAYER_VELOCITY);
+	set_velocity(SPACESHIP_VELOCITY);
 }
 
 spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector, float in_velocity)

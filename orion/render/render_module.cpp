@@ -303,5 +303,6 @@ void render_module::run(world_module *in_world) {
 }
 
 void render_module::scroll_background(float delta_time) {
-	m_background.m_scroll_offset += delta_time;
+	float scroll_speed = 60.f;
+	m_background.m_scroll_offset += delta_time * scroll_speed;
 }

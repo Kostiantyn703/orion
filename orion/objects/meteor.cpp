@@ -16,7 +16,8 @@ void meteor::init() {
 void meteor::update(float delta_time) {
 	game_object::update(delta_time);
 	float cur_rot = get_rotation();
-	cur_rot += delta_time * 2;
+	float rot_speed = 50.f;
+	cur_rot += delta_time * rot_speed;
 	set_rotation(cur_rot);
 
 	if (get_origin().get_y() > WINDOW_HEIGHT + OUT_OFFSET) {

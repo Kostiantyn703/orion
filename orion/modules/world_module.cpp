@@ -125,7 +125,7 @@ void world_module::on_notify(const vector2f &in_position, const vector2f &in_for
 	vector2f pos = in_position;
 	pos.set_x(pos.get_x() - tex->get_width() * 0.5f);
 
- 	bullet *bul = spawn_bullet(pos, in_forward_vector, is_enemy ? ENEMY_BULLET_VELOCITY : PLAYER_BULLET_VELOCITY);
+ 	bullet *bul = spawn_bullet(pos, in_forward_vector, BULLET_VELOCITY);
 	bul->set_texture(tex);
 	bul->set_mask(!is_enemy ? (MASK_PLAYER | MASK_PLAYER_BULLET | MASK_ENEMY_BULLET) : (MASK_ENEMY | MASK_ENEMY_BULLET | MASK_PLAYER_BULLET));
 	if (is_enemy) {
