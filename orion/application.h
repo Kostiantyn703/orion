@@ -15,39 +15,45 @@
 
 class application {
 public:
-	application() : is_active(false) {}
-	~application() { m_states.clear(); }
+	application();
+	~application();
 
-	void set_active(bool in_val) { is_active = in_val; }
+	void init();
 
 	void start_up();
 	void run();
-	void shut_down();
 
-	void init_game();
+	void handle_input();
+	void render();
+
+	void reset();
 	void clear_objects();
 
-	void render();
-	void handle_input();
 	void update_world(float delta_time);
 
 	void change_state();
 
-	world_module &get_world() const { return *m_world.get(); }
+	bool start_game_condition() const;
+	bool game_over_condition() const;
 
-	bool is_game_started = false;
+	void start_game(bool val) { game_started = val; }
+	bool is_game_started() const { return game_started; }
+
+	void set_active(bool val) { active = val; }
+	world_module &get_world() const { return *world.get(); }
 
 private:
-	bool is_active;
+	bool active;
+	bool game_started;
+	size_t state_idx;
 
-	size_t m_cur_state_idx = 0;
-	std::vector<std::unique_ptr<game_state>> m_states;
+	std::vector<std::unique_ptr<game_state>> states;
 
-	std::unique_ptr<script_module>	m_scripts;
-	std::unique_ptr<render_module>	m_renderer;
-	std::unique_ptr<world_module>	m_world;
+	std::unique_ptr<script_module> scripts;
+	std::unique_ptr<render_module> renderer;
+	std::unique_ptr<world_module> world;
 
-	std::unique_ptr<controller>		m_controller;
-	std::unique_ptr<input_receiver> m_receiver;
+	std::unique_ptr<controller> input_controller;
+	std::unique_ptr<input_receiver> receiver;
 };
 #endif // APPLICATION_H

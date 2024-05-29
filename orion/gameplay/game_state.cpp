@@ -11,7 +11,7 @@ void start_state::on_transition(application &in_game) {
 	world.reset_difficulty();
 	world.set_show_title(false);
 	world.set_show_score(false);
-	in_game.init_game();
+	in_game.init();
 }
 
 void active_state::process(application &in_game, float delta_time) {
@@ -22,6 +22,5 @@ void active_state::on_transition(application &in_game) {
 	world_module &world = in_game.get_world();
 	world.set_game_over(false);
 	world.set_show_score(true);
-	in_game.clear_objects();
-	in_game.is_game_started = false;
+	in_game.reset();
 }
