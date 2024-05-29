@@ -17,23 +17,33 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
-void background::init() {
-	m_texture = resource_module::get_instance()->get_texture(TEX_NAME_BACKGROUND);
-	m_size.set_x((float)m_texture->get_width());
-	m_size.set_y((float)m_texture->get_height());
+background_renderer::background_renderer() : scroll_offset(0.f), scroll_speed(60.f), size(vector2f(0.f, 0.f)) {}
+
+void background_renderer::init() {
+	set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BACKGROUND));
+	size.set_x((float)m_texture->get_width());
+	size.set_y((float)m_texture->get_height());
 }
 
-void background::draw(const shader_program &in_shader) {
+void background_renderer::scroll(float delta_time) {
+	scroll_offset += scroll_speed * delta_time;
+}
+
+void background_renderer::set_texture(texture *tex) {
+	m_texture = tex;
+}
+
+void background_renderer::draw(const shader_program &shader) {
 	// draw texture
 	glm::mat4 model = glm::mat4(1.f);
 	glm::vec2 model_size(WINDOW_WIDTH, WINDOW_HEIGHT);
 	model = glm::scale(model, glm::vec3(model_size, 1.f));
-	glUniformMatrix4fv(glGetUniformLocation(in_shader.id(), "model"), 1, false, glm::value_ptr(model));
+	glUniformMatrix4fv(glGetUniformLocation(shader.id(), "model"), 1, false, glm::value_ptr(model));
 
-	float scalar_x = m_size.get_x() / WINDOW_WIDTH; 
-	float scalar_y = m_size.get_y() / WINDOW_HEIGHT;
-	glUniform2f(glGetUniformLocation(in_shader.id(), "scalar"), scalar_x, scalar_y);
-	glUniform1f(glGetUniformLocation(in_shader.id(), "scroll"), m_scroll_offset / 50.f);
+	float scalar_x = size.get_x() / WINDOW_WIDTH; 
+	float scalar_y = size.get_y() / WINDOW_HEIGHT;
+	glUniform2f(glGetUniformLocation(shader.id(), "scalar"), scalar_x, scalar_y);
+	glUniform1f(glGetUniformLocation(shader.id(), "scroll"), scroll_offset / 50.f);
 
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();
@@ -46,8 +56,6 @@ text_render_module::text_render_module() {
 	init();
 	load();
 }
-
-text_render_module::~text_render_module() {}
 
 void text_render_module::init() {
 	std::string v_shader_source;
@@ -235,7 +243,7 @@ void render_module::init() {
 	m_vertex_buffer->unbind();
 	m_vertex_array->unbind();
 
-	m_background.init();
+	background.init();
 	m_text_renderer = std::make_unique<text_render_module>();
 }
 
@@ -280,7 +288,7 @@ void render_module::run(world_module *in_world) {
 
 	for (int i = 0; i < m_shaders.size(); ++i) {
 		m_shaders[i]->use();
-		m_background.draw(*m_shaders[i]);
+		background.draw(*m_shaders[i]);
 		m_vertex_array->bind();
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		m_vertex_array->unbind();
@@ -303,6 +311,5 @@ void render_module::run(world_module *in_world) {
 }
 
 void render_module::scroll_background(float delta_time) {
-	float scroll_speed = 60.f;
-	m_background.m_scroll_offset += delta_time * scroll_speed;
+	background.scroll(delta_time);
 }

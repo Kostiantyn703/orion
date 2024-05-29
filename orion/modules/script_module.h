@@ -6,27 +6,32 @@
 
 #include "../gameplay/game_block.h"
 
+struct game_block;
+struct behavior_item;
+
 class script_module {
+	using string_vector = std::vector<std::string>;
 public:
-	script_module();
-	~script_module();
+	void collect_scripts(const std::string &path, std::vector<game_block> &data);
 
-	void collect_scripts(const std::string &in_path, std::vector<game_block> &out_data);
 private:
-	std::vector<std::string> m_actions = { "forward", "left", "right", "backward" };
-	std::vector<std::string> m_conditions = { "x_pos", "y_pos" };
+	bool get_file_content(const std::string &file, std::string &content);
+	void parse_file_content(std::string &content, game_block &block);
 
-	bool get_file_content(const std::string &in_file, std::string &out_content);
-	void parse_file_content(std::string &in_content, game_block &out_block);
+	void erase_spaces(std::string &line);
 	
-	void parse_spawn(std::string &in_line, behavior_item &out_item);
-	size_t parse_int(std::string &in_line);
-	void parse_behavior(std::string &in_line, behavior_item &out_item);
-	void parse_range(std::string &in_line, range &out_range);
+	size_t parse_int(std::string &line);
+	void parse_spawn_position(std::string &line, behavior_item &item);
+	
+	std::string get_data_substring(std::string &line) const;
+	
+	void parse_behavior(std::string &line, behavior_item &item);
 
-	bool action_found(const std::string &in_line);
-	bool condition_found(const std::string &in_line);
+	bool token_found(const std::string &line, string_vector &values);
 
-	void erase_spaces(std::string &out_line);
+	void parse_range(std::string &line, range_container &range);
+	
+	string_vector actions = { ACTION_FORWARD, ACTION_LEFT, ACTION_RIGHT, ACTION_BACKWARD };
+	string_vector conditions = { X_POS, Y_POS };
 };
 #endif // SCRIPT_MODULE_H

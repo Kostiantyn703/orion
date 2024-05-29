@@ -7,7 +7,6 @@ public:
 	texture(texture &in_texture);
 
 	texture &operator=(const texture &in_texture);
-	~texture() {}
 
 	void init_data(unsigned char *in_data, const int &in_width, const int &in_height, const int &in_channels);
 

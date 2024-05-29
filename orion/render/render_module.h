@@ -17,17 +17,20 @@
 
 #include "../modules/world_module.h"
 
-class background : public renderable {
+class background_renderer : public renderable {
 public:
-	background() {}
-	
+	background_renderer();
+	virtual ~background_renderer() = default;
+
 	void init();
+	void scroll(float delta_time);
 
-	virtual void draw(const shader_program &in_shader) override;
-	virtual void set_texture(texture *in_texture) override {}
+	virtual void set_texture(texture *tex) override;
+	virtual void draw(const shader_program &shader) override;
 
-	vector2f m_size;
-	float m_scroll_offset = 0.f;
+	vector2f size;
+	float scroll_offset;
+	float scroll_speed;
 };
 
 struct character {
@@ -41,7 +44,6 @@ class text_render_module {
 	using char_map = std::map<char, character>;
 public:
 	text_render_module();
-	~text_render_module();
 
 	void init();
 	void load();
@@ -82,7 +84,7 @@ public:
 
 	window *get_window() const { return m_window.get();	}
 
-	background m_background;
+	background_renderer background;
 private:
 	std::unique_ptr<window>	m_window;
 

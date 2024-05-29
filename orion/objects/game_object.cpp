@@ -12,7 +12,9 @@
 #include "../render/texture.h"
 #include "../render/shader_program.h"
 
-game_object::game_object(const vector2f &initial_point) {
+game_object::game_object(const vector2f &initial_point)
+	: to_remove(false), m_rotation(0.f), m_score(0), m_origin(0.f, 0.f), m_size(0.f, 0.f), m_center(0.f,0.f)
+{
 	set_origin(initial_point);
 }
 

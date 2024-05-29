@@ -29,14 +29,14 @@ private:
 
 enum class action_type {
 	AT_MOVE_FORWARD,
-	AT_MOVE_BACKWARDS,
+	AT_MOVE_BACKWARD,
 	AT_MOVE_LEFT,
 	AT_MOVE_RIGHT,
 	AT_NONE
 };
 
-extern std::map<std::string, action_type> g_actions_map;
-extern std::map<std::string, condition_type> g_cond_map;
+extern std::map<std::string, action_type> actions_map;
+extern std::map<std::string, condition_type> conditions_map;
 
 class action {
 public:

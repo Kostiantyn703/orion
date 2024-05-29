@@ -43,7 +43,7 @@ void behavior::handle_action(const action &in_action, spaceship &in_object) {
 		in_object.move_right();
 		change_rotation(90.f, in_object);
 		break;
-	case action_type::AT_MOVE_BACKWARDS:
+	case action_type::AT_MOVE_BACKWARD:
 		in_object.move_backward();
 		change_rotation(180.f, in_object);
 		break;
@@ -72,7 +72,7 @@ bool behavior::handle_condition(const action &in_action, spaceship &in_object) {
 				result = true;
 			}
 		}
-		if (in_action.get_type() == action_type::AT_MOVE_BACKWARDS) {
+		if (in_action.get_type() == action_type::AT_MOVE_BACKWARD) {
 			if ((in_object.get_center().get_y() - cond.get_data()) < 0.001) {
 				result = true;
 			}

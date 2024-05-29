@@ -9,7 +9,7 @@
 #include "../interfaces/collidable.h"
 #include "../interfaces/movable.h"
 
-class game_object : public renderable, public collidable, public movable{
+class game_object : public renderable, public collidable, public movable {
 public:
 	game_object(const vector2f &initial_point);
 	virtual ~game_object();
@@ -25,8 +25,8 @@ public:
 	virtual void set_texture(texture *in_texture) override;
 	// ~ end renderable interface
 
-	void set_to_remove			(bool in_val)	{	to_remove = in_val;	}
-	bool should_remove			()	const		{	return to_remove;	}
+	void set_to_remove(bool in_val) { to_remove = in_val; }
+	bool should_remove() const { return to_remove; }
 
 	// ~ collidable interface
 	virtual bool on_intersect	()	override;
