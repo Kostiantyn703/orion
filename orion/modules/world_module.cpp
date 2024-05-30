@@ -12,89 +12,77 @@
 
 constexpr int OBJECTS_CAPACITY = 30;
 
-world_module::world_module() {
-	m_colision_system = std::make_unique<collision_module>();
+world_module::world_module() : spawn_time(0.f), max_spawn_time(SHIP_SPAWN_TIME), score(0),
+								show_title(true), show_score(false), game_over(false)
+{
+	colision_system = std::make_unique<collision_module>();
 
-	m_meteor_spawner = std::make_unique<meteor_spawner>();
-	m_ship_spawner = std::make_unique<ship_spawner>();
+	meteor_spawner_instance = std::make_unique<meteor_spawner>();
+	ship_spawner_instance = std::make_unique<ship_spawner>();
 
-	m_difficulty = std::make_unique<difficulty>();
+	difficulty = std::make_unique<difficulty_data>();
 
-	m_meteor_spawner->set_listener(this);
-	m_ship_spawner->set_listener(this);
+	meteor_spawner_instance->set_listener(this);
+	ship_spawner_instance->set_listener(this);
 
-	m_objects.reserve(OBJECTS_CAPACITY);
+	objects.reserve(OBJECTS_CAPACITY);
 
 	srand((unsigned int)time(0));
-
-	m_spawn_time = 0.f;
-	m_max_spawn_time = SHIP_SPAWN_TIME;
-
-	is_show_title = true;
-	is_show_score = false;
-	is_game_over = false;
-
-	m_score = 0;
 }
 
 world_module::~world_module() {
 	clear_objects();
 }
 
-void world_module::init() {}
-
-void world_module::init_player(controller *in_controller) {
-	vector2f player_pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
+void world_module::init_player(input_controller *controller) {
+	vector2f pos(WINDOW_WIDTH * 0.5f, WINDOW_HEIGHT * 0.8f);
 	vector2f forward_vec(0.f, -1.f);
-	spaceship *player = m_ship_spawner->spawn_spaceship(player_pos, forward_vec);
+	spaceship *player = ship_spawner_instance->spawn_spaceship(pos, forward_vec);
 	texture *player_tex = resource_module::get_instance()->get_texture(TEX_NAME_SHIP);
 	player->set_texture(player_tex);
 	player->init();
-	in_controller->set_owner(player);
+	controller->set_owner(player);
 	player->set_listener(this);
 
 	player->set_mask(MASK_PLAYER);
-	m_player_pos = player->get_origin_ptr();
-	m_objects.push_back(player);
+	player_pos = player->get_origin_ptr();
+	objects.push_back(player);
 }
 
 void world_module::clear_objects() {
-	for (auto it = m_objects.begin(); it != m_objects.end(); ++it) {
+	for (object_storage::iterator it = objects.begin(); it != objects.end(); ++it) {
 		delete *it;
 	}
-	m_objects.clear();
+	objects.clear();
 }
 
 void world_module::update(float delta_time) {
-	for (object_storage::iterator it = m_objects.begin(); it != m_objects.end(); ++it) {
-		game_object *cur_obj = *it;
-		cur_obj->update(delta_time);
-		m_colision_system->check_collision(this, cur_obj);
+	for (object_storage::iterator it = objects.begin(); it != objects.end(); ++it) {
+		game_object *obj = *it;
+		obj->update(delta_time);
+		colision_system->check_collision(this, obj);
 	}
-	m_meteor_spawner->update(delta_time);
-	if (m_meteor_spawner->spawn_timer_expired()) {
-		m_meteor_spawner->reload_timer();
-		m_meteor_spawner->set_spawn_pos(m_player_pos->get_x());
-		m_meteor_spawner->notify();
+	meteor_spawner_instance->update(delta_time);
+	if (meteor_spawner_instance->spawn_timer_expired()) {
+		meteor_spawner_instance->spawn(player_pos->get_x());
 	}
 
-	m_spawn_time -= delta_time;
-	if (m_spawn_time < 0.f) {
-		size_t idx = calculate_idx(m_block_data.size());
-		if (!m_block_data.empty()) {
-			m_ship_spawner->notify_spawn(m_block_data[idx % m_block_data.size()]);
-			m_spawn_time = m_max_spawn_time;
+	spawn_time -= delta_time;
+	if (spawn_time < 0.f) {
+		size_t idx = calculate_idx(game_blocks.size());
+		if (!game_blocks.empty()) {
+			ship_spawner_instance->notify_spawn(game_blocks[idx % game_blocks.size()]);
+			spawn_time = max_spawn_time;
 		}
 	}
 
 	remove_objects();
-	handle_difficulty(m_score);
+	handle_difficulty(score);
 }
 
 void world_module::remove_objects() {
-	// only one object per frame set to remove
-	object_storage::iterator left_bound = m_objects.begin();
-	object_storage::iterator right_bound = m_objects.end();
+	object_storage::iterator left_bound = objects.begin();
+	object_storage::iterator right_bound = objects.end();
 	while (left_bound != right_bound) {
 		if ((*left_bound)->should_remove()) {
 			--right_bound;
@@ -106,56 +94,56 @@ void world_module::remove_objects() {
 	auto pred = [](game_object *object) {
 		return object->should_remove();
 	};
-	object_storage::iterator it = find_if(m_objects.begin(), m_objects.end(), pred);
-	if (it != m_objects.end()) {
+	object_storage::iterator it = find_if(objects.begin(), objects.end(), pred);
+	if (it != objects.end()) {
 		delete *it;
-		m_objects.erase(it, m_objects.end());
+		objects.erase(it, objects.end());
 	}
 }
 
-bullet *world_module::spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const {
-	return new bullet(in_position, in_forward_vector, in_velocity);
+bullet *world_module::create_bullet(const vector2f &position, const vector2f &forward_vector) const {
+	return new bullet(position, forward_vector, BULLET_VELOCITY);
 }
 
 // bullet spawner
-void world_module::on_notify(const vector2f &in_position, const vector2f &in_forward_vector, int in_type) {
-	bool is_enemy = (in_type == 1);
-	texture *tex = resource_module::get_instance()->get_texture(in_type == 0 ? TEX_NAME_BULLET_GREEN : TEX_NAME_BULLET_RED);
+void world_module::on_notify(const vector2f &position, const vector2f &forward_vector, int type) {
+	bool is_enemy = (type == 1);
+	texture *tex = resource_module::get_instance()->get_texture(type == 0 ? TEX_NAME_BULLET_GREEN : TEX_NAME_BULLET_RED);
 	
-	vector2f pos = in_position;
-	pos.set_x(pos.get_x() - tex->get_width() * 0.5f);
+	float spawn_x = position.get_x() - tex->get_width() * 0.5f;
+	float spawn_y = position.get_y();
 
- 	bullet *bul = spawn_bullet(pos, in_forward_vector, BULLET_VELOCITY);
+ 	bullet *bul = create_bullet(vector2f(spawn_x, spawn_y), forward_vector);
 	bul->set_texture(tex);
 	bul->set_mask(!is_enemy ? (MASK_PLAYER | MASK_PLAYER_BULLET | MASK_ENEMY_BULLET) : (MASK_ENEMY | MASK_ENEMY_BULLET | MASK_PLAYER_BULLET));
 	if (is_enemy) {
 		bul->set_rotation(180.f);
 	}
-	m_objects.push_back(bul);
+	objects.push_back(bul);
 }
 // meteor spawner
-void world_module::on_notify(game_object &in_object) {
-	m_objects.push_back(&in_object);
+void world_module::on_notify(game_object &object) {
+	objects.push_back(&object);
 }
 
-size_t world_module::calculate_idx(size_t in_val) {
-	return std::rand() % int(in_val);
+size_t world_module::calculate_idx(size_t val) {
+	return std::rand() % int(val);
 }
 
-void world_module::handle_difficulty(const size_t &in_cur_score) {
-	bool should_increase = in_cur_score > m_difficulty->m_cur_level * DIFFICULTY_STEP;
+void world_module::handle_difficulty(const size_t &score) {
+	bool should_increase = score > difficulty->level * DIFFICULTY_STEP;
 	if (should_increase) {
-		++m_difficulty->m_cur_level;
+		++difficulty->level;
 		on_difficulty_changed();
 	}
 }
 
 void world_module::on_difficulty_changed() {
-	m_max_spawn_time -= SHIP_SPAWN_TIME_STEP;
-	if (m_max_spawn_time < SHIP_MIN_SPAWN_TIME) {
-		m_max_spawn_time = SHIP_MIN_SPAWN_TIME;
+	max_spawn_time -= SHIP_SPAWN_TIME_STEP;
+	if (max_spawn_time < SHIP_MIN_SPAWN_TIME) {
+		max_spawn_time = SHIP_MIN_SPAWN_TIME;
 	}
-	float meteor_velocity = m_meteor_spawner->get_velocity();
+	float meteor_velocity = meteor_spawner_instance->get_velocity();
 	meteor_velocity += METEOR_VELOCITY_STEP;
-	m_meteor_spawner->set_velocity(meteor_velocity);
+	meteor_spawner_instance->set_velocity(meteor_velocity);
 }

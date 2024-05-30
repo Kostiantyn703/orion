@@ -53,7 +53,7 @@ private:
 	std::unique_ptr<render_module> renderer;
 	std::unique_ptr<world_module> world;
 
-	std::unique_ptr<controller> input_controller;
+	std::unique_ptr<input_controller> controller;
 	std::unique_ptr<input_receiver> receiver;
 };
 #endif // APPLICATION_H

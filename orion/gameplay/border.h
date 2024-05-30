@@ -7,7 +7,7 @@
 class border : public collidable {
 public:
 	border() : m_side(border_side::BS_NONE) {}
-	~border() {}
+	virtual ~border() {}
 
 	border_side	get_side()	const { return m_side; }
 	void		set_side(border_side in_side) { m_side = in_side; }

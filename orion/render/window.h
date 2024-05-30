@@ -3,19 +3,16 @@
 
 #include "SDL_video.h"
 
-class window {
+class game_window {
 public:
-	window();
-	~window();
+	game_window();
+	~game_window();
 
 	void swap();
-
 	void log_info();
 
-	void toggle_fullscreen();
-
 private:
-	SDL_Window *m_window;
-	SDL_GLContext m_context;
+	SDL_Window *window;
+	SDL_GLContext context;
 };
 #endif WINDOW_H

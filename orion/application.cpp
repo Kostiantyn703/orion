@@ -13,21 +13,20 @@ application::~application() {
 }
 
 void application::init() {
-	world->init_player(input_controller.get());
+	world->init_player(controller.get());
 	game_started = true;
 }
 
 void application::start_up() {
 	renderer = std::make_unique<render_module>();
 
-	input_controller = std::make_unique<controller>();
+	controller = std::make_unique<input_controller>();
 	receiver = std::make_unique<input_receiver>();
 
 	world = std::make_unique<world_module>();
 
 	scripts = std::make_unique<script_module>();
-	scripts->collect_scripts(SCRIPTS_PATH, world->m_block_data);
-	world->init();
+	scripts->collect_scripts(SCRIPTS_PATH, world->game_blocks);
 
 	renderer->init();
 
@@ -52,7 +51,7 @@ void application::run() {
 }
 
 void application::handle_input() {
-	input_controller->handle_input(receiver.get());
+	controller->handle_input(receiver.get());
 
 	if (receiver->esc_pressed) {
 		active = false;

@@ -10,7 +10,7 @@
 class spaceship;
 
 enum class condition_type {
-	CT_POSITION_X,		// if condition means fly until position on the screen
+	CT_POSITION_X,
 	CT_POSITION_Y,
 	CT_NONE
 };

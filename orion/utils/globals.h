@@ -77,6 +77,11 @@ static float vertices[] = {
 
 class vector2f {
 public:
+	vector2f() {
+		this->x = 0.f;
+		this->y = 0.f;
+	}
+
 	vector2f(float x, float y) {
 		this->x = x;
 		this->y = y;
@@ -133,4 +138,4 @@ struct range_container {
 
 	bool is_valid() const { return min != max; }
 };
-#endif // !GLOBALS_H
+#endif // GLOBALS_H

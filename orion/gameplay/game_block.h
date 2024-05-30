@@ -1,5 +1,5 @@
-#ifndef GAME_BLOCK_H
-#define GAME_BLOCK_H
+#ifndef game_block_H
+#define game_block_H
 
 #include <limits>
 #include <string>
@@ -29,5 +29,4 @@ struct game_block {
 
 	void add_item(const behavior_item &item) { items.push_back(item); }
 };
-
-#endif // GAME_BLOCK_H
+#endif // game_block_H

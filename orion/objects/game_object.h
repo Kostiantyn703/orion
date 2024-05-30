@@ -12,7 +12,7 @@
 class game_object : public renderable, public collidable, public movable {
 public:
 	game_object(const vector2f &initial_point);
-	virtual ~game_object();
+	virtual ~game_object() = default;
 
 	virtual void init() {}
 	// for spaceship
