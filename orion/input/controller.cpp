@@ -8,6 +8,6 @@ void input_controller::handle_input(input_receiver *receiver) {
 	if (!owner)
 		return;
 
-	for (std::unordered_set<command*>::iterator it = receiver->m_commands.cbegin(); it != receiver->m_commands.cend(); ++it)
+	for (std::unordered_set<command*>::iterator it = receiver->commands.cbegin(); it != receiver->commands.cend(); ++it)
 		(*it)->execute(owner);
 }
