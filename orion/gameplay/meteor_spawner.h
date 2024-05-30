@@ -11,28 +11,25 @@ public:
 	void update(float delta_time);
 	void spawn(const float x);
 
-	void set_listener(subscriber *in_listener) { m_world = in_listener; }
+	void set_listener(subscriber *listener) { world = listener; }
 
-	void set_spawn_time(float in_time) { m_spawn_time = in_time; }
-	float get_max_spawn_time() const { return m_max_spawn_time; }
+	void set_spawn_time(float time) { spawn_time = time; }
+	float get_max_spawn_time() const { return max_spawn_time; }
 
-	bool spawn_timer_expired() const { return m_spawn_time < 0.f; }
-	void reload_timer() { m_spawn_time = m_max_spawn_time; }
+	bool spawn_timer_expired() const { return spawn_time < 0.f; }
+	void reload_timer() { spawn_time = max_spawn_time; }
 
-	void set_velocity(float in_val) { m_meteor_velocity = in_val; }
-	float get_velocity() const { return m_meteor_velocity; }
+	void set_velocity(float val) { meteor_velocity = val; }
+	float get_velocity() const { return meteor_velocity; }
 
-	game_object *create_object(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const;
+	game_object *create_object(const vector2f &position, const vector2f &forward_vector) const;
 private:
-	subscriber *m_world;
+	subscriber *world;
 
-	float m_meteor_velocity = 0.f;
-
-	float m_spawn_time = 0.f;
-
-	float m_max_spawn_time = 0.f;
-
-	int m_spawn_range = 0;
+	float meteor_velocity;
+	float spawn_time;
+	float max_spawn_time;
+	int spawn_range;
 
 	vector2f calculate_position(const float x);
 };

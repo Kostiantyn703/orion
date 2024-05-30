@@ -42,14 +42,14 @@ void collision_module::init_borders() {
 	west->set_side(border_side::BS_WEST);
 	west->set_mask(MASK_BORDER);
 
-	m_borders.push_back(north);
-	m_borders.push_back(east);
-	m_borders.push_back(south);
-	m_borders.push_back(west);
+	borders.push_back(north);
+	borders.push_back(east);
+	borders.push_back(south);
+	borders.push_back(west);
 }
 
 collision_module::~collision_module() {
-	for (auto it = m_borders.begin(); it != m_borders.end(); ++it) {
+	for (std::vector<border*>::iterator it = borders.begin(); it != borders.end(); ++it) {
 		delete *it;
 	}
 }
@@ -59,7 +59,7 @@ void collision_module::check_collision(world_module *world, collidable *object) 
 		return;
 
 	if (object->get_mask() & MASK_PLAYER) {
-		for (std::vector<border*>::const_iterator it = m_borders.cbegin(); it != m_borders.cend(); ++it) {
+		for (std::vector<border*>::const_iterator it = borders.cbegin(); it != borders.cend(); ++it) {
 			if (intersect(object->get_aabb(), (*it)->get_aabb())) {
 				object->borders_intersect((*it)->get_side());
 			}

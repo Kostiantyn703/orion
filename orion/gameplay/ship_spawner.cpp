@@ -53,14 +53,14 @@ void ship_spawner::set_behavior(spaceship &ship, const behavior_item &item) {
 			auto cond_it = conditions_map.find(it->condition_name);
 			end_condition cond;
 			cond.set_type(cond_it->second);
-			float coord_data = 0.f;
-			float cond_data = it->range.is_valid() ? calculate_coordinate(it->range) : it->condition_data;
+			float coordinate = 0.f;
+			float condition = it->range.is_valid() ? calculate_coordinate(it->range) : it->condition_data;
 			if (cond.get_type() == condition_type::CT_POSITION_X) {
-				coord_data = WINDOW_WIDTH * cond_data;
+				coordinate = WINDOW_WIDTH * condition;
 			} else {
-				coord_data = WINDOW_HEIGHT * cond_data;
+				coordinate = WINDOW_HEIGHT * condition;
 			}
-			cond.set_data(coord_data);
+			cond.set_data(coordinate);
 			act.set_condition(cond);
 		}
 		ship.get_behavior()->add_action(act);
