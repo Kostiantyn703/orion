@@ -4,7 +4,6 @@
 class vertex_array {
 public:
 	vertex_array();
-	~vertex_array() {}
 
 	void init_data();
 
@@ -12,7 +11,7 @@ public:
 	void unbind();
 
 private:
-	unsigned int m_id;
+	unsigned int id;
 
 	void create();
 };
