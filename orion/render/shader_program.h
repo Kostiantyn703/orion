@@ -4,16 +4,15 @@
 class shader_program {
 public:
 	shader_program();
-	~shader_program() {}
 
-	unsigned int id()	const	{	return m_id;	}
+	unsigned int get_id() const { return id; }
 
 	void use();
 	void attach_shader(unsigned int shader_id);
 	void link();
 
 private:
-	unsigned int m_id;
+	unsigned int id;
 
 	void create();
 };

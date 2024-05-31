@@ -34,16 +34,15 @@ void background_renderer::set_texture(texture *tex) {
 }
 
 void background_renderer::draw(const shader_program &shader) {
-	// draw texture
 	glm::mat4 model = glm::mat4(1.f);
 	glm::vec2 model_size(WINDOW_WIDTH, WINDOW_HEIGHT);
 	model = glm::scale(model, glm::vec3(model_size, 1.f));
-	glUniformMatrix4fv(glGetUniformLocation(shader.id(), "model"), 1, false, glm::value_ptr(model));
+	glUniformMatrix4fv(glGetUniformLocation(shader.get_id(), "model"), 1, false, glm::value_ptr(model));
 
 	float scalar_x = size.get_x() / WINDOW_WIDTH; 
 	float scalar_y = size.get_y() / WINDOW_HEIGHT;
-	glUniform2f(glGetUniformLocation(shader.id(), "scalar"), scalar_x, scalar_y);
-	glUniform1f(glGetUniformLocation(shader.id(), "scroll"), scroll_offset / 50.f);
+	glUniform2f(glGetUniformLocation(shader.get_id(), "scalar"), scalar_x, scalar_y);
+	glUniform1f(glGetUniformLocation(shader.get_id(), "scroll"), scroll_offset / 50.f);
 
 	glActiveTexture(GL_TEXTURE0);
 	m_texture->bind();
@@ -78,8 +77,8 @@ void text_render_module::init() {
 	shader_prog->use();
 
 	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f);
-	glUniformMatrix4fv(glGetUniformLocation(shader_prog->id(), "projection"), 1, false, glm::value_ptr(projection));
-	glUniform1i(glGetUniformLocation(shader_prog->id(), "text"), 0);
+	glUniformMatrix4fv(glGetUniformLocation(shader_prog->get_id(), "projection"), 1, false, glm::value_ptr(projection));
+	glUniform1i(glGetUniformLocation(shader_prog->get_id(), "text"), 0);
 
 	vert->destroy();
 	frag->destroy();
@@ -110,7 +109,7 @@ void text_render_module::draw_score(const int score) {
 void text_render_module::draw(const std::string &text, float x, float y, float scale) {
 	// activate corresponding render state	
 	shader_prog->use();
-	glUniform3f(glGetUniformLocation(shader_prog->id(), "text_color"), text_color.x, text_color.y, text_color.z);
+	glUniform3f(glGetUniformLocation(shader_prog->get_id(), "text_color"), text_color.x, text_color.y, text_color.z);
 	glActiveTexture(GL_TEXTURE0);
 	glBindVertexArray(vert_array);
 
@@ -271,7 +270,7 @@ void render_module::compile_shaders(const std::string &vertex_source, const std:
 	sp.use();
 
 	glm::mat4 projection = glm::ortho(0.f, WINDOW_WIDTH, WINDOW_HEIGHT, 0.f, -1.f, 1.f);
-	glUniformMatrix4fv(glGetUniformLocation(sp.id(), "projection"), 1, false, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(sp.get_id(), "projection"), 1, false, glm::value_ptr(projection));
 	shaders.push_back(std::make_unique<shader_program>(sp));
 
 	vert->destroy();

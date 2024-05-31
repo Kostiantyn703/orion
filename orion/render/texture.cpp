@@ -5,21 +5,21 @@
 texture::texture() : target(GL_TEXTURE_2D), width (0), height (0), channels (0) {}
 
 texture::texture(texture &tex) {
-	id = tex.id;
-	target = tex.target;
-	format = tex.format;
-	width = tex.width;
-	height = tex.height;
-	channels = tex.channels;
+	this->id = tex.id;
+	this->target = tex.target;
+	this->format = tex.format;
+	this->width = tex.width;
+	this->height = tex.height;
+	this->channels = tex.channels;
 }
 
 texture &texture::operator=(const texture &tex) {
-	id = tex.id;
-	target = tex.target;
-	format = tex.format;
-	width = tex.width;
-	height = tex.height;
-	channels = tex.channels;
+	this->id = tex.id;
+	this->target = tex.target;
+	this->format = tex.format;
+	this->width = tex.width;
+	this->height = tex.height;
+	this->channels = tex.channels;
 	return *this;
 }
 

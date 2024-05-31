@@ -7,22 +7,23 @@ void behavior::init() {
 	m_cur_action = m_actions.begin();
 }
 
-void behavior::update(float delta_time, spaceship &in_object) {
-	if (m_actions.empty())	return;
+void behavior::update(float delta_time, spaceship &ship) {
+	if (m_actions.empty())
+		return;
 
 	if (m_cur_action != m_actions.cend()) {
-		handle_action(*m_cur_action, in_object);
-		if (handle_condition(*m_cur_action, in_object)) {
+		handle_action(*m_cur_action, ship);
+		if (handle_condition(*m_cur_action, ship)) {
 			++m_cur_action;
 			on_action_change();
 		}
 	}
 
-	if (!in_object.get_weapon())	return;
+	if (!ship.get_weapon())
+		return;
 	
-	if (in_object.get_weapon()->can_shoot()) {
-		in_object.shoot();
-	}
+	if (ship.get_weapon()->get_can_shoot())
+		ship.shoot();
 }
 
 void behavior::add_action(const action &in_action) {

@@ -55,9 +55,9 @@ void spaceship::update(float delta_time) {
 
 	game_object::update(delta_time);
 
-	if (m_weapon && !m_weapon->can_shoot()) {
-		m_weapon->m_reload_timer -= delta_time;
-		if (m_weapon->m_reload_timer < 0.f) {
+	if (m_weapon && !m_weapon->get_can_shoot()) {
+		m_weapon->decrease_reload_timer(delta_time);
+		if (m_weapon->get_reload_timer() < 0.f) { 
 			m_weapon->set_can_shoot(true);
 		}
 	}
@@ -95,7 +95,7 @@ void spaceship::move_left() {
 }
 
 void spaceship::shoot() {
-	if (m_weapon->can_shoot()) {
+	if (m_weapon->get_can_shoot()) {
 		vector2f spawn_pos = get_origin() + m_weapon->get_position();
 		m_listener->on_notify(spawn_pos, get_forward_vector(), m_type);
 		m_weapon->set_can_shoot(false);
@@ -103,8 +103,8 @@ void spaceship::shoot() {
 	}
 }
 
-void spaceship::borders_intersect(border_side in_side) {
-	switch (in_side) {
+void spaceship::borders_intersect(border_side side) {
+	switch (side) {
 	case border_side::BS_NORTH:
 		blocked_up = true;
 		break;
@@ -132,5 +132,5 @@ void spaceship::init_weapon() {
 	m_weapon = new weapon();
 	vector2f wep_pos(get_size().get_x() * 0.5f, 0.f);
 	m_weapon->set_postition(wep_pos);
-	m_weapon->set_reload_time(WEAPON_RELOAD_TIME);
+	m_weapon->reset_reload_timer();
 }
