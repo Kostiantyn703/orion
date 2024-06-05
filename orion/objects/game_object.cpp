@@ -17,7 +17,7 @@ game_object::game_object(const vector2f &initial_point) : to_remove(false), rota
 }
 
 void game_object::update(float delta_time) {
-	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
+	vector2f delta_vec = get_direction() * get_velocity() * delta_time;
 	set_origin(get_origin() + delta_vec);
 	set_center(get_center() + delta_vec);
 	box.calculate(get_origin(), get_size());

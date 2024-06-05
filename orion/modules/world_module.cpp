@@ -102,7 +102,7 @@ void world_module::remove_objects() {
 }
 
 bullet *world_module::create_bullet(const vector2f &position, const vector2f &forward_vector) const {
-	return new bullet(position, forward_vector, BULLET_VELOCITY);
+	return new bullet(position, forward_vector);
 }
 
 // bullet spawner

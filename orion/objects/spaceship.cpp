@@ -96,7 +96,7 @@ void spaceship::move_left() {
 void spaceship::shoot() {
 	if (gun->get_can_shoot()) {
 		vector2f spawn_pos = get_origin() + gun->get_position();
-		listener->on_notify(spawn_pos, get_forward_vector(), type);
+		world->on_notify(spawn_pos, get_forward_vector(), type);
 		gun->set_can_shoot(false);
 		gun->reset_reload_timer();
 	}
@@ -120,7 +120,7 @@ void spaceship::borders_intersect(border_side side) {
 }
 
 void spaceship::reset_movement() {
-	set_move_dir	(vector2f(0.f, 0.f));
+	set_direction	(vector2f(0.f, 0.f));
 	blocked_up		= false;
 	blocked_right	= false;
 	blocked_down	= false;

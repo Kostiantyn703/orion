@@ -12,13 +12,9 @@
 
 game_window::game_window() {
 	unsigned int flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
-	window = SDL_CreateWindow	(	GAME_NAME
-								,	SDL_WINDOWPOS_CENTERED
-								,	SDL_WINDOWPOS_CENTERED
-								,	(int)WINDOW_WIDTH
-								,	(int)WINDOW_HEIGHT
-								,	flags
-								);
+	window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
+								,(int)WINDOW_WIDTH, (int)WINDOW_HEIGHT, flags);
+
 	context = SDL_GL_CreateContext(window);
 	gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
 
@@ -38,11 +34,4 @@ game_window::~game_window() {
 
 void game_window::swap() {
 	SDL_GL_SwapWindow(window);
-}
-
-void game_window::log_info() {
-	if (!window) {
-		SDL_LogError(0, "Window has not been initialized");
-		return;
-	}
 }

@@ -9,7 +9,6 @@ public:
 	~game_window();
 
 	void swap();
-	void log_info();
 
 private:
 	SDL_Window *window;

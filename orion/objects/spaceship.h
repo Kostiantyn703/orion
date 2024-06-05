@@ -46,7 +46,7 @@ public:
 
 	virtual void borders_intersect(border_side side) override;
 
-	void set_listener(subscriber *in_listener) { this->listener = in_listener; }
+	void set_listener(subscriber *listener) { world = listener; }
 
 	weapon *get_weapon() const { return gun; }
 	behavior *get_behavior() const { return behavior_instance.get(); }
@@ -58,8 +58,8 @@ private:
 	bool blocked_left	= false;
 
 	weapon *gun = nullptr;
-	// world
-	subscriber *listener = nullptr;
+
+	subscriber *world = nullptr;
 
 	std::unique_ptr<behavior> behavior_instance;
 
