@@ -4,91 +4,87 @@
 #include "../utils/globals.h"
 
 void behavior::init() {
-	m_cur_action = m_actions.begin();
+	action_it = actions.begin();
 }
 
-void behavior::update(float delta_time, spaceship &in_object) {
-	if (m_actions.empty())	return;
+void behavior::update(float delta_time, spaceship &ship) {
+	if (actions.empty())
+		return;
 
-	if (m_cur_action != m_actions.cend()) {
-		handle_action(*m_cur_action, in_object);
-		if (handle_condition(*m_cur_action, in_object)) {
-			++m_cur_action;
-			on_action_change();
-		}
+	if (action_it != actions.cend()) {
+		handle_action(*action_it, ship);
+		if (handle_condition(*action_it, ship))
+			action_change();
 	}
 
-	if (!in_object.get_weapon())	return;
+	if (!ship.get_weapon())
+		return;
 	
-	if (in_object.get_weapon()->can_shoot()) {
-		in_object.shoot();
-	}
+	if (ship.get_weapon()->get_can_shoot())
+		ship.shoot();
 }
 
-void behavior::add_action(const action &in_action) {
-	m_actions.push_back(in_action);
+void behavior::add_action(const action &act) {
+	actions.push_back(act);
 }
 
-void behavior::handle_action(const action &in_action, spaceship &in_object) {
-	switch (in_action.get_type()) {
+void behavior::handle_action(const action &act, spaceship &ship) {
+	switch (act.get_type()) {
 	case action_type::AT_MOVE_FORWARD:
-		in_object.move_forward();
-		change_rotation(0.f, in_object);
+		ship.move_forward();
+		change_rotation(ZERO_ANGLE, ship);
 		break;
 	case action_type::AT_MOVE_LEFT:
-		in_object.move_left();
-		change_rotation(270.f, in_object);
+		ship.move_left();
+		change_rotation(REFLEX_ANGLE, ship);
 		break;
 	case action_type::AT_MOVE_RIGHT:
-		in_object.move_right();
-		change_rotation(90.f, in_object);
+		ship.move_right();
+		change_rotation(RIGHT_ANGLE, ship);
 		break;
-	case action_type::AT_MOVE_BACKWARDS:
-		in_object.move_backward();
-		change_rotation(180.f, in_object);
+	case action_type::AT_MOVE_BACKWARD:
+		ship.move_backward();
+		change_rotation(STRAIGHT_ANGLE, ship);
 		break;
 	}
 }
 
-bool behavior::handle_condition(const action &in_action, spaceship &in_object) {
+bool behavior::handle_condition(const action &act, spaceship &ship) {
 	bool result = false;
-	const end_condition &cond = in_action.get_condition();
+	const end_condition &cond = act.get_condition();
 	switch (cond.get_type()) {
 	case condition_type::CT_POSITION_X:
-		if (in_action.get_type() == action_type::AT_MOVE_LEFT) {
-			if ((in_object.get_center().get_x() - cond.get_data()) > 0.001) {
+		if (act.get_type() == action_type::AT_MOVE_LEFT) {
+			if ((ship.get_center().get_x() - cond.get_data()) > FLOAT_PRECSISSION)
 				result = true;
-			}
 		}
-		if (in_action.get_type() == action_type::AT_MOVE_RIGHT) {
-			if ((in_object.get_center().get_x() - cond.get_data()) < 0.001) {
+		if (act.get_type() == action_type::AT_MOVE_RIGHT) {
+			if ((ship.get_center().get_x() - cond.get_data()) < FLOAT_PRECSISSION)
 				result = true;
-			}
 		}
 		break;
 	case condition_type::CT_POSITION_Y:
-		if (in_action.get_type() == action_type::AT_MOVE_FORWARD) {
-			if ((in_object.get_center().get_y() - cond.get_data()) > 0.001) {
+		if (act.get_type() == action_type::AT_MOVE_FORWARD) {
+			if ((ship.get_center().get_y() - cond.get_data()) > FLOAT_PRECSISSION)
 				result = true;
-			}
 		}
-		if (in_action.get_type() == action_type::AT_MOVE_BACKWARDS) {
-			if ((in_object.get_center().get_y() - cond.get_data()) < 0.001) {
+		if (act.get_type() == action_type::AT_MOVE_BACKWARD) {
+			if ((ship.get_center().get_y() - cond.get_data()) < FLOAT_PRECSISSION)
 				result = true;
-			}
 		}
 		break;
 	}
 	return result;
 }
 
-void behavior::on_action_change() {
+void behavior::action_change() {
+	++action_it;
 	rotation_changed = false;
 }
 
-void behavior::change_rotation(float in_rot, spaceship &in_object) {
+void behavior::change_rotation(float rotation, spaceship &ship) {
 	if (!rotation_changed) {
-		in_object.set_rotation(in_rot);
+		ship.set_rotation(rotation);
 		rotation_changed = true;
 	}
 }

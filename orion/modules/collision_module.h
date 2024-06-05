@@ -4,7 +4,6 @@
 #include <vector>
 
 #include "../interfaces/collidable.h"
-#include "../utils/globals.h"
 
 class world_module;
 class border;
@@ -16,10 +15,10 @@ public:
 
 	void init_borders();
 
-	void check_collision(world_module *in_world, collidable *in_object);
+	void check_collision(world_module *world, collidable *object);
 	bool intersect(const aabb &lhs, const aabb &rhs);
 
 private:
-	std::vector<border*> m_borders;
+	std::vector<border*> borders;
 };
 #endif // COLLISION_MODULE_H

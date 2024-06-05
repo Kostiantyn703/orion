@@ -17,80 +17,80 @@
 
 #include "../modules/world_module.h"
 
-class background : public renderable {
+class background_renderer : public renderable {
 public:
-	background() {}
-	
+	background_renderer();
+	virtual ~background_renderer() = default;
+
 	void init();
+	void scroll(float delta_time);
 
-	virtual void draw(const shader_program &in_shader) override;
-	virtual void set_texture(texture *in_texture) override {}
+	virtual void set_texture(texture *tex) override;
+	virtual void draw(const shader_program &shader) override;
 
-	vector2f m_size;
-	float m_scroll_offset = 0.f;
+	float scroll_offset;
+	vector2f size;
 };
 
 struct character {
-	unsigned int m_id;
-	glm::ivec2 m_size;
-	glm::ivec2 m_bearing;
-	unsigned int m_advance;
+	unsigned int id;
+	glm::ivec2 size;
+	glm::ivec2 bearing;
+	unsigned int advance;
 };
 
 class text_render_module {
 	using char_map = std::map<char, character>;
 public:
 	text_render_module();
-	~text_render_module();
 
 	void init();
 	void load();
 
 	void draw_title();
-	void draw_score(const int in_score);
+	void draw_score(const int score);
 
 private:
-	float m_left_offset;
+	float left_offset;
 
-	std::unique_ptr<shader_program> m_shader;
+	std::unique_ptr<shader_program> shader_prog;
 
-	unsigned int m_vertex_array;
-	unsigned int m_vertex_buffer;
+	unsigned int vert_array;
+	unsigned int vert_buffer;
 
-	char_map m_characters;
+	char_map characters;
 
-	unsigned int m_font_size;
+	unsigned int font_size;
 
-	glm::vec3 m_text_color;
+	glm::vec3 text_color;
 
-	void draw(const std::string &in_text, float in_x, float in_y, float in_scale);
+	void draw(const std::string &text, float x, float y, float scale);
 };
 
 class render_module {
 	using shader_vec = std::vector<std::unique_ptr<shader_program>>;
 public:
 	render_module();
-	~render_module() {}
 
 	void init();
 
-	void init_shader(const char *in_vert_address, const char *in_frag_address);
-	void compile_shaders(const std::string &in_vertex_source, const std::string &in_fragment_source);
+	void init_shader(const char *vert_address, const char *frag_address);
+	void compile_shaders(const std::string &vertex_source, const std::string &fragment_source);
 
-	void run(world_module *in_world);
+	void run(world_module *world);
 	void scroll_background(float delta_time);
 
-	window *get_window() const { return m_window.get();	}
+	game_window *get_window() const { return window.get();	}
 
-	background m_background;
+	background_renderer background;
 private:
-	std::unique_ptr<window>	m_window;
+	std::unique_ptr<game_window> window;
 
-	std::unique_ptr<vertex_array>	m_vertex_array;
-	std::unique_ptr<buffer_object>	m_vertex_buffer;
+	std::unique_ptr<vertex_array> vert_array;
+	std::unique_ptr<buffer_object> vert_buffer;
 
-	std::unique_ptr<text_render_module> m_text_renderer;
+	std::unique_ptr<text_render_module> text_renderer;
 
-	shader_vec m_shaders;
+	shader_vec shaders;
 };
 #endif // RENDER_MODULE_H

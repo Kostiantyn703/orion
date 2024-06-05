@@ -1,5 +1,5 @@
-#ifndef GAME_BLOCK_H
-#define GAME_BLOCK_H
+#ifndef game_block_H
+#define game_block_H
 
 #include <limits>
 #include <string>
@@ -8,26 +8,25 @@
 #include "../utils/globals.h"
 
 struct behavior_data {
-	std::string	m_action_name;
-	std::string	m_condition_name;
+	std::string	action_name;
+	std::string	condition_name;
 
-	range		m_range;
-	float		m_condition_data;
+	range_container	range;
+	float condition_data = 0.f;
 };
 
 struct behavior_item {
-	float m_spawn_pos	= 0.f;
-	range m_spawn_range;
+	float spawn_pos_x = 0.f;
+	range_container spawn_range;
 
-	std::vector<behavior_data> m_behavior_data;
+	std::vector<behavior_data> behavior;
 };
 
 struct game_block {
-	size_t m_type		= std::numeric_limits<size_t>::max();
-	bool is_shooter		= false;
-	std::vector<behavior_item> m_items;
+	size_t type = std::numeric_limits<size_t>::max();
+	bool is_shooter = false;
+	std::vector<behavior_item> items;
 
-	void add_item(const behavior_item &in_item) { m_items.push_back(in_item); }
+	void add_item(const behavior_item &item) { items.push_back(item); }
 };
-
-#endif // GAME_BLOCK_H
+#endif // game_block_H

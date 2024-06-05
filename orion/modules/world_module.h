@@ -20,11 +20,11 @@
 
 using object_storage = std::vector<game_object*>;
 
-class difficulty {
+class difficulty_data {
 public:
-	difficulty() : m_cur_level(1) {}
+	difficulty_data() : level(1) {}
 
-	size_t m_cur_level;
+	size_t level;
 };
 
 class world_module : public subscriber {
@@ -32,62 +32,60 @@ public:
 	world_module();
 	virtual ~world_module();
 
-	void init();
-
 	void update(float delta_time);
 	void remove_objects();
 	
-	void set_show_title(bool in_val) { is_show_title = in_val; }
-	bool get_show_title() const { return is_show_title; }
+	void set_show_title(bool val) { show_title = val; }
+	bool should_show_title() const { return show_title; }
 
-	void set_show_score(bool in_val) { is_show_score = in_val; }
-	bool get_show_score() const { return is_show_score; }
+	void set_show_score(bool val) { show_score = val; }
+	bool get_show_score() const { return show_score; }
 
-	void set_game_over(bool in_val) { is_game_over = in_val; }
-	bool get_game_over() const { return is_game_over; }
+	void set_game_over(bool val) { game_over = val; }
+	bool get_game_over() const { return game_over; }
 
-	void reset_score() { m_score = 0; }
-	size_t get_score() const { return m_score; }
+	void reset_score() { score = 0; }
+	size_t get_score() const { return score; }
 
-	void reset_difficulty() { m_difficulty->m_cur_level = 1; }
+	void reset_difficulty() { difficulty->level = 1; }
 
-	void init_player(controller *in_controller);
+	void init_player(input_controller *controller);
 	void clear_objects();
 
-	bullet *spawn_bullet(const vector2f &in_position, const vector2f &in_forward_vector, const float in_velocity) const;
+	bullet *create_bullet(const vector2f &position, const vector2f &forward_vector) const;
 
-	virtual void on_notify(const vector2f &in_position, const vector2f &in_forward_vector, int in_type) override;
-	virtual void on_notify(game_object &in_object) override;
+	virtual void on_notify(const vector2f &position, const vector2f &forward_vector, int type_val) override;
+	virtual void on_notify(game_object &object) override;
 
-	void add_score(const size_t &in_val) { m_score += in_val; }
+	void add_score(const size_t &val) { score += val; }
 
-	void set_max_spawn_time(float in_val) { m_max_spawn_time = in_val; }
+	void set_max_spawn_time(float val) { max_spawn_time = val; }
 
-	object_storage				m_objects;
-	std::vector<game_block>		m_block_data;
+	object_storage objects;
+	std::vector<game_block> game_blocks;
 
 private:
-	bool is_show_title;
-	bool is_show_score;
-	bool is_game_over;
+	bool show_title;
+	bool show_score;
+	bool game_over;
 
-	float m_spawn_time = 0.f;
-	float m_max_spawn_time = 0.f;
+	float spawn_time;
+	float max_spawn_time;
 
-	size_t m_score = 0;
+	size_t score;
 
-	std::unique_ptr<difficulty> m_difficulty;
+	std::unique_ptr<difficulty_data> difficulty;
 
-	std::unique_ptr<collision_module> m_colision_system;
+	std::unique_ptr<collision_module> colision_system;
 
-	std::unique_ptr<meteor_spawner> m_meteor_spawner;
-	std::unique_ptr<ship_spawner>	m_ship_spawner;
+	std::unique_ptr<meteor_spawner> meteor_spawner_instance;
+	std::unique_ptr<ship_spawner>	ship_spawner_instance;
 
-	vector2f *m_player_pos = nullptr;
+	vector2f *player_pos = nullptr;
 
-	size_t calculate_idx(size_t in_val);
+	size_t calculate_idx(size_t val);
 
-	void handle_difficulty(const size_t &in_cur_score);
+	void handle_difficulty(const size_t &score);
 	void on_difficulty_changed();
 };
 #endif // WORLD_MODULE_H

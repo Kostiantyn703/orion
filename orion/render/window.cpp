@@ -10,16 +10,12 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
-window::window() {
+game_window::game_window() {
 	unsigned int flags = SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL;
-	m_window = SDL_CreateWindow	(	GAME_NAME
-								,	SDL_WINDOWPOS_CENTERED
-								,	SDL_WINDOWPOS_CENTERED
-								,	(int)WINDOW_WIDTH
-								,	(int)WINDOW_HEIGHT
-								,	flags
-								);
-	m_context = SDL_GL_CreateContext(m_window);
+	window = SDL_CreateWindow(GAME_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED
+								,(int)WINDOW_WIDTH, (int)WINDOW_HEIGHT, flags);
+
+	context = SDL_GL_CreateContext(window);
 	gladLoadGLLoader((GLADloadproc)SDL_GL_GetProcAddress);
 
 	glEnable(GL_BLEND);
@@ -30,36 +26,12 @@ window::window() {
 	log_error;
 }
 
-window::~window() {
-	SDL_GL_DeleteContext(m_context);
-	SDL_DestroyWindow(m_window);
+game_window::~game_window() {
+	SDL_GL_DeleteContext(context);
+	SDL_DestroyWindow(window);
 	log_error;
 }
 
-void window::swap() {
-	SDL_GL_SwapWindow(m_window);
-}
-
-void window::log_info() {
-	if (!m_window) {
-		SDL_LogError(0, "Window has not been initialized");
-		return;
-	}
-}
-
-void window::toggle_fullscreen() {
-	int display_idx = SDL_GetWindowDisplayIndex(m_window);
-	SDL_Rect display_bounds;
-	SDL_GetDisplayBounds(display_idx, &display_bounds);
-	
-	int window_width		= 0;
-	int window_height		= 0;
-	SDL_GetWindowSize(m_window, &window_width, &window_height);
-
-	if (display_bounds.h != window_height && display_bounds.w != window_width) {
-		SDL_SetWindowFullscreen(m_window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-	}
-	if (display_bounds.h == window_height && display_bounds.w == window_width) {
-		SDL_SetWindowFullscreen(m_window, 0);
-	}
+void game_window::swap() {
+	SDL_GL_SwapWindow(window);
 }

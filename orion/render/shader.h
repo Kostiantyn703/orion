@@ -4,18 +4,15 @@
 class shader {
 public:
 	shader(const char *shader_source, const unsigned int shader_type);
-	~shader() {}
-
-	unsigned int get_id() const { return m_id; }
 
 	bool compile();
 	void destroy();
 
+	unsigned int get_id() const { return id; }
+
 private:
-	unsigned int m_id;
+	unsigned int id;
 
 	bool log_errors(const unsigned int check_type);
-
-	shader() = delete;
 };
 #endif // SHADER_H

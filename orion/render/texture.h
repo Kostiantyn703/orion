@@ -4,28 +4,27 @@
 class texture {
 public:
 	texture();
-	texture(texture &in_texture);
+	texture(texture &tex);
 
-	texture &operator=(const texture &in_texture);
-	~texture() {}
+	texture &operator=(const texture &tex);
 
-	void init_data(unsigned char *in_data, const int &in_width, const int &in_height, const int &in_channels);
+	void init_data(unsigned char *data, const int &width, const int &height, const int &channels);
 
-	unsigned int id()	const	{	return m_id;	}
-	int get_width()		const	{	return m_width;	}
-	int get_height()	const	{	return m_height;}
+	unsigned int get_id() const { return id; }
+	int get_width() const { return width; }
+	int get_height() const { return height; }
 
 	void bind();
 	void unbind();
 
 private:
-	unsigned int m_id;
-	unsigned int m_target;
-	unsigned int m_format;
+	unsigned int id;
+	unsigned int target;
+	unsigned int format;
 
-	int m_width;
-	int m_height;
-	int m_channels;
+	int width;
+	int height;
+	int channels;
 
 	void create();
 };

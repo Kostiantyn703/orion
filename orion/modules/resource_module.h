@@ -12,22 +12,20 @@ class resource_module {
 public:
 	static resource_module *get_instance();
 
-	~resource_module() {}
-
-	texture *get_texture(const std::string &in_key)	const	{	return m_textures.at(in_key).get();	}
+	texture *get_texture(const std::string &key) const { return textures.at(key).get();	}
 
 	void load_textures();
-	bool load_shader(const char *source_address, std::string &out_shader_source);
+	bool load_shader(const char *source_address, std::string &shader_source);
 
 private:
 	resource_module();
 
 	static resource_module *instance;
 
-	texture_map m_textures;
+	texture_map textures;
 	
-	void create_texture(const char *in_tex_address, const char *in_tex_name);
-	unsigned char *load_texture(const char *in_tex_address, int &out_width, int &out_height, int &out_channels);
-	void free_texture_data(unsigned char *in_data);
+	void create_texture(const char *tex_address, const char *tex_name);
+	unsigned char *load_texture(const char *tex_address, int &width, int &height, int &channels);
+	void free_texture_data(unsigned char *data);
 };
 #endif // RESOURCE_MODULE_H

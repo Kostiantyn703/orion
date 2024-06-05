@@ -10,67 +10,62 @@
 class spaceship;
 
 enum class condition_type {
-	CT_POSITION_X,		// if condition means fly until position on the screen
+	CT_POSITION_X,
 	CT_POSITION_Y,
 	CT_NONE
 };
 
 class end_condition {
 public:
-	void set_type(condition_type in_type) { m_type = in_type; }
-	condition_type get_type() const { return m_type; }
+	void set_type(condition_type type) { this->type = type; }
+	condition_type get_type() const { return type; }
 
-	void set_data(float in_data) { m_data = in_data; }
-	float get_data() const { return m_data; }
+	void set_data(float data) { this->data = data; }
+	float get_data() const { return data; }
 private:
-	condition_type m_type;
-	float m_data;
+	condition_type type;
+	float data;
 };
 
 enum class action_type {
 	AT_MOVE_FORWARD,
-	AT_MOVE_BACKWARDS,
+	AT_MOVE_BACKWARD,
 	AT_MOVE_LEFT,
 	AT_MOVE_RIGHT,
 	AT_NONE
 };
 
-extern std::map<std::string, action_type> g_actions_map;
-extern std::map<std::string, condition_type> g_cond_map;
+extern std::map<std::string, action_type> actions_map;
+extern std::map<std::string, condition_type> conditions_map;
 
 class action {
 public:
-	void set_type(action_type in_type) { m_type = in_type; }
-	action_type get_type() const { return m_type; }
+	void set_type(action_type type) { this->type = type; }
+	action_type get_type() const { return type; }
 
-	void set_condition(const end_condition &in_cond) { m_condition = in_cond; }
-	const end_condition& get_condition() const { return m_condition; }
+	void set_condition(const end_condition &condition) { this->condition = condition; }
+	const end_condition& get_condition() const { return condition; }
 private:
-	action_type m_type;
-	end_condition m_condition;
+	action_type type;
+	end_condition condition;
 };
 
 class behavior {
 public:
-	behavior() {}
-	~behavior() {}
-
 	void init();
 
-	void update				(float delta_time, spaceship &in_object);
+	void update(float delta_time, spaceship &ship);
 
-	void add_action			(const action &in_action);
-	void handle_action		(const action &in_action, spaceship &in_object);
-	bool handle_condition	(const action &in_action, spaceship &in_object);
+	void add_action(const action &act);
+	void handle_action(const action &act, spaceship &ship);
+	bool handle_condition(const action &act, spaceship &ship);
 
-	void on_action_change	();
-	void change_rotation	(float in_rot, spaceship &in_object);
+	void action_change();
+	void change_rotation(float rotation, spaceship &ship);
 private:
 	bool rotation_changed	= false;
 
-	std::list<action> m_actions;
-	std::list<action>::iterator m_cur_action;
+	std::list<action> actions;
+	std::list<action>::iterator action_it;
 };
-
 #endif // BEHAVIOR_H
-

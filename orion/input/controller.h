@@ -1,20 +1,15 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <vector>
-
 class input_receiver;
 class controllable;
 
-class controller {
+class input_controller {
 public:
-	controller() {}
-	~controller() {}
+	void set_owner(controllable *owner) { this->owner = owner; }
+	void handle_input(input_receiver *receiver);
 
-	void set_owner(controllable *in_controllable) { m_owner = in_controllable; }
-
-	void handle_input(input_receiver *in_receiver);
 private:
-	controllable *m_owner = nullptr;
+	controllable *owner = nullptr;
 };
 #endif // CONTROLLER_H

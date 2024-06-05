@@ -6,80 +6,95 @@
 #include "render/renderable.h"
 #include "gameplay/game_state.h"
 
+application::application() : active(false), game_started(false), state_idx(0) {}
+
+application::~application() {
+	states.clear();
+}
+
+void application::init() {
+	world->init_player(controller.get());
+	game_started = true;
+}
+
 void application::start_up() {
-	m_renderer	= std::make_unique<render_module>();
+	renderer = std::make_unique<render_module>();
 
-	m_controller	= std::make_unique<controller>();
-	m_receiver		= std::make_unique<input_receiver>();
+	controller = std::make_unique<input_controller>();
+	receiver = std::make_unique<input_receiver>();
 
-	m_world = std::make_unique<world_module>();
+	world = std::make_unique<world_module>();
 
-	m_scripts = std::make_unique<script_module>();
-	m_scripts->collect_scripts(SCRIPTS_PATH, m_world->m_block_data);
-	m_world->init();
+	scripts = std::make_unique<script_module>();
+	scripts->collect_scripts(SCRIPTS_PATH, world->game_blocks);
 
-	m_renderer->init();
+	renderer->init();
 
-	m_states.push_back(std::make_unique<start_state>());
-	m_states.push_back(std::make_unique<active_state>());
-	m_cur_state_idx = 0;
+	states.push_back(std::make_unique<start_state>());
+	states.push_back(std::make_unique<active_state>());
 
-	is_active = true;
-}
-
-void application::init_game() {
-	m_world->init_player(m_controller.get());
-	is_game_started = true;
-}
-
-void application::clear_objects() {
-	m_world->clear_objects();
+	active = true;
 }
 
 void application::run() {
 	Uint64 last_time = 0;
-	while (is_active) {
+	while (active) {
 		Uint64 cur_time = SDL_GetTicks64();
 		float delta_time = (cur_time - last_time) / 1000.f;
 		last_time = cur_time;
 
 		handle_input();
-		m_states[m_cur_state_idx]->process(*this, delta_time);
+		states[state_idx]->process(*this, delta_time);
 
 		render();
 	}
 }
 
-void application::shut_down() {}
-
-void application::render() {
-	m_renderer->run(m_world.get());
-}
-
 void application::handle_input() {
-	m_controller->handle_input(m_receiver.get());
+	controller->handle_input(receiver.get());
 
-	if (m_receiver->esc_pressed) {
-		is_active = false;
+	if (receiver->esc_pressed) {
+		active = false;
 	}
-	if (!is_game_started && m_receiver->enter_pressed && m_cur_state_idx == 0) {
+	if (start_game_condition()) {
 		change_state();
 	}
 }
 
+void application::render() {
+	renderer->run(world.get());
+}
+
+void application::reset() {
+	clear_objects();
+	game_started = false;
+}
+
+void application::clear_objects() {
+	world->clear_objects();
+}
+
 void application::update_world(float delta_time) {
-	m_world->update(delta_time);
-	m_renderer->scroll_background(delta_time);
-	if (m_cur_state_idx > 0 && m_world->get_game_over()) {
+	world->update(delta_time);
+	renderer->scroll_background(delta_time);
+	if (game_over_condition()) {
 		change_state();
 	}
 }
 
 void application::change_state() {
-	m_states[m_cur_state_idx]->on_transition(*this);
-	if (m_cur_state_idx == 0) {
-		++m_cur_state_idx;
+	states[state_idx]->on_transition(*this);
+	if (state_idx == 0) {
+		++state_idx;
 	} else {
-		--m_cur_state_idx;
+		--state_idx;
 	}
+}
+
+bool application::start_game_condition() const {
+	return !game_started && receiver->enter_pressed && state_idx == 0;
+}
+
+bool application::game_over_condition() const {
+	return state_idx > 0 && world->get_game_over();
 }

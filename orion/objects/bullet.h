@@ -6,7 +6,7 @@
 
 class bullet : public game_object {
 public:
-	bullet(const vector2f &initial_point, const vector2f &in_forward_vector, const float in_velocity);
+	bullet(const vector2f &initial_point, const vector2f &in_forward_vector);
 	virtual ~bullet() {}
 
 	virtual void update(float delta_time) override;

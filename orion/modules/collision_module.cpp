@@ -42,38 +42,42 @@ void collision_module::init_borders() {
 	west->set_side(border_side::BS_WEST);
 	west->set_mask(MASK_BORDER);
 
-	m_borders.push_back(north);
-	m_borders.push_back(east);
-	m_borders.push_back(south);
-	m_borders.push_back(west);
+	borders.push_back(north);
+	borders.push_back(east);
+	borders.push_back(south);
+	borders.push_back(west);
 }
 
 collision_module::~collision_module() {
-	for (auto it = m_borders.begin(); it != m_borders.end(); ++it) {
+	for (std::vector<border*>::iterator it = borders.begin(); it != borders.end(); ++it) {
 		delete *it;
 	}
 }
 
-void collision_module::check_collision(world_module *in_world, collidable *in_object) {
-	if (!in_object) return;
+void collision_module::check_collision(world_module *world, collidable *object) {
+	if (!object)
+		return;
 
-	if (in_object->get_mask() & MASK_PLAYER) {
-		for (std::vector<border*>::const_iterator local_it = m_borders.cbegin(); local_it != m_borders.cend(); ++local_it) {
-			if (intersect(in_object->get_aabb(), (*local_it)->get_aabb())) {
-				in_object->borders_intersect((*local_it)->get_side());
+	if (object->get_mask() & MASK_PLAYER) {
+		for (std::vector<border*>::const_iterator it = borders.cbegin(); it != borders.cend(); ++it) {
+			if (intersect(object->get_aabb(), (*it)->get_aabb())) {
+				object->borders_intersect((*it)->get_side());
 			}
 		}
 	}
 
-	for (object_storage::const_iterator it = in_world->m_objects.cbegin(); it != in_world->m_objects.cend(); ++it) {
-		if (in_object == *it)	continue;
-		if (in_object->get_mask() & (*it)->get_mask())	continue;
-		if (intersect(in_object->get_aabb(), (*it)->get_aabb())) {
+	for (object_storage::const_iterator it = world->objects.cbegin(); it != world->objects.cend(); ++it) {
+		if (object == *it)	
+			continue;
+
+		if (object->get_mask() & (*it)->get_mask())	
+			continue;
+
+		if (intersect(object->get_aabb(), (*it)->get_aabb())) {
 			bool player_killed = (*it)->on_intersect();
-			in_world->set_game_over(player_killed);
-			in_world->add_score((*it)->get_score_value());
-			// bullet should disappear
-			in_object->on_intersect();
+			world->set_game_over(player_killed);
+			world->add_score((*it)->get_score_value());
+			object->on_intersect();
 		}
 	}
 }

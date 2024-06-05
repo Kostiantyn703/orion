@@ -13,21 +13,19 @@ struct game_block;
 
 class ship_spawner {
 public:
-	ship_spawner() : m_world(nullptr) {}
-	~ship_spawner() {}
+	ship_spawner() : world(nullptr) {}
 
-	void notify_spawn(const game_block &in_block);
+	void notify_spawn(const game_block &block);
 
-	void set_listener(subscriber *in_listener) { m_world = in_listener; }
+	void set_listener(subscriber *listener) { world = listener; }
 
-	void set_behavior(spaceship &in_ship, const behavior_item &in_item);
+	void set_behavior(spaceship &ship, const behavior_item &item);
 
-	game_object *spawn_object(const vector2f &in_position, const vector2f &in_forward_vector) const;
-	spaceship *spawn_spaceship(const vector2f &in_position, const vector2f &in_forward_vector) const;
+	spaceship *spawn_spaceship(const vector2f &position, const vector2f &forward_vector) const;
 
 private:
-	subscriber *m_world;
+	subscriber *world;
 
-	float calculate_coordinate(const range &in_range);
+	float calculate_coordinate(const range_container &range);
 };
 #endif // SHIP_SPAWNER_H

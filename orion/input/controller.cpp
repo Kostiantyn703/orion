@@ -2,12 +2,12 @@
 
 #include "input_receiver.h"
 
-#include "../utils/globals.h"
+void input_controller::handle_input(input_receiver *receiver) {
+	receiver->receive_key();
 
-void controller::handle_input(input_receiver *in_receiver) {
-	in_receiver->receive_key();
-	if (!m_owner) return;
-	for (auto it = in_receiver->m_commands.cbegin(); it != in_receiver->m_commands.cend(); ++it) {
-		(*it)->execute(m_owner);
-	}
+	if (!owner)
+		return;
+
+	for (std::unordered_set<command*>::iterator it = receiver->commands.cbegin(); it != receiver->commands.cend(); ++it)
+		(*it)->execute(owner);
 }

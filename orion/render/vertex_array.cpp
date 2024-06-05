@@ -11,7 +11,7 @@ void vertex_array::init_data() {
 }
 
 void vertex_array::bind() {
-	glBindVertexArray(m_id);
+	glBindVertexArray(id);
 }
 
 void vertex_array::unbind() {
@@ -19,5 +19,5 @@ void vertex_array::unbind() {
 }
 
 void vertex_array::create() {
-	glGenVertexArrays(1, &m_id);
+	glGenVertexArrays(1, &id);
 }

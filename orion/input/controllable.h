@@ -13,5 +13,4 @@ public:
 
 	virtual void reset_movement	()	= 0;
 };
-
 #endif // CONTROLLABLE_H

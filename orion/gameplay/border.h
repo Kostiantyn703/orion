@@ -6,17 +6,17 @@
 
 class border : public collidable {
 public:
-	border() : m_side(border_side::BS_NONE) {}
-	~border() {}
+	border() : side(border_side::BS_NONE) {}
+	virtual ~border() {}
 
-	border_side	get_side()	const { return m_side; }
-	void		set_side(border_side in_side) { m_side = in_side; }
+	border_side	get_side()	const { return side; }
+	void		set_side(border_side side) { this->side = side; }
 
 	virtual bool on_intersect() { return false; };
-	virtual void borders_intersect(border_side in_side) {};
+	virtual void borders_intersect(border_side side) {};
 
 private:
-	border_side m_side;
+	border_side side;
 };
 
 #endif // BORDER_H
