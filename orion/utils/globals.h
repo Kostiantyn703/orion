@@ -1,6 +1,12 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+constexpr float		FLOAT_PRECSISSION = 0.001f;
+constexpr float		ZERO_ANGLE = 0.f;
+constexpr float		RIGHT_ANGLE = 90.f;
+constexpr float		STRAIGHT_ANGLE = 180.f;
+constexpr float		REFLEX_ANGLE = 270.f;
+
 constexpr float		WINDOW_HEIGHT	= 720.f;
 constexpr float		WINDOW_WIDTH	= 1280.f;
 static const char	*GAME_NAME	= "PROJECT ORION";

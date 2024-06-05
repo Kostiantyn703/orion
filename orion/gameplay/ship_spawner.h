@@ -21,7 +21,6 @@ public:
 
 	void set_behavior(spaceship &ship, const behavior_item &item);
 
-	game_object *spawn_object(const vector2f &position, const vector2f &forward_vector) const;
 	spaceship *spawn_spaceship(const vector2f &position, const vector2f &forward_vector) const;
 
 private:

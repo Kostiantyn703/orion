@@ -67,10 +67,6 @@ void ship_spawner::set_behavior(spaceship &ship, const behavior_item &item) {
 	}
 }
 
-game_object *ship_spawner::spawn_object(const vector2f &position, const vector2f &forward_vector) const {
-	return new spaceship(position, forward_vector);
-}
-
 spaceship *ship_spawner::spawn_spaceship(const vector2f &position, const vector2f &forward_vector) const {
 	return new spaceship(position, forward_vector);
 }

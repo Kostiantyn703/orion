@@ -6,25 +6,27 @@
 
 class aabb {
 public:
-	aabb() : m_origin(0.f, 0.f), m_size(0.f, 0.f) {}
-	aabb(const vector2f in_origin, const vector2f in_size) : m_origin(in_origin), m_size(in_size) {}
-	~aabb() {}
+	aabb() : origin(0.f, 0.f), size(0.f, 0.f) {}
+	aabb(const vector2f origin, const vector2f size) {
+		this->origin = origin;
+		this->size = size;
+	}
 
-	void		set_origin(const vector2f &in_origin) { m_origin = in_origin; }
-	vector2f	get_origin()	const { return m_origin; }
-	void		set_size(const vector2f &in_size) { m_size = in_size; }
-	vector2f	get_size()	const { return m_size; }
+	void set_origin(const vector2f &origin) { this->origin = origin; }
+	vector2f get_origin()	const { return origin; }
+	void set_size(const vector2f &size) { this->size = size; }
+	vector2f get_size()	const { return size; }
 
-	void calculate(const vector2f &in_origin, const vector2f &in_size, const float in_scalar = 1.f) {
-		vector2f aabb_origin = in_origin + (in_size * in_scalar);
+	void calculate(const vector2f &origin, const vector2f &size) {
+		vector2f aabb_origin = origin + (size * SIZE_SCALAR);
 		set_origin(aabb_origin);
-		vector2f aabb_size = in_size * (1.f - (in_scalar * 2));
+		vector2f aabb_size = size * (1.f - (SIZE_SCALAR * 2));
 		set_size(aabb_size);
 	}
 
 private:
-	vector2f	m_origin;
-	vector2f	m_size;
+	vector2f origin;
+	vector2f size;
 };
 
 // collision masks
@@ -38,15 +40,15 @@ class collidable {
 public:
 	virtual ~collidable() {}
 	virtual bool on_intersect() = 0;
-	virtual void borders_intersect(border_side in_side) {};
+	virtual void borders_intersect(border_side side) {};
 
-	const aabb &get_aabb() const		{ return m_aabb;	}
-	void set_aabb(const aabb &in_aabb)	{ m_aabb = in_aabb;	}
+	const aabb &get_aabb() const { return box;	}
+	void set_aabb(const aabb &box) { this->box = box;	}
 
-	void set_mask(uint8_t in_mask)		{ m_mask = in_mask;	}
-	const std::uint8_t get_mask() const	{ return m_mask;	}
+	void set_mask(uint8_t mask) { this->mask = mask;	}
+	const std::uint8_t get_mask() const	{ return mask;	}
 protected:
-	aabb			m_aabb;
-	std::uint8_t	m_mask;
+	aabb box;
+	std::uint8_t mask;
 };
 #endif //COLLIDABLE_H

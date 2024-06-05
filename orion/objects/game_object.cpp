@@ -20,7 +20,7 @@ void game_object::update(float delta_time) {
 	vector2f delta_vec = get_move_dir() * get_velocity() * delta_time;
 	set_origin(get_origin() + delta_vec);
 	set_center(get_center() + delta_vec);
-	m_aabb.calculate(get_origin(), get_size(), SIZE_SCALAR);
+	box.calculate(get_origin(), get_size());
 }
 
 void game_object::draw(const shader_program &shader) {
