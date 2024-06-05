@@ -17,20 +17,20 @@
 
 #define log_error	if (SDL_GetError()[0]) {SDL_LogError(0, SDL_GetError()); }
 
-background_renderer::background_renderer() : scroll_offset(0.f), scroll_speed(60.f) {}
+background_renderer::background_renderer() : scroll_offset(0.f) {}
 
 void background_renderer::init() {
 	set_texture(resource_module::get_instance()->get_texture(TEX_NAME_BACKGROUND));
-	size.set_x((float)m_texture->get_width());
-	size.set_y((float)m_texture->get_height());
+	size.set_x((float)get_texture()->get_width());
+	size.set_y((float)get_texture()->get_height());
 }
 
 void background_renderer::scroll(float delta_time) {
-	scroll_offset += scroll_speed * delta_time;
+	scroll_offset += BACKGORUND_SCROLL_SPEED * delta_time;
 }
 
 void background_renderer::set_texture(texture *tex) {
-	m_texture = tex;
+	this->tex = tex;
 }
 
 void background_renderer::draw(const shader_program &shader) {
@@ -45,7 +45,7 @@ void background_renderer::draw(const shader_program &shader) {
 	glUniform1f(glGetUniformLocation(shader.get_id(), "scroll"), scroll_offset / 50.f);
 
 	glActiveTexture(GL_TEXTURE0);
-	m_texture->bind();
+	get_texture()->bind();
 }
 
 text_render_module::text_render_module() : font_size(72), left_offset (120.f) {

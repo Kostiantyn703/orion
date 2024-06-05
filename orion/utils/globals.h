@@ -5,6 +5,8 @@ constexpr float		WINDOW_HEIGHT	= 720.f;
 constexpr float		WINDOW_WIDTH	= 1280.f;
 static const char	*GAME_NAME	= "PROJECT ORION";
 
+constexpr float		BACKGORUND_SCROLL_SPEED = 60.f;
+
 constexpr float		BULLET_VELOCITY		= 650.f;
 constexpr float		SPACESHIP_VELOCITY	= 500.f;
 constexpr float		WEAPON_RELOAD_TIME	= 0.8f;
@@ -20,6 +22,7 @@ constexpr size_t	SPACESHIP_SCORE = 5;
 
 constexpr size_t	DIFFICULTY_STEP			= 20;
 constexpr float		METEOR_VELOCITY			= 400.f;
+constexpr float		METEOR_ROTATION_VELOCITY = 50.f;
 constexpr float		METEOR_VELOCITY_STEP	= 20.f;
 constexpr float		SHIP_SPAWN_TIME			= 5.f;
 constexpr float		SHIP_MIN_SPAWN_TIME		= 1.f;

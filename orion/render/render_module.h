@@ -28,9 +28,8 @@ public:
 	virtual void set_texture(texture *tex) override;
 	virtual void draw(const shader_program &shader) override;
 
-	vector2f size;
 	float scroll_offset;
-	float scroll_speed;
+	vector2f size;
 };
 
 struct character {

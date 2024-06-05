@@ -5,65 +5,56 @@
 #include "../modules/world_module.h"
 #include "../utils/globals.h"
 
-spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector)
+spaceship::spaceship(const vector2f &initial_point, const vector2f &forward_vector)
 	:	game_object(initial_point)
 {
-	set_forward_vector(in_forward_vector);
+	set_forward_vector(forward_vector);
 	set_velocity(SPACESHIP_VELOCITY);
 }
 
-spaceship::spaceship(const vector2f &initial_point, const vector2f &in_forward_vector, float in_velocity)
-	:	game_object(initial_point)
-{
-	set_forward_vector(in_forward_vector);
-	set_velocity(in_velocity);
-}
-
 spaceship::~spaceship() {
-	delete m_weapon;
+	delete gun;
 }
 
 void spaceship::init() {
 	init_weapon();
-	m_type = ship_type::ST_PLAYER;
-	recalc_pos();
+	type = ship_type::ST_PLAYER;
+	calculate_origin();
 }
 
 void spaceship::on_spawn(bool is_shooter) {
-	m_type			= ship_type::ST_ENEMY;
-	if (is_shooter) {
-		init_weapon	();
-	}
-	recalc_pos		();
-	m_behavior		= std::make_unique<behavior>();
-	set_mask		(MASK_ENEMY);
-	set_score_value	(SPACESHIP_SCORE);
+	type = ship_type::ST_ENEMY;
+	if (is_shooter)
+		init_weapon();
+
+	calculate_origin();
+	behavior_instance = std::make_unique<behavior>();
+	set_mask(MASK_ENEMY);
+	set_score_value(SPACESHIP_SCORE);
 }
 
 bool spaceship::on_intersect() {
 	set_to_remove(true);
-	if (m_type == ship_type::ST_PLAYER) {
+	if (type == ship_type::ST_PLAYER)
 		return true;
-	}
+
 	return false;
 }
 
 void spaceship::update(float delta_time) {
-	if (m_type == ship_type::ST_ENEMY) {
-		m_behavior->update(delta_time, *this);
-	}
+	if (type == ship_type::ST_ENEMY)
+		behavior_instance->update(delta_time, *this);
 
 	game_object::update(delta_time);
 
-	if (m_weapon && !m_weapon->get_can_shoot()) {
-		m_weapon->decrease_reload_timer(delta_time);
-		if (m_weapon->get_reload_timer() < 0.f) { 
-			m_weapon->set_can_shoot(true);
-		}
+	if (gun && !gun->get_can_shoot()) {
+		gun->decrease_reload_timer(delta_time);
+		if (gun->get_reload_timer() < 0.f)
+			gun->set_can_shoot(true);
 	}
 	reset_movement();
 
-	if (m_type == ship_type::ST_ENEMY) {
+	if (type == ship_type::ST_ENEMY) {
 		if (get_origin().get_y() > WINDOW_HEIGHT + OUT_OFFSET) {
 			set_to_remove(true);
 		}
@@ -71,35 +62,43 @@ void spaceship::update(float delta_time) {
 }
 
 void spaceship::move_forward() {
-	if (blocked_up) return;
+	if (blocked_up)
+		return;
+
 	vector2f dir = get_forward_vector();
 	merge_movement(dir);
 }
 
 void spaceship::move_right() {
-	if (blocked_right) return;
+	if (blocked_right)
+		return;
+	
 	vector2f dir = get_forward_vector().get_swapped().get_inverse();
 	merge_movement(dir);
 }
 
 void spaceship::move_backward() {
-	if (blocked_down) return;
+	if (blocked_down)
+		return;
+
 	vector2f dir = get_forward_vector().get_inverse();
 	merge_movement(dir);
 }
 
 void spaceship::move_left() {
-	if (blocked_left) return;
+	if (blocked_left)
+		return;
+
 	vector2f dir = get_forward_vector().get_swapped();
 	merge_movement(dir);
 }
 
 void spaceship::shoot() {
-	if (m_weapon->get_can_shoot()) {
-		vector2f spawn_pos = get_origin() + m_weapon->get_position();
-		m_listener->on_notify(spawn_pos, get_forward_vector(), m_type);
-		m_weapon->set_can_shoot(false);
-		m_weapon->reset_reload_timer();
+	if (gun->get_can_shoot()) {
+		vector2f spawn_pos = get_origin() + gun->get_position();
+		listener->on_notify(spawn_pos, get_forward_vector(), type);
+		gun->set_can_shoot(false);
+		gun->reset_reload_timer();
 	}
 }
 
@@ -129,8 +128,8 @@ void spaceship::reset_movement() {
 }
 
 void spaceship::init_weapon() {
-	m_weapon = new weapon();
-	vector2f wep_pos(get_size().get_x() * 0.5f, 0.f);
-	m_weapon->set_postition(wep_pos);
-	m_weapon->reset_reload_timer();
+	gun = new weapon();
+	vector2f pos(get_size().get_x() * 0.5f, 0.f);
+	gun->set_postition(pos);
+	gun->reset_reload_timer();
 }
